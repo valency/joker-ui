@@ -1,0 +1,11 @@
+.no_border {
+    border: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.pointer {
+    cursor: pointer;
+}
