@@ -2,7 +2,7 @@
 <head>
     <?php
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[2][1] . "</title>";
+    echo "<title>SmartCube | " . $sub_words[1][0] . "</title>";
     $domain = $_SERVER['HTTP_HOST'];
     $prefix = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
     require_once "../../php/lib.php";
@@ -23,11 +23,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($prefix . $domain . '/projects/joker/components/sidebar.php?menu=2&sub=1'); ?>
+    <?php echo curl($prefix . $domain . '/projects/joker/components/sidebar.php?menu=1&sub=0'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=2&sub=1'); ?>
+            <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
             <!-- BEGIN PAGE -->
             <div class="table-scrollable">
                 <table class="table table-striped table-bordered table-advance table-hover">
@@ -50,6 +50,7 @@
                                 echo "<td class='collapsing'>";
                                 echo "<a href='javascript:void(0)' class='btn default btn-xs purple'><i class='fa fa-edit'></i> Add as Features </a>";
                                 echo "<a href='javascript:void(0)' class='btn default btn-xs blue'><i class='fa fa-edit'></i> Add as Predictions</a>";
+                                echo "<a href='javascript:void(0)' class='btn default btn-xs black' onclick=\"refresh_confirm_filename('" . $entry . "');\"><i class='fa fa-trash-o'></i> Delete</a>";
                                 echo "<button filename='" . $entry . "' class='btn default btn-xs black' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";
