@@ -6592,6 +6592,7 @@ Custom tables
 
 .table-advance tr td {
     border-left-width: 0px;
+    font-size: 13px;
 }
 
 .table-advance tr td:first-child {
