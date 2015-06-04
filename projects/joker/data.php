@@ -48,8 +48,8 @@
                                 echo "<td>" . number_format(filesize('./data/' . $entry)) . " bytes</td>";
                                 echo "<td>" . date("F d Y, H:i:s", filemtime('./data/' . $entry)) . "</td>";
                                 echo "<td class='collapsing'>";
-                                echo "<button op='feature' filename='" . $entry . "' class='btn default btn-xs purple' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-edit'></i> Add as Features</button>";
-                                echo "<a href='javascript:void(0)' class='btn default btn-xs blue'><i class='fa fa-edit'></i> Add as Predictions</a>";
+                                echo "<button op='feature' filename='" . $entry . "' class='btn default btn-xs purple' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-edit'></i> Import as Features</button>";
+                                echo "<button op='prediction' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-edit'></i> Import as Predictions</button>";
                                 echo "<button op='delete' filename='" . $entry . "' class='btn default btn-xs black' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";

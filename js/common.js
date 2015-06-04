@@ -1,4 +1,4 @@
-var API_SERVER = "http://120.25.209.91:9001/joker/api/";
+var API_SERVER = "http://120.25.209.91:9001/";
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
 
 jQuery.fn.center = function () {

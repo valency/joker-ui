@@ -29,36 +29,29 @@
         <div class="page-content">
             <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
             <!-- BEGIN PAGE -->
-            <div class="table-scrollable">
-                <table class="table table-striped table-bordered table-advance table-hover">
+            <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
+                <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
                     <thead>
-                    <tr>
-                        <th><i class="fa fa-briefcase"></i> File Name</th>
-                        <th><i class="fa fa-database"></i> Size</th>
-                        <th><i class="fa fa-clock-o"></i> Upload Time</th>
-                        <th></th>
+                    <tr class="heading">
+                        <th>ID</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Club Years</th>
+                        <th>Member</th>
+                        <th>Horse Owner</th>
+                        <th>Major Channel</th>
+                        <th>Meetings</th>
+                        <th>Investment</th>
+                        <th>Dividend</th>
+                        <th>Recovery Rate</th>
+                        <th>Balance</th>
+                        <th>Recharge Times</th>
+                        <th>Recharge Amount</th>
+                        <th>Withdraw Times</th>
+                        <th>Withdraw Amount</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <?php if ($handle = opendir('./data/')) {
-                        while (false !== ($entry = readdir($handle))) {
-                            if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
-                                echo "<tr>";
-                                echo "<td class='font-green bold'><i class='fa fa-file-o'></i> " . $entry . "</td>";
-                                echo "<td>" . number_format(filesize('./data/' . $entry)) . " bytes</td>";
-                                echo "<td>" . date("F d Y, H:i:s", filemtime('./data/' . $entry)) . "</td>";
-                                echo "<td class='collapsing'>";
-                                echo "<a href='javascript:void(0)' class='btn default btn-xs purple'><i class='fa fa-edit'></i> Add as Features </a>";
-                                echo "<a href='javascript:void(0)' class='btn default btn-xs blue'><i class='fa fa-edit'></i> Add as Predictions</a>";
-                                echo "<a href='javascript:void(0)' class='btn default btn-xs black' onclick=\"refresh_confirm_filename('" . $entry . "');\"><i class='fa fa-trash-o'></i> Delete</a>";
-                                echo "<button filename='" . $entry . "' class='btn default btn-xs black' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-trash-o'></i> Delete</button>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                        }
-                        closedir($handle);
-                    } ?>
-                    </tbody>
+                    <tbody id="customer_table_body"></tbody>
                 </table>
             </div>
             <!-- END PAGE -->
@@ -68,6 +61,6 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
-<script src="js/data.js" type="text/javascript"></script>
+<script src="js/customer.js" type="text/javascript"></script>
 </body>
 </html>
