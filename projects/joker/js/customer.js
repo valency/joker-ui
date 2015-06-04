@@ -11,9 +11,12 @@ $(document).ready(function () {
         }
     });
     oTable = $('#customer_table').dataTable({
+        stateSave: true,
         "searching": false,
+        "ordering": false,
         "processing": true,
         "serverSide": true,
+        "deferRender": true,
         "ajax": API_SERVER + "joker/api/cust/get_all/",
         "columns": [
             {"data": "id"},
