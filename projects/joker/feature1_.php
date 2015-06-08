@@ -12,7 +12,7 @@
     <script src="/lib/d3.min.js"></script>
     <script src="data/feature.js"></script>
     <script src="js/feature.js"></script>
-    <script src="js/feature1.js"></script>
+    <script src="js/feature1_.js"></script>
 </head>
 <body>
 <div id="data_source">

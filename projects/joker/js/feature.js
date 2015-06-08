@@ -1,4 +1,26 @@
+function interpret_gender_name(gender) {
+    if (gender == "F") return "Female";
+    else if (gender == "M") return "Male";
+    else return "N/A";
+}
+
+function interpret_gender_color(gender) {
+    if (gender == "F") return "red";
+    else if (gender == "M") return "blue";
+    else return "grey";
+}
+
+function find_prediction_type(data, label) {
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].label == label) return data[i];
+    }
+    return null;
+}
+
+var DATA_SRC = "feature_and_result_1";
+
 function piechart(src, table_title, table_desc) {
+    BODY_WIDTH = Math.floor($("body").width() / 4) - 4;
     var figid = guid();
     $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var width = BODY_WIDTH,
@@ -24,18 +46,19 @@ function piechart(src, table_title, table_desc) {
         .style("fill", function (d) {
             return color(d.data.key);
         })
-        .on("mouseover", function (d) {
+        .on("mousemove", function (d) {
             d3.select(this).transition().duration(200).attr("r", 10);
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(d.data.key).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
         })
         .on("mouseout", function (d) {
             d3.select(this).transition().duration(200).attr("r", 5);
-            tooltip.transition().duration(500).style("opacity", 0);
+            tooltip.transition().duration(200).style("opacity", 0);
         });
 }
 
 function polyline(src, table_title, table_desc, kpi) {
+    BODY_WIDTH = Math.floor($("body").width() / 4) - 4;
     var figid = guid();
     $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
@@ -93,6 +116,7 @@ function polyline(src, table_title, table_desc, kpi) {
 }
 
 function barchart(src, table_title, table_desc) {
+    BODY_WIDTH = Math.floor($("body").width() / 4) - 4;
     var figid = guid();
     $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
@@ -148,6 +172,7 @@ function barchart(src, table_title, table_desc) {
 }
 
 function barset(src, table_title, table_desc, label1, label2) {
+    BODY_WIDTH = Math.floor($("body").width() / 4) - 4;
     var figid = guid();
     $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
@@ -229,6 +254,7 @@ function barset(src, table_title, table_desc, label1, label2) {
 }
 
 function histogram(column, categorical, table_title, table_desc) {
+    BODY_WIDTH = Math.floor($("body").width() / 4) - 4;
     var figid = guid();
     $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     $.get("python/api.py?CTL=105&SCHEMA=" + DATA_SRC + "&COLUMN=" + column + "&CATEGORICAL=" + categorical, function (data) {

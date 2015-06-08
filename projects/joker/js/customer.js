@@ -23,8 +23,18 @@ $(document).ready(function () {
             {"data": "age"},
             {"data": "gender"},
             {"data": "yrs_w_club"},
-            {"data": "is_member"},
-            {"data": "is_hrs_owner"},
+            {
+                "data": "is_member",
+                "render": function (data, type, full, meta) {
+                    return data ? "Yes" : "No";
+                }
+            },
+            {
+                "data": "is_hrs_owner",
+                "render": function (data, type, full, meta) {
+                    return data ? "Yes" : "No";
+                }
+            },
             {"data": "major_channel"},
             {"data": "mtg_num"},
             {"data": "inv"},

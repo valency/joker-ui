@@ -27,7 +27,7 @@ $(document).ready(function () {
                 message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/api/cust/assign_pred_from_csv/?src=" + $(this).attr("filename"), function (r) {
+            $.get(API_SERVER + "joker/api/cust/assign_pred_from_csv/?src=" + $(this).attr("filename") + "&label=" + $(this).attr("as"), function (r) {
                 r = eval(r);
                 var msg = "<p>" + r.processed + " entries have been processed.</p><p>" + r.success + " entries have been imported.</p><p>" + r.fail + " entries are failed to import.</p>";
                 bootbox.hideAll();

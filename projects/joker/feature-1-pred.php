@@ -23,11 +23,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($prefix . $domain . '/projects/joker/components/sidebar.php?menu=1&sub=0'); ?>
+    <?php echo curl($prefix . $domain . '/projects/joker/components/sidebar.php?menu=1&sub=2'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
+            <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=1&sub=2'); ?>
             <!-- BEGIN PAGE -->
             <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
                 <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
@@ -49,6 +49,8 @@
                         <th>Recharge<br/>Amount</th>
                         <th>Withdraw<br/>Times</th>
                         <th>Withdraw<br/>Amount</th>
+                        <th class="font-red">Prop. to<br/>Grow</th>
+                        <th class="font-green">Prop. to<br/>Lapse</th>
                     </tr>
                     </thead>
                     <tbody id="customer_table_body"></tbody>
@@ -61,6 +63,7 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
-<script src="js/customer.js" type="text/javascript"></script>
+<script src="js/feature.js" type="text/javascript"></script>
+<script src="js/feature-1-pred.js" type="text/javascript"></script>
 </body>
 </html>
