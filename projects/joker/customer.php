@@ -61,6 +61,7 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
+<script src="js/feature.js" type="text/javascript"></script>
 <script src="js/customer.js" type="text/javascript"></script>
 </body>
 </html>

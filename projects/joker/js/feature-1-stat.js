@@ -32,7 +32,7 @@ function draw_figures() {
         });
     }
     barchart(src, "Dist. of Customers' Growth Rate of Turnover", "X Axis: Customers' Growth Rate of Turnover (%)<br/>Y Axis: Probabilistic Distribution Function (%)");
-    histogram("AGE", 0, "Dist. of Customers' Age", "X Axis: Customers' Age<br/>Y Axis: Probabilistic Distribution Function (%)");
+    histogram("AGE", 0, "Dist. of Customers' Age", "X Axis: Customers' Age<br/>Y Axis: Probabilistic Distribution Function (%)", "feature_and_result_1");
     src = [];
     for (i = 0; i < BET_TYPE.length; i++) {
         src.push({
@@ -49,7 +49,7 @@ function draw_figures() {
         });
     }
     piechart(src, "Turnover of Channels (PYTD)", "Key: Channel<br/>Value: Turnover of the Channel (%)");
-    histogram("LABEL_GROW_YEARLY_PRED_PROB", 0, "Dist. of Customer's Grow Score", "X Axis: Customer's Grow Score<br/>Y Axis: Probabilistic Distribution Function (%)");
-    histogram("LABEL_LAPSE_YEARLY_PRED_PROB", 0, "Dist. of Customers' Lapse Score", "X Axis: Customers' Lapse Score<br/>Y Axis: Probabilistic Distribution Function (%)");
+    histogram("LABEL_GROW_YEARLY_PRED_PROB", 0, "Dist. of Customer's Grow Score", "X Axis: Customer's Grow Score<br/>Y Axis: Probabilistic Distribution Function (%)", "feature_and_result_1");
+    histogram("LABEL_LAPSE_YEARLY_PRED_PROB", 0, "Dist. of Customers' Lapse Score", "X Axis: Customers' Lapse Score<br/>Y Axis: Probabilistic Distribution Function (%)", "feature_and_result_1");
 }
 

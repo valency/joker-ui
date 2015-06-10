@@ -29,32 +29,36 @@
         <div class="page-content">
             <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=1&sub=2'); ?>
             <!-- BEGIN PAGE -->
-            <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
-                <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
-                    <thead>
-                    <tr class="heading">
-                        <th>ID</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Club<br/>Years</th>
-                        <th>Member</th>
-                        <th>Horse<br/>Owner</th>
-                        <th>Major<br/>Channel</th>
-                        <th>Meetings<br/>Attended</th>
-                        <th>Investment</th>
-                        <th>Dividend</th>
-                        <th>Recovery<br/>Rate</th>
-                        <th>Balance</th>
-                        <th>Recharge<br/>Times</th>
-                        <th>Recharge<br/>Amount</th>
-                        <th>Withdraw<br/>Times</th>
-                        <th>Withdraw<br/>Amount</th>
-                        <th class="font-red">Prop. to<br/>Grow</th>
-                        <th class="font-green">Prop. to<br/>Lapse</th>
-                    </tr>
-                    </thead>
-                    <tbody id="customer_table_body"></tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
+                        <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
+                            <thead>
+                            <tr class="heading">
+                                <th>ID</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Club<br/>Years</th>
+                                <th>Member</th>
+                                <th>Horse<br/>Owner</th>
+                                <th>Major<br/>Channel</th>
+                                <th>Meetings<br/>Attended</th>
+                                <th>Investment</th>
+                                <th>Dividend</th>
+                                <th>Recovery<br/>Rate</th>
+                                <th>Balance</th>
+                                <th>Recharge<br/>Times</th>
+                                <th>Recharge<br/>Amount</th>
+                                <th>Withdraw<br/>Times</th>
+                                <th>Withdraw<br/>Amount</th>
+                                <th class="font-red">Grow<br/>Propensity</th>
+                                <th class="font-green">Lapse<br/>Propensity</th>
+                            </tr>
+                            </thead>
+                            <tbody id="customer_table_body"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <!-- END PAGE -->
         </div>

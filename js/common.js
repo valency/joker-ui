@@ -10,11 +10,11 @@ jQuery.fn.center = function () {
     return this;
 };
 
-function toTitleCase(str) {
+String.prototype.toTitleCase = function (str) {
     return str.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-}
+};
 
 function guid() {
     function s4() {
@@ -30,20 +30,14 @@ function random_color() {
     return '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
 }
 
-$(document).on('change', '.btn-file>input:file', function () {
-    var input = $(this);
-    var numFiles = input.get(0).files ? input.get(0).files.length : 1;
-    var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-    input.trigger('fileselect', [numFiles, label]);
-});
+function get_url_parameter(p) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == p) {
+            return sParameterName[1];
+        }
+    }
+}
 
-$(document).ready(function () {
-    $('.btn-file>input:file').on('fileselect', function (event, nfiles, label) {
-        console.log("fileselect");
-        var input = $(this).parents('.input-group').find(':text');
-        console.log(input);
-        var log = nfiles > 1 ? nfiles + ' files selected' : label;
-        if (input.length) input.val(log);
-        else if (log) alert(log);
-    });
-});

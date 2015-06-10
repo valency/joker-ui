@@ -29,17 +29,14 @@
         <div class="page-content">
             <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=0&sub=0'); ?>
             <!-- BEGIN PAGE -->
-            <h4 class="font-green">Demo</h4>
-            <ul>
-                <li><a href="feature1.php">Analysis Result Table (Model 1) Demo</a> (Last Update: <?php echo date("F d Y, H:i:s", filemtime("./feature1.php")); ?>)</li>
-                <li><a href="feature2.php">Analysis Result Table (Model 2) Demo</a> (Last Update: <?php echo date("F d Y, H:i:s", filemtime("./feature2.php")); ?>)</li>
-                <li><a href="cluster.php">Clustering (Model 3) Demo</a> (Last Update: <?php echo date("F d Y, H:i:s", filemtime("./cluster.php")); ?>)</li>
-            </ul>
-            <h4 class="font-green">Maintenance</h4>
-            <ul>
-                <li><a href="upload.php">CSV Data Uploader</a> (Last Update: <?php echo date("F d Y, H:i:s", filemtime("./upload.php")); ?>)</li>
-                <li><a href="data.php">CSV Data Processor</a> (Last Update: <?php echo date("F d Y, H:i:s", filemtime("./data.php")); ?>)</li>
-            </ul>
+            <?php if ($handle = opendir('./')) {
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "php") {
+                        echo "<span><a href='" . $entry . "'>" . $entry . "</a> (Last Update: " . date("F d Y, H:i:s", filemtime($entry)) . ")</span><br/>";
+                    }
+                }
+                closedir($handle);
+            } ?>
             <!-- END PAGE -->
         </div>
     </div>
