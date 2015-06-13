@@ -3,8 +3,6 @@
     <?php
     require_once "components/menu.php";
     echo "<title>SmartCube | " . $sub_words[1][0] . "</title>";
-    $domain = $_SERVER['HTTP_HOST'];
-    $prefix = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
     require_once "../php/lib.php";
     require_once "../php/common.php";
     require_once "components/css.php";
