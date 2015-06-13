@@ -3,8 +3,6 @@
     <?php
     require_once "components/menu.php";
     echo "<title>SmartCube | " . $sub_words[1][0] . "</title>";
-    $domain = $_SERVER['HTTP_HOST'];
-    $prefix = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
     require_once "../php/lib.php";
     require_once "../php/common.php";
     require_once "components/css.php";
@@ -23,11 +21,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($prefix . $domain . '/joker/components/sidebar.php?menu=1&sub=0'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=0'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($prefix . $domain . '/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
             <!-- BEGIN PAGE -->
             <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
                 <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">

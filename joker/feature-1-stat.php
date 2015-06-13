@@ -24,11 +24,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($prefix . $domain . '/joker/components/sidebar.php?menu=1&sub=1'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=1'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($prefix . $domain . '/joker/components/breadcrumb.php?menu=1&sub=1'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=1'); ?>
             <!-- BEGIN PAGE -->
             <div id="figure_container"></div>
             <!-- END PAGE -->
