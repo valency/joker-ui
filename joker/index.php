@@ -23,11 +23,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($prefix . $domain . '/projects/joker/components/sidebar.php?menu=0&sub=0'); ?>
+    <?php echo curl($prefix . $domain . '/joker/components/sidebar.php?menu=0&sub=0'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($prefix . $domain . '/projects/joker/components/breadcrumb.php?menu=0&sub=0'); ?>
+            <?php echo curl($prefix . $domain . '/joker/components/breadcrumb.php?menu=0&sub=0'); ?>
             <!-- BEGIN PAGE -->
             <?php if ($handle = opendir('./')) {
                 while (false !== ($entry = readdir($handle))) {
