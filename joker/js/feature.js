@@ -5,6 +5,7 @@ var DT_CONF = {
     processing: true,
     serverSide: true,
     deferRender: true,
+    lengthMenu: [10, 50, 100, 500],
     ajax: API_SERVER + "joker/api/cust/get_all/",
     columns: [
         {data: "id"},
@@ -38,9 +39,6 @@ var DT_CONF = {
     tableTools: {
         sSwfPath: "assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
         aButtons: [{
-            sExtends: "pdf",
-            sButtonText: "PDF"
-        }, {
             sExtends: "csv",
             sButtonText: "CSV"
         }, {
@@ -106,31 +104,32 @@ function generate_cust_data(data) {
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-5'>";
     var pred = find_prediction_type(data.prediction, "Grow");
-    if (pred == null) pred = {
-        prob: "-",
-        reason_code_1: "N/A",
-        reason_code_2: "N/A",
-        reason_code_3: "N/A"
-    };
-    html += "<span class='bold font-red'><i class='fa fa-arrow-up'></i> Grow Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
-    html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
-    html += "<li>" + pred.reason_code_1 + "</li>";
-    html += "<li>" + pred.reason_code_2 + "</li>";
-    html += "<li>" + pred.reason_code_3 + "</li>";
-    html += "</ul>";
+    if (pred != null) {
+        html += "<span class='bold font-red'><i class='fa fa-arrow-up'></i> Grow Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
+        html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
+        html += "<li>" + pred.reason_code_1 + "</li>";
+        html += "<li>" + pred.reason_code_2 + "</li>";
+        html += "<li>" + pred.reason_code_3 + "</li>";
+        html += "</ul>";
+    }
     pred = find_prediction_type(data.prediction, "Lapse");
-    if (pred == null) pred = {
-        prob: "-",
-        reason_code_1: "N/A",
-        reason_code_2: "N/A",
-        reason_code_3: "N/A"
-    };
-    html += "<span class='bold font-green'><i class='fa fa-arrow-down'></i> Lapse Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
-    html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
-    html += "<li>" + pred.reason_code_1 + "</li>";
-    html += "<li>" + pred.reason_code_2 + "</li>";
-    html += "<li>" + pred.reason_code_3 + "</li>";
-    html += "</ul>";
+    if (pred != null) {
+        html += "<span class='bold font-green'><i class='fa fa-arrow-down'></i> Lapse Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
+        html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
+        html += "<li>" + pred.reason_code_1 + "</li>";
+        html += "<li>" + pred.reason_code_2 + "</li>";
+        html += "<li>" + pred.reason_code_3 + "</li>";
+        html += "</ul>";
+    }
+    pred = find_prediction_type(data.prediction, "Growth");
+    if (pred != null) {
+        html += "<span class='bold font-yellow'><i class='fa fa-rocket'></i> Chance to be Regular: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
+        html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
+        html += "<li>" + pred.reason_code_1 + "</li>";
+        html += "<li>" + pred.reason_code_2 + "</li>";
+        html += "<li>" + pred.reason_code_3 + "</li>";
+        html += "</ul>";
+    }
     html += "</div>";
     html += "<div class='col-md-7'>";
     html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Age: </span>" + data.age + "<br/>";
