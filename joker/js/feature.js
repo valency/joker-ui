@@ -90,7 +90,7 @@ function load_data(div_id, conf) {
         var html = generate_cust_data(data);
         bootbox.dialog({
             message: html,
-            title: "CUST_ID: " + data.id + " <a href='customer.php?id=51' target='_blank' class='fa fa-share'></a>"
+            title: "CUST_ID: " + data.id + " <a href='customer.php?id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         });
     });
     $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='cust_code_filter'><span>Customer Code Filter</span></a>");
