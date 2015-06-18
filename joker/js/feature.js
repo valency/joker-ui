@@ -9,6 +9,7 @@ var DT_CONF = {
     ajax: API_SERVER + "joker/api/cust/get_all/",
     columns: [
         {data: "id"},
+        {data: "cust_code"},
         {data: "age"},
         {data: "gender"},
         {data: "yrs_w_club"},
@@ -92,12 +93,31 @@ function load_data(div_id, conf) {
             title: "CUST_ID: " + data.id + " <a href='customer.php?id=51' target='_blank' class='fa fa-share'></a>"
         });
     });
+    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='cust_code_filter'><span>Customer Code Filter</span></a>");
+    $("#cust_code_filter").click(function () {
+        bootbox.prompt({
+            title: "Filter by Customer Code:",
+            value: "",
+            callback: function (result) {
+                if (result != null) {
+                    if (result != "") {
+                        $("#cust_code_filter>span").html("<i class='fa fa-group'></i> " + result);
+                        table.ajax.url(API_SERVER + "joker/api/cust/get_all/?cust_code=" + result).load();
+                    } else {
+                        $("#cust_code_filter>span").html("<span>Customer Code Filter</span>");
+                        table.ajax.url(API_SERVER + "joker/api/cust/get_all/").load();
+                    }
+                }
+            }
+        });
+    });
     $('#customer_table_wrapper').find('.dataTables_length select').select2();
     return table;
 }
 
 function generate_cust_data(data) {
     var html = "<div>";
+    html += "<span class='label bg-purple'><i class='fa fa-group'></i> " + data.cust_code + "</span> ";
     html += "<span class='label bg-" + interpret_gender_color(data.gender) + "'>" + interpret_gender_name(data.gender) + "</span> ";
     html += "<span class='label bg-" + (data.is_member ? "green" : "grey") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
     html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";

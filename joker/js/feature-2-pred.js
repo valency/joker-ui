@@ -17,6 +17,6 @@ $(document).ready(function () {
             else return "-";
         }
     });
-    oConf.order = [[16, "desc"]];
+    oConf.order = [[17, "desc"]];
     oTable = load_data("customer_table", oConf);
 });

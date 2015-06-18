@@ -1,3 +1,5 @@
+var oTable = null;
+var filter_cust_code = null;
 $(document).ready(function () {
     Metronic.init();
     Layout.init();
@@ -12,6 +14,6 @@ $(document).ready(function () {
             $("#customer_table_wrapper").html("<span class='font-red'>Not Found</span>");
         });
     } else {
-        load_data("customer_table", DT_CONF);
+        oTable = load_data("customer_table", DT_CONF);
     }
 });

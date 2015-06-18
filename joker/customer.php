@@ -32,6 +32,7 @@
                     <thead>
                     <tr class="heading">
                         <th>ID</th>
+                        <th>Customer<br/>Code</th>
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Club<br/>Years</th>
