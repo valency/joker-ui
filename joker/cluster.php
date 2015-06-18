@@ -1,35 +1,83 @@
 <html>
 <head>
-    <title>Project Joker: Clustering Demo</title>
-    <?php require "../php/lib.php"; ?>
-    <link rel="stylesheet" href="css/cluster.css"/>
-    <script src="/lib/d3.min.js"></script>
-    <script src="js/cluster.js"></script>
+    <?php
+    require_once "components/menu.php";
+    echo "<title>SmartCube | " . $sub_words[1][5] . "</title>";
+    require_once "../php/lib.php";
+    require_once "../php/common.php";
+    require_once "components/css.php";
+    ?>
+    <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
-<div>
-    <p>
-        <span>Schema: </span>
-        <select id="schema">
-            <option value="feature_11">feature_11</option>
-            <option value="feature_and_result">feature_and_result</option>
-        </select>
-        <span style="margin-left:5px;">Job ID: </span><input id="job_id" value="" style="width:24em;"/>
-    </p>
-
-    <p>
-        <span># of Records: </span><input id="no_of_records" value="100" style="width:5em;"/>
-        <span style="margin-left:5px;"># of Clusters: </span><input id="no_of_clusters" value="3" style="width:3em;"/>
-    </p>
-
-    <p>
-        <a href="javascript:void(0)" onclick="load_header();">Show Header</a> |
-        <a href="javascript:void(0)" onclick="generate_data();">Generate Data</a> |
-        <a href="javascript:void(0)" onclick="cluster();">Perform Clustering</a> |
-        <a href="javascript:void(0)" onclick="plot();">Plot Results</a>
-    </p>
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
+<div class="page-header -i navbar navbar-fixed-top">
+    <div class="page-header-inner">
+        <?php require_once "components/logo.php"; ?>
+        <div class="top-menu">
+            <ul class="nav navbar-nav pull-right">
+                <?php require_once "components/login.php"; ?>
+            </ul>
+        </div>
+    </div>
 </div>
-<hr/>
-<div id="canvas"></div>
+<div class="clearfix"></div>
+<div class="page-container">
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=5'); ?>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=5'); ?>
+            <!-- BEGIN PAGE -->
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Features</span>
+                        <input type="hidden" id="select2_features" class="form-control select2" value=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon"># of Records</span>
+                        <input id="no_of_records" class="form-control" type="text" value="500"/>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon"># of Clusters</span>
+                        <input id="no_of_clusters" class="form-control" type="text" value="5"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Prediction</span>
+                        <select id="select2_predictions" class="form-control">
+                            <option value="Grow">Grow Propensity</option>
+                            <option value="Lapse">Lapse Propensity</option>
+                            <option value="Growth">Chance to be Regular</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <!--                    <button class="btn blue" type="button" onclick="select_all_features();">Select All Features</button>-->
+                    <!--                    <button class="btn red" type="button" onclick="remove_all_features();">Clear Features</button>-->
+                    <button class="btn green pull-right" type="button" onclick="cluster();">Perform Clustering</button>
+                </div>
+            </div>
+            <hr/>
+            <div id="canvas"></div>
+        </div>
+        <!-- END PAGE -->
+    </div>
+</div>
+<!-- END CONTENT -->
+</div>
+<?php require_once "components/footer.php"; ?>
+<?php require_once "components/js.php"; ?>
+<script src="/lib/d3.min.js"></script>
+<script src="js/cluster.js" type="text/javascript"></script>
 </body>
 </html>

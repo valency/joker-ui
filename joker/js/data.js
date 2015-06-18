@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    Metronic.init(); // init metronic core componets
-    Layout.init(); // init layout
-    QuickSidebar.init(); // init quick sidebar
+    Metronic.init();
+    Layout.init();
+    QuickSidebar.init();
     $("button[data-toggle='confirmation']").on('confirmed.bs.confirmation', function () {
         if ($(this).attr("op") == "delete") {
             $.get("data/delete.php?f=" + $(this).attr("filename"), function (r) {

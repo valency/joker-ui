@@ -2,7 +2,7 @@
 <head>
     <?php
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][0] . "</title>";
+    echo "<title>SmartCube | " . $sub_words[1][2] . "</title>";
     require_once "../php/lib.php";
     require_once "../php/common.php";
     require_once "components/css.php";

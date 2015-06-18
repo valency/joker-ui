@@ -4,7 +4,10 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
-    $("select").select2({dropdownAutoWidth: 'true'});
+    $("select").select2({
+        dropdownAutoWidth: 'true',
+        minimumResultsForSearch: Infinity
+    });
     oConf = DT_CONF;
     oConf.columns.push({
         data: "prediction",

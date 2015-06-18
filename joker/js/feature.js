@@ -111,7 +111,10 @@ function load_data(div_id, conf) {
             }
         });
     });
-    $('#customer_table_wrapper').find('.dataTables_length select').select2();
+    $('#customer_table_wrapper').find('.dataTables_length select').select2({
+        dropdownAutoWidth: 'true',
+        minimumResultsForSearch: Infinity
+    });
     return table;
 }
 
