@@ -1,5 +1,5 @@
 var feature_tags = [
-    {id: "cust_code", text: "Customer Code"},
+    {id: "cust_code", text: "Segment"},
     {id: "age", text: "Age"},
     {id: "gender", text: "Gender"},
     {id: "yrs_w_club", text: "Club Years"},

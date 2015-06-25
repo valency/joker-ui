@@ -8,8 +8,18 @@ var DT_CONF = {
     lengthMenu: [10, 50, 100, 500],
     ajax: API_SERVER + "joker/api/cust/get_all/",
     columns: [
-        {data: "id"},
-        {data: "cust_code"},
+        {
+            data: "id",
+            render: function (data, type, full, meta) {
+                return "<span class='label bg-blue'>" + data + "</span>";
+            }
+        },
+        {
+            data: "cust_code",
+            render: function (data, type, full, meta) {
+                return "<span class='label bg-purple'><i class='fa fa-group'></i> " + data + "</span>";
+            }
+        },
         {data: "age"},
         {data: "gender"},
         {data: "yrs_w_club"},
@@ -39,16 +49,7 @@ var DT_CONF = {
     dom: "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     tableTools: {
         sSwfPath: "assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
-        aButtons: [{
-            sExtends: "csv",
-            sButtonText: "CSV"
-        }, {
-            sExtends: "xls",
-            sButtonText: "Excel"
-        }, {
-            sExtends: "copy",
-            sButtonText: "Copy"
-        }]
+        aButtons: []
     },
     fnInitComplete: function (oSettings, json) {
         var table_tools = $("#customer_table_wrapper>.row:first>div").first().first();
@@ -93,23 +94,47 @@ function load_data(div_id, conf) {
             title: "CUST_ID: " + data.id + " <a href='customer.php?id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         });
     });
-    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='cust_code_filter'><span>Customer Code Filter</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='cust_code_filter'><span>Segment Filter</span></a>");
     $("#cust_code_filter").click(function () {
-        bootbox.prompt({
-            title: "Filter by Customer Code:",
-            value: "",
-            callback: function (result) {
-                if (result != null) {
-                    if (result != "") {
-                        $("#cust_code_filter>span").html("<i class='fa fa-group'></i> " + result);
-                        table.ajax.url(API_SERVER + "joker/api/cust/get_all/?cust_code=" + result).load();
+        var cust_code_filter_label = $("#cust_code_filter>span");
+        bootbox.dialog({
+            title: "Filter by Segment:",
+            message: "<input type='hidden' id='select2_segment' class='form-control select2' value=''/>",
+            buttons: {
+                OK: function () {
+                    var selected = $("#select2_segment").select2('data');
+                    if (selected.length > 0) {
+                        var cust_code_set = [];
+                        for (var i = 0; i < selected.length; i++) {
+                            cust_code_set.push(selected[i].id);
+                        }
+                        cust_code_filter_label.html("<i class='fa fa-group'></i> " + cust_code_set.join(" & "));
+                        table.ajax.url(API_SERVER + "joker/api/cust/get_all/?cust_code=" + cust_code_set.join(",")).load();
                     } else {
-                        $("#cust_code_filter>span").html("<span>Customer Code Filter</span>");
+                        cust_code_filter_label.html("<span>Segment Filter</span>");
                         table.ajax.url(API_SERVER + "joker/api/cust/get_all/").load();
                     }
                 }
             }
         });
+        $.get(API_SERVER + "joker/api/cust/dist/?column=cust_code", function (data) {
+            var segment_tags = [];
+            for (var i = 0; i < data.length; i++) {
+                segment_tags.push({
+                    id: data[i].cust_code,
+                    text: "#" + data[i].cust_code + "(" + data[i].total + ")"
+                });
+            }
+            $("#select2_segment").select2({
+                tags: segment_tags
+            });
+            if (!cust_code_filter_label.html().includes("Filter")) $("#select2_segment").select2("val", cust_code_filter_label.html().replace(/<(.*)>/g, "").replace(/ /g, "").split("&amp;"));
+        });
+    });
+    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export'><span>Export</span></a>");
+    $("#cust_export").click(function () {
+        var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "csv=true&" + $.param(table.ajax.params());
+        window.open(url);
     });
     $('#customer_table_wrapper').find('.dataTables_length select').select2({
         dropdownAutoWidth: 'true',
@@ -137,7 +162,7 @@ function generate_cust_data(data) {
     }
     pred = find_prediction_type(data.prediction, "Lapse");
     if (pred != null) {
-        html += "<span class='bold font-green'><i class='fa fa-arrow-down'></i> Lapse Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
+        html += "<span class='bold font-green'><i class='fa fa-arrow-down'></i> Decline Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
         html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
         html += "<li>" + pred.reason_code_1 + "</li>";
         html += "<li>" + pred.reason_code_2 + "</li>";

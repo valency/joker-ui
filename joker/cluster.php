@@ -54,7 +54,7 @@
                         <span class="input-group-addon">Prediction</span>
                         <select id="select2_predictions" class="form-control">
                             <option value="Grow">Grow Propensity</option>
-                            <option value="Lapse">Lapse Propensity</option>
+                            <option value="Lapse">Decline Propensity</option>
                             <option value="Growth">Chance to be Regular</option>
                         </select>
                     </div>

@@ -9,7 +9,7 @@ $(document).ready(function () {
         minimumResultsForSearch: Infinity
     });
     oConf = DT_CONF;
-    oConf.columns.push({
+    oConf.columns.splice(2, 0, {
         data: "prediction",
         name: "prediction.Grow",
         render: function (data, type, full, meta) {
@@ -20,7 +20,7 @@ $(document).ready(function () {
             else return "-";
         }
     });
-    oConf.columns.push({
+    oConf.columns.splice(3, 0, {
         data: "prediction",
         name: "prediction.Lapse",
         render: function (data, type, full, meta) {

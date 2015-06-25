@@ -31,8 +31,8 @@
                 <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
                     <thead>
                     <tr class="heading">
-                        <th>ID</th>
-                        <th>Customer<br/>Code</th>
+                        <th class="font-blue">ID</th>
+                        <th class="font-purple">Segment</th>
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Club<br/>Years</th>

@@ -9,7 +9,7 @@ $(document).ready(function () {
         minimumResultsForSearch: Infinity
     });
     oConf = DT_CONF;
-    oConf.columns.push({
+    oConf.columns.splice(2, 0, {
         data: "prediction",
         name: "prediction.Growth",
         render: function (data, type, full, meta) {
@@ -20,6 +20,6 @@ $(document).ready(function () {
             else return "-";
         }
     });
-    oConf.order = [[17, "desc"]];
+    oConf.order = [[2, "desc"]];
     oTable = load_data("customer_table", oConf);
 });

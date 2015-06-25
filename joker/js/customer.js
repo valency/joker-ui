@@ -1,5 +1,4 @@
 var oTable = null;
-var filter_cust_code = null;
 $(document).ready(function () {
     Metronic.init();
     Layout.init();

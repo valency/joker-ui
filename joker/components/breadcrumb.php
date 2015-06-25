@@ -18,5 +18,13 @@ require_once "menu.php";
         </li>
         <?php if ($menu != "0") echo "<li><a href=" . $sub_urls[$menu][$sub] . ">" . $sub_words[$menu][$sub] . "</a></li>"; ?>
     </ul>
+    <div class="page-toolbar">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-fit-height grey-salt" onclick="window.print();">
+                &nbsp;<i class="fa fa-print"></i>
+            </button>
+        </div>
+    </div>
+
 </div>
 <!-- END BREADCRUMB -->

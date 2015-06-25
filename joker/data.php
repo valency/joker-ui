@@ -49,7 +49,7 @@
                                 echo "<td class='collapsing'>";
                                 echo "<button op='feature' filename='" . $entry . "' class='btn default btn-xs purple' data-toggle='confirmation' data-original-title='Are you sure?'>Features</button>";
                                 echo "<button op='prediction' as='Grow' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Grow)</button>";
-                                echo "<button op='prediction' as='Lapse' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Lapse)</button>";
+                                echo "<button op='prediction' as='Lapse' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Decline)</button>";
                                 echo "<button op='prediction' as='Growth' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Growth)</button>";
                                 echo "";
                                 echo "</td>";

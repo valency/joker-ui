@@ -33,8 +33,10 @@
                         <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
                             <thead>
                             <tr class="heading">
-                                <th>ID</th>
-                                <th>Customer<br/>Code</th>
+                                <th class="font-blue">ID</th>
+                                <th class="font-purple">Segment</th>
+                                <th class="font-red">Grow<br/>Propensity</th>
+                                <th class="font-green">Decline<br/>Propensity</th>
                                 <th>Age</th>
                                 <th>Gender</th>
                                 <th>Club<br/>Years</th>
@@ -50,8 +52,6 @@
                                 <th>Recharge<br/>Amount</th>
                                 <th>Withdraw<br/>Times</th>
                                 <th>Withdraw<br/>Amount</th>
-                                <th class="font-red">Grow<br/>Propensity</th>
-                                <th class="font-green">Lapse<br/>Propensity</th>
                             </tr>
                             </thead>
                             <tbody id="customer_table_body"></tbody>

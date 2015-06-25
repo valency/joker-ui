@@ -50,6 +50,6 @@ function draw_figures() {
     }
     piechart(src, "Turnover of Channels (PYTD)", "Key: Channel<br/>Value: Turnover of the Channel (%)");
     histogram("prediction.Grow", 0, "Dist. of Customer's Grow Score", "X Axis: Customer's Grow Score<br/>Y Axis: Probabilistic Distribution Function (%)");
-    histogram("prediction.Lapse", 0, "Dist. of Customers' Lapse Score", "X Axis: Customers' Lapse Score<br/>Y Axis: Probabilistic Distribution Function (%)");
+    histogram("prediction.Lapse", 0, "Dist. of Customers' Decline Score", "X Axis: Customers' Decline Score<br/>Y Axis: Probabilistic Distribution Function (%)");
 }
 
