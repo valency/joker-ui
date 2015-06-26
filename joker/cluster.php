@@ -62,15 +62,13 @@
             </div>
             <div class="row form-group">
                 <div class="col-md-12">
-                    <!--                    <button class="btn blue" type="button" onclick="select_all_features();">Select All Features</button>-->
-                    <!--                    <button class="btn red" type="button" onclick="remove_all_features();">Clear Features</button>-->
                     <button class="btn green pull-right" type="button" onclick="cluster();">Perform Clustering</button>
                 </div>
             </div>
             <hr/>
             <div id="canvas"></div>
+            <!-- END PAGE -->
         </div>
-        <!-- END PAGE -->
     </div>
 </div>
 <!-- END CONTENT -->

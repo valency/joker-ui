@@ -77,6 +77,25 @@ function find_prediction_type(data, label) {
     return null;
 }
 
+function add_portlet(target, title, body) {
+    var content = '<div class="col-md-4">';
+    content += '<div class="portlet purple box">';
+    content += '<div class="portlet-title">';
+    content += '<div class="caption"><i class="fa fa-cogs"></i>' + title + '</div>';
+    content += '<div class="tools">';
+    content += '<a href="javascript:void(0);" class="collapse"></a>';
+    content += '<a href="javascript:void(0);" class="remove"></a>';
+    content += '</div>';
+    content += '</div>';
+    content += '<div class="portlet-body">' + body + '</div>';
+    content += '</div>';
+    content += '</div>';
+    if ($(target + ">.row").length <= 0 || $(target + ">.row:last>.col-md-4").length >= 3) {
+        $(target).append('<div class="row"></div>');
+    }
+    $(target + ">.row:last").append(content);
+}
+
 function load_data(div_id, conf) {
     $.extend(true, $.fn.DataTable.TableTools.classes, {
         "container": "btn-group tabletools-btn-group pull-right",
@@ -201,8 +220,8 @@ function generate_cust_data(data) {
 
 function piechart(src, table_title, table_desc) {
     var figid = guid();
-    $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
-    var width = 300,
+    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    var width = $(".portlet-body:first").width() - 5,
         height = 300,
         radius = Math.min(width, height) / 2;
     var color = d3.scale.ordinal().range(COLOR_PALETTE);
@@ -238,9 +257,9 @@ function piechart(src, table_title, table_desc) {
 
 function polyline(src, table_title, table_desc, kpi) {
     var figid = guid();
-    $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
-        width = 300 - margin.left - margin.right,
+        width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
@@ -295,9 +314,9 @@ function polyline(src, table_title, table_desc, kpi) {
 
 function barchart(src, table_title, table_desc) {
     var figid = guid();
-    $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
-        width = 300 - margin.left - margin.right,
+        width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
     var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
     var y = d3.scale.linear().range([height, 0]);
@@ -350,9 +369,9 @@ function barchart(src, table_title, table_desc) {
 
 function barset(src, table_title, table_desc, label1, label2) {
     var figid = guid();
-    $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
-        width = 300 - margin.left - margin.right,
+        width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
     var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
     var y = d3.scale.linear().range([height, 0]);
@@ -431,7 +450,7 @@ function barset(src, table_title, table_desc, label1, label2) {
 
 function histogram(column, categorical, table_title, table_desc) {
     var figid = guid();
-    $("#figure_container").append("<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
     $.get(API_SERVER + "joker/api/cust/histogram/?column=" + column + "&categorical=" + categorical, function (data) {
         var src = [];
         for (var i = 0; i < data.hist.length; i++) {
@@ -441,7 +460,7 @@ function histogram(column, categorical, table_title, table_desc) {
             });
         }
         var margin = {top: 20, right: 10, bottom: 70, left: 50},
-            width = 300 - margin.left - margin.right,
+            width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
         var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
         var y = d3.scale.linear().range([height, 0]);

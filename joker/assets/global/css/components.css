@@ -5102,6 +5102,10 @@ Portlets
     font-size: 18px;
     line-height: 18px;
     padding: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 75%;
 }
 
 .portlet > .portlet-title > .caption.bold {

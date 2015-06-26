@@ -34,7 +34,6 @@
                         <th><i class="fa fa-briefcase"></i> File Name</th>
                         <th><i class="fa fa-database"></i> Size</th>
                         <th><i class="fa fa-clock-o"></i> Upload Time</th>
-                        <th><i class='fa fa-edit'></i> Import As</th>
                         <th><i class='fa fa-cubes'></i> Manage</th>
                     </tr>
                     </thead>
@@ -43,17 +42,13 @@
                         while (false !== ($entry = readdir($handle))) {
                             if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
                                 echo "<tr>";
-                                echo "<td class='font-green bold'><i class='fa fa-file-o'></i> " . $entry . "</td>";
-                                echo "<td>" . number_format(filesize('./data/' . $entry)) . " bytes</td>";
+                                echo "<td class='font-green bold'><a href='data/" . $entry . "' target='_blank'><i class='fa fa-file-o'></i> " . $entry . "</a></td>";
+                                echo "<td>" . number_format(filesize('./data/' . $entry)) . "</td>";
                                 echo "<td>" . date("F d Y, H:i:s", filemtime('./data/' . $entry)) . "</td>";
-                                echo "<td class='collapsing'>";
-                                echo "<button op='feature' filename='" . $entry . "' class='btn default btn-xs purple' data-toggle='confirmation' data-original-title='Are you sure?'>Features</button>";
-                                echo "<button op='prediction' as='Grow' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Grow)</button>";
-                                echo "<button op='prediction' as='Lapse' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Decline)</button>";
-                                echo "<button op='prediction' as='Growth' filename='" . $entry . "' class='btn default btn-xs blue' data-toggle='confirmation' data-original-title='Are you sure?'>Predictions (Growth)</button>";
-                                echo "";
+                                echo "<td>";
+                                echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue'><i class='fa fa-edit'></i> Import</button>";
+                                echo "<button onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
-                                echo "<td><button op='delete' filename='" . $entry . "' class='btn default btn-xs black' data-toggle='confirmation' data-original-title='Are you sure?'><i class='fa fa-trash-o'></i> Delete</button></td>";
                                 echo "</tr>";
                             }
                         }
