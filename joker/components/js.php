@@ -28,4 +28,6 @@
 <script src="assets/admin/layout/scripts/quick-sidebar.js"></script>
 <script src="assets/admin/pages/scripts/table-advanced.js"></script>
 <!-- END CORE PLUGINS -->
+<script src="/lib/crypto-js-3.1.2/rollups/md5.js"></script>
+<script src="/lib/js.cookie.js"></script>
 <script src="/js/common.js"></script>

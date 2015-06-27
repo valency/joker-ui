@@ -109,6 +109,7 @@ function load_data(div_id, conf) {
         var data = table.row(this).data();
         var html = generate_cust_data(data);
         bootbox.dialog({
+            size: "large",
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         });
@@ -166,55 +167,78 @@ function generate_cust_data(data) {
     var html = "<div>";
     html += "<span class='label bg-purple'><i class='fa fa-group'></i> " + data.cust_code + "</span> ";
     html += "<span class='label bg-" + interpret_gender_color(data.gender) + "'>" + interpret_gender_name(data.gender) + "</span> ";
-    html += "<span class='label bg-" + (data.is_member ? "green" : "grey") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
+    html += "<span class='label bg-green'>" + data.age + " y/o</span> ";
+    html += "<span class='label bg-" + (data.is_member ? "yellow" : "grey") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
     html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
     html += "</div><hr/><div class='row'>";
-    html += "<div class='col-md-5'>";
+    html += "<div class='col-md-6'>";
+    html += "<span class='font-green'>Club Years: </span><span>" + data.yrs_w_club + "</span><br/>";
+    html += "<span class='font-green'>Major Channel: </span><span>" + data.major_channel + "</span><br/>";
+    html += "<span class='font-green'>Meetings Attended in Last Season: </span><span>" + data.mtg_num + "</span><br/>";
+    html += "<span class='font-green'>Total Investment: </span><span>" + data.inv + "</span><br/>";
+    html += "<span class='font-green'>Total Investment in Beginning of Season: </span><span>" + data.inv_seg_1 + "</span><br/>";
+    html += "<span class='font-green'>Total Investment in Middle of Season: </span><span>" + data.inv_seg_2 + "</span><br/>";
+    html += "<span class='font-green'>Total Investment in Ending of Season: </span><span>" + data.inv_seg_3 + "</span><br/>";
+    html += "</div><div class='col-md-6'>";
+    html += "<span class='font-green'>Dividend: </span><span>" + data.div + "</span><br/>";
+    html += "<span class='font-green'>Recovery Rate: </span><span>" + data.rr + "</span><br/>";
+    html += "<span class='font-green'>Balance: </span><span>" + data.end_bal + "</span><br/>";
+    html += "<span class='font-green'>Recharge Times: </span><span>" + data.recharge_times + "</span><br/>";
+    html += "<span class='font-green'>Recharge Amount: </span><span>" + data.recharge_amount + "</span><br/>";
+    html += "<span class='font-green'>Withdraw Times: </span><span>" + data.withdraw_times + "</span><br/>";
+    html += "<span class='font-green'>Withdraw Amount: </span><span>" + data.withdraw_amount + "</span>";
+    html += "</div>";
+    html += "</div><hr/><div class='row'>";
     var pred = find_prediction_type(data.prediction, "Grow");
     if (pred != null) {
-        html += "<span class='bold font-red'><i class='fa fa-arrow-up'></i> Grow Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
-        html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
-        html += "<li>" + pred.reason_code_1 + "</li>";
-        html += "<li>" + pred.reason_code_2 + "</li>";
-        html += "<li>" + pred.reason_code_3 + "</li>";
-        html += "</ul>";
+        html += "<div class='col-md-6'>";
+        html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
+        html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
+        html += "<p class='bold font-red' style='font-size:35px;margin:0;'>" + (pred.prob * 100.0).toFixed(1) + "</p>";
+        html += "<p style='font-size:10px;'><span class='font-red'>GROW</span><br/>PROPENSITY</p>";
+        html += "</div>";
+        html += "</div>";
+        html += "<div class='thumbnail' style='height:100px;width:200px;display:inline-block;padding:12px;'>";
+        html += "<p><i class='fa fa-arrow-up'></i> " + pred.reason_code_1 + "</p>";
+        html += "<p><i class='fa fa-arrow-up'></i> " + pred.reason_code_2 + "</p>";
+        html += "<p><i class='fa fa-arrow-up'></i> " + pred.reason_code_3 + "</p>";
+        html += "</div>";
+        html += "</div>";
     }
     pred = find_prediction_type(data.prediction, "Lapse");
     if (pred != null) {
-        html += "<span class='bold font-green'><i class='fa fa-arrow-down'></i> Decline Propensity: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
-        html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
-        html += "<li>" + pred.reason_code_1 + "</li>";
-        html += "<li>" + pred.reason_code_2 + "</li>";
-        html += "<li>" + pred.reason_code_3 + "</li>";
-        html += "</ul>";
+        html += "<div class='col-md-6'>";
+        html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
+        html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
+        html += "<p class='bold font-green' style='font-size:35px;margin:0;'>" + (pred.prob * 100.0).toFixed(1) + "</p>";
+        html += "<p style='font-size:10px;'><span class='font-green'>DECLINE</span><br/>PROPENSITY</p>";
+        html += "</div>";
+        html += "</div>";
+        html += "<div class='thumbnail' style='height:100px;width:200px;display:inline-block;padding:12px;'>";
+        html += "<p><i class='fa fa-arrow-down'></i> " + pred.reason_code_1 + "</p>";
+        html += "<p><i class='fa fa-arrow-down'></i> " + pred.reason_code_2 + "</p>";
+        html += "<p><i class='fa fa-arrow-down'></i> " + pred.reason_code_3 + "</p>";
+        html += "</div>";
+        html += "</div>";
     }
     pred = find_prediction_type(data.prediction, "Growth");
     if (pred != null) {
-        html += "<span class='bold font-yellow'><i class='fa fa-rocket'></i> Chance to be Regular: </span>" + (pred.prob * 100.0).toFixed(1) + " %<br/>";
-        html += "<span class='bold'><i class='fa'></i> Reason Code: </span><ul>";
-        html += "<li>" + pred.reason_code_1 + "</li>";
-        html += "<li>" + pred.reason_code_2 + "</li>";
-        html += "<li>" + pred.reason_code_3 + "</li>";
-        html += "</ul>";
+        html += "<div class='col-md-12'>";
+        html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
+        html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
+        html += "<p class='bold font-yellow' style='font-size:35px;margin:0;'>" + (pred.prob * 100.0).toFixed(1) + "</p>";
+        html += "<p style='font-size:10px;'><span class='font-yellow'>CHANCE</span><br/>TO BE REGULAR</p>";
+        html += "</div>";
+        html += "</div>";
+        html += "<div class='thumbnail' style='height:100px;width:200px;display:inline-block;padding:12px;'>";
+        html += "<p><i class='fa fa-rocket'></i> " + pred.reason_code_1 + "</p>";
+        html += "<p><i class='fa fa-rocket'></i> " + pred.reason_code_2 + "</p>";
+        html += "<p><i class='fa fa-rocket'></i> " + pred.reason_code_3 + "</p>";
+        html += "</div>";
+        html += "</div>";
     }
     html += "</div>";
-    html += "<div class='col-md-7'>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Age: </span>" + data.age + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Club Years: </span>" + data.yrs_w_club + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Major Channel: </span>" + data.major_channel + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Meetings Attended in Last Season: </span>" + data.mtg_num + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Total Investment: </span>" + data.inv + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Total Investment in Beginning of Season: </span>" + data.inv_seg_1 + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Total Investment in Middle of Season: </span>" + data.inv_seg_2 + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Total Investment in Ending of Season: </span>" + data.inv_seg_3 + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Dividend: </span>" + data.div + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Recovery Rate: </span>" + data.rr + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Balance: </span>" + data.end_bal + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Recharge Times: </span>" + data.recharge_times + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Recharge Amount: </span>" + data.recharge_amount + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Withdraw Times: </span>" + data.withdraw_times + "<br/>";
-    html += "<span class='bold font-blue-madison'><i class='fa fa-angle-right'></i> Withdraw Amount: </span>" + data.withdraw_amount;
-    html += "</div></div>";
+    html += "</div>";
     return html;
 }
 

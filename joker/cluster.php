@@ -51,11 +51,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <span class="input-group-addon">Prediction</span>
+                        <span class="input-group-addon">Model</span>
                         <select id="select2_predictions" class="form-control">
                             <option value="Grow">Grow Propensity</option>
                             <option value="Lapse">Decline Propensity</option>
-                            <option value="Growth">Chance to be Regular</option>
                         </select>
                     </div>
                 </div>

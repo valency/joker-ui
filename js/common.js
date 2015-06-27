@@ -37,3 +37,11 @@ function get_url_parameter(p) {
     }
 }
 
+function check_login() {
+    if (Cookies.get('login') != "true") window.location.href = "/joker/login.php";
+}
+
+function logout() {
+    Cookies.remove("login");
+    window.location.href = "/joker/login.php";
+}

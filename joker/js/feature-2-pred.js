@@ -4,6 +4,7 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
+    check_login();
     $("select").select2({
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity

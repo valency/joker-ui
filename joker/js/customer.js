@@ -3,6 +3,7 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
+    check_login();
     if (get_url_parameter("id") != undefined) {
         $("#customer_table_wrapper").html("");
         $(".page-title").first().html("CUST_ID: " + get_url_parameter("id"));

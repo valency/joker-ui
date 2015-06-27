@@ -1,4 +1,4 @@
-jQuery(document).ready(function () {
+$(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();

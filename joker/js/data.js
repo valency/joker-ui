@@ -2,6 +2,7 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
+    check_login();
 });
 
 function interpret_data_type_desc(data_type) {

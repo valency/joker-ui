@@ -7,15 +7,15 @@
     </a>
     <ul class="dropdown-menu dropdown-menu-default">
         <li>
-            <a href="extra_profile.html">
+            <a href="javascript:void(0);">
                 <i class="icon-user"></i> Profile </a>
         </li>
         <li>
-            <a href="extra_lock.html">
+            <a href="javascript:void(0);">
                 <i class="icon-lock"></i> Settings </a>
         </li>
         <li>
-            <a href="login.html">
+            <a href="javascript:void(0);" onclick="logout();">
                 <i class="icon-key"></i> Logout </a>
         </li>
     </ul>

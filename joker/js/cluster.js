@@ -12,8 +12,8 @@ var feature_tags = [
     {id: "rr", text: "Recovery Rate"},
     {id: "end_bal", text: "Balance"},
     {id: "recharge_times", text: "Recharge Times"},
-    {id: "recharge_amount", text: "Recharge Amount"},
-    {id: "withdraw_times", text: "Withdraw Times"},
+    //{id: "recharge_amount", text: "Recharge Amount"},
+    //{id: "withdraw_times", text: "Withdraw Times"},
     {id: "withdraw_amount", text: "Withdraw Amount"}
 ];
 
@@ -21,6 +21,7 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
+    check_login();
     $("select").select2({
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity
@@ -44,7 +45,7 @@ function remove_all_features() {
 
 function interpret_feature_tag(tag) {
     for (var i = 0; i < feature_tags.length; i++) {
-        if (feature_tags[i].id == tag)return feature_tags[i].text;
+        if (feature_tags[i].id == tag) return feature_tags[i].text;
     }
     return null;
 }
@@ -76,15 +77,25 @@ function cluster() {
 }
 
 function scatter(data, xLabel, yLabel) {
-    var margin = {top: 10, right: 10, bottom: 30, left: 30},
-        width = 200 - margin.left - margin.right,
-        height = 200 - margin.top - margin.bottom;
-    var xScale = d3.scale.linear().range([0, width]).domain(d3.extent(data, function (d) {
+    var margin = {top: 10, right: 10, bottom: 40, left: 50},
+        width = $(".row").width() / 3 - 30 - margin.left - margin.right,
+        height = $(".row").width() / 3 - 30 - margin.top - margin.bottom;
+    var xScale = d3.scale.ordinal().domain(data.map(function (d) {
         return d[xLabel];
-    }));
-    var yScale = d3.scale.linear().range([height, 0]).domain(d3.extent(data, function (d) {
+    })).rangePoints([0, width]);
+    if ($.isNumeric(data[0][xLabel])) {
+        xScale = d3.scale.linear().range([0, width]).domain(d3.extent(data, function (d) {
+            return d[xLabel];
+        }));
+    }
+    var yScale = d3.scale.ordinal().domain(data.map(function (d) {
         return d[yLabel];
-    }));
+    })).rangePoints([height, 0]);
+    if ($.isNumeric(data[0][yLabel])) {
+        yScale = d3.scale.linear().range([height, 0]).domain(d3.extent(data, function (d) {
+            return d[yLabel];
+        }));
+    }
     var xMap = function (d) {
             return xScale(d[xLabel]);
         },
@@ -93,7 +104,6 @@ function scatter(data, xLabel, yLabel) {
             return yScale(d[yLabel]);
         },
         yAxis = d3.svg.axis().scale(yScale).orient("left");
-    var color = d3.scale.category10();
     var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);

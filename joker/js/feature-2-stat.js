@@ -2,6 +2,7 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
+    check_login();
     draw_figures();
 });
 
