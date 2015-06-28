@@ -85,6 +85,7 @@ function show_detail(id) {
     $.get(API_SERVER + "joker/api/cust/get/?id=" + id, function (data) {
         var html = generate_cust_data(data);
         bootbox.dialog({
+            size: "large",
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         });
