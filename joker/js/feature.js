@@ -195,7 +195,7 @@ function generate_cust_data(data) {
         html += "<div class='col-md-6'>";
         html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
         html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
-        html += "<p class='bold font-red' style='font-size:35px;margin:0;'>" + (pred.prob * 100.0).toFixed(1) + "</p>";
+        html += "<p class='bold font-red' style='font-size:35px;margin:0;'>" + pred.prob.toFixed(1) + "</p>";
         html += "<p style='font-size:10px;'><span class='font-red'>GROW</span><br/>PROPENSITY</p>";
         html += "</div>";
         html += "</div>";
@@ -211,7 +211,7 @@ function generate_cust_data(data) {
         html += "<div class='col-md-6'>";
         html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
         html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
-        html += "<p class='bold font-green' style='font-size:35px;margin:0;'>" + (pred.prob * 100.0).toFixed(1) + "</p>";
+        html += "<p class='bold font-green' style='font-size:35px;margin:0;'>" + pred.prob.toFixed(1) + "</p>";
         html += "<p style='font-size:10px;'><span class='font-green'>DECLINE</span><br/>PROPENSITY</p>";
         html += "</div>";
         html += "</div>";

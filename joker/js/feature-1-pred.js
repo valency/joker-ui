@@ -17,7 +17,7 @@ $(document).ready(function () {
             var prefix = "<span class='label bg-red'>";
             var postfix = " %</span>";
             var r = find_prediction_type(data, "Grow");
-            if (r != null) return prefix + (r.prob * 100.0).toFixed(1) + postfix;
+            if (r != null) return prefix + r.prob.toFixed(1) + postfix;
             else return "-";
         }
     });
@@ -28,7 +28,7 @@ $(document).ready(function () {
             var prefix = "<span class='label bg-green'>";
             var postfix = " %</span>";
             var r = find_prediction_type(data, "Lapse");
-            if (r != null) return prefix + (r.prob * 100.0).toFixed(1) + postfix;
+            if (r != null) return prefix + r.prob.toFixed(1) + postfix;
             else return "-";
         }
     });
