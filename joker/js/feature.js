@@ -84,6 +84,7 @@ function add_portlet(target, title, body) {
     content += '<div class="caption"><i class="fa fa-cogs"></i>' + title + '</div>';
     content += '<div class="tools">';
     content += '<a href="javascript:void(0);" class="collapse"></a>';
+    content += '<a href="javascript:void(0);" class="fullscreen"></a>';
     content += '<a href="javascript:void(0);" class="remove"></a>';
     content += '</div>';
     content += '</div>';
@@ -244,7 +245,12 @@ function generate_cust_data(data) {
 
 function piechart(src, table_title, table_desc) {
     var figid = guid();
-    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    var container = "<div style='display:inline-block;text-align:center;'>";
+    container += "<span class='bold'>" + table_title + "</span><br/>";
+    container += "<span>" + table_desc + "</span><br/>";
+    container += "<div id='figure_container_" + figid + "'></div>";
+    container += "</div>";
+    add_portlet("#figure_container", table_title, container);
     var width = $(".portlet-body:first").width() - 5,
         height = 300,
         radius = Math.min(width, height) / 2;
@@ -279,11 +285,20 @@ function piechart(src, table_title, table_desc) {
         });
 }
 
-function polyline(src, table_title, table_desc, kpi) {
+function polyline(src, table_title, table_desc, width, kpi) {
     var figid = guid();
-    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    var container = "<div style='display:inline-block;text-align:center;'>";
+    container += "<span class='bold'>" + table_title + "</span><br/>";
+    container += "<span>" + table_desc + "</span><br/>";
+    container += "<div id='figure_container_" + figid + "'></div>";
+    container += "</div>";
+    add_portlet("#figure_container", table_title, container);
+    render_polyline(figid, src, width == null ? $(".portlet-body:first").width() : width, kpi);
+}
+
+function render_polyline(figid, src, container_width, kpi) {
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
-        width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
+        width = container_width - 5 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
@@ -338,7 +353,12 @@ function polyline(src, table_title, table_desc, kpi) {
 
 function barchart(src, table_title, table_desc) {
     var figid = guid();
-    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    var container = "<div style='display:inline-block;text-align:center;'>";
+    container += "<span class='bold'>" + table_title + "</span><br/>";
+    container += "<span>" + table_desc + "</span><br/>";
+    container += "<div id='figure_container_" + figid + "'></div>";
+    container += "</div>";
+    add_portlet("#figure_container", table_title, container);
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
         width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
@@ -393,7 +413,12 @@ function barchart(src, table_title, table_desc) {
 
 function barset(src, table_title, table_desc, label1, label2) {
     var figid = guid();
-    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    var container = "<div style='display:inline-block;text-align:center;'>";
+    container += "<span class='bold'>" + table_title + "</span><br/>";
+    container += "<span>" + table_desc + "</span><br/>";
+    container += "<div id='figure_container_" + figid + "'></div>";
+    container += "</div>";
+    add_portlet("#figure_container", table_title, container);
     var margin = {top: 20, right: 10, bottom: 70, left: 50},
         width = $(".portlet-body:first").width() - 5 - margin.left - margin.right,
         height = 300 - margin.top - margin.bottom;
@@ -474,7 +499,12 @@ function barset(src, table_title, table_desc, label1, label2) {
 
 function histogram(column, categorical, table_title, table_desc) {
     var figid = guid();
-    add_portlet("#figure_container", table_title, "<div style='display:inline-block;text-align:center;'><span class='bold'>" + table_title + "</span><br/><span>" + table_desc + "</span><div id='figure_container_" + figid + "'></div></div>");
+    var container = "<div style='display:inline-block;text-align:center;'>";
+    container += "<span class='bold'>" + table_title + "</span><br/>";
+    container += "<span>" + table_desc + "</span><br/>";
+    container += "<div id='figure_container_" + figid + "'></div>";
+    container += "</div>";
+    add_portlet("#figure_container", table_title, container);
     $.get(API_SERVER + "joker/api/cust/histogram/?column=" + column + "&categorical=" + categorical, function (data) {
         var src = [];
         for (var i = 0; i < data.hist.length; i++) {

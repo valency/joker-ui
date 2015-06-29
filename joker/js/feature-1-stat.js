@@ -15,7 +15,7 @@ function draw_figures() {
             y: GROWTH_RATE_TURNOVER[i]
         });
     }
-    polyline(src, "Growth Rate of Turnover (PYTD)", "X Axis: Meeting ID<br/>Y Axis: Growth Rate (%)", 0.05);
+    polyline(src, "Growth Rate of Turnover (PYTD)", "X Axis: Meeting ID<br/>Y Axis: Growth Rate (%)", null, 0.05);
     src = [];
     for (i = 0; i < TURNOVER_COUNT.length; i++) {
         src.push({

@@ -16,7 +16,7 @@ $(document).ready(function () {
         $("#canvas_label").append("<span class='label bg-blue'><i class='fa fa-file-text-o'></i> " + source + "</span> ");
         $("#canvas_label").append("<span class='label bg-green'><i class='fa fa-briefcase'></i> " + model + " Model</span> ");
         $("#canvas_label").append("<span class='label bg-purple'><i class='fa fa-users'></i> " + (segment == "" ? "All" : segment.replace(/,/g, ' & ')) + "</span> ");
-        $.get(API_SERVER + "joker/api/csv_to_json/?src=" + source, function (data_csv) {
+        $.get(API_SERVER + "joker/api/csv_to_json/?src=validation/" + source, function (data_csv) {
             $.get(API_SERVER + "joker/api/cust/get_all/?cust_code=" + segment + "&draw=0&columns[0][data]=prediction&columns[0][name]=prediction." + model + "&order[0][column]=0&order[0][dir]=desc&start=0&length=" + data_csv.content.length, function (data_ours) {
                 var hit_msg = "<span class='badge badge-danger pull-right'>Hit!</span>";
                 var truth = [];
@@ -71,14 +71,22 @@ $(document).ready(function () {
                 tags: segment_tags
             });
         });
+        $('#file_upload').fileupload({
+            dataType: 'json',
+            acceptFileTypes: '/(\.|\/)(csv|txt)$/i',
+            done: function (e, data) {
+                window.location.reload();
+            }
+        });
     }
 });
 
 function validate() {
     var source = $("#select2_source").val();
     var model = $("#select2_model").val();
+    if (get_url_parameter("mode") == 2) model = "Growth";
     var segment = $("#select2_segment").val();
-    window.location.href = "validation.php?src=" + source + "&model=" + model + "&seg=" + segment;
+    window.location.href = "validation.php?mode=" + get_url_parameter("mode") + "&src=" + source + "&model=" + model + "&seg=" + segment;
 }
 
 function show_detail(id) {

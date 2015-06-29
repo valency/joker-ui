@@ -2,7 +2,7 @@
 <head>
     <?php
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][3] . "</title>";
+    echo "<title>SmartCube | " . $sub_words[1][4] . "</title>";
     require_once "../php/lib.php";
     require_once "../php/common.php";
     require_once "components/css.php";
@@ -22,11 +22,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=3'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=4'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=3'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=4'); ?>
             <!-- BEGIN PAGE -->
             <div id="figure_container"></div>
             <!-- END PAGE -->
