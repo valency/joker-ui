@@ -1,3 +1,23 @@
+var COL_TRANS = {
+    id: "ID",
+    cust_code: "Segment",
+    age: "Age",
+    gender: "Gender",
+    yrs_w_club: "Club Years",
+    is_member: "Member",
+    is_hrs_owner: "Horse Owner",
+    major_channel: "Major Channel",
+    mtg_num: "Meetings Attended",
+    inv: "Investment",
+    div: "Dividend",
+    rr: "Recovery Rate",
+    end_bal: "Balance",
+    recharge_times: "Recharge Times",
+    recharge_amount: "Recharge Amount",
+    withdraw_times: "Withdraw Times",
+    withdraw_amount: "Withdraw Amount"
+};
+
 var DT_CONF = {
     stateSave: true,
     searching: false,
@@ -10,43 +30,47 @@ var DT_CONF = {
     columns: [
         {
             data: "id",
+            name: "id",
             render: function (data, type, full, meta) {
                 return "<span class='label bg-blue'>" + data + "</span>";
             }
         },
         {
             data: "cust_code",
+            name: "cust_code",
             render: function (data, type, full, meta) {
                 return "<span class='label bg-purple'><i class='fa fa-group'></i> " + data + "</span>";
             }
         },
-        {data: "age"},
-        {data: "gender"},
-        {data: "yrs_w_club"},
+        {data: "age", name: "age"},
+        {data: "gender", name: "gender"},
+        {data: "yrs_w_club", name: "yrs_w_club"},
         {
             data: "is_member",
+            name: "is_member",
             render: function (data, type, full, meta) {
                 return data ? "Yes" : "No";
             }
         },
         {
             data: "is_hrs_owner",
+            name: "is_hrs_owner",
             render: function (data, type, full, meta) {
                 return data ? "Yes" : "No";
             }
         },
-        {data: "major_channel"},
-        {data: "mtg_num"},
-        {data: "inv"},
-        {data: "div"},
-        {data: "rr"},
-        {data: "end_bal"},
-        {data: "recharge_times"},
-        {data: "recharge_amount"},
-        {data: "withdraw_times"},
-        {data: "withdraw_amount"}
+        {data: "major_channel", name: "major_channel"},
+        {data: "mtg_num", name: "mtg_num"},
+        {data: "inv", name: "inv"},
+        {data: "div", name: "div"},
+        {data: "rr", name: "rr"},
+        {data: "end_bal", name: "end_bal"},
+        {data: "recharge_times", name: "recharge_times"},
+        {data: "recharge_amount", name: "recharge_amount"},
+        {data: "withdraw_times", name: "withdraw_times"},
+        {data: "withdraw_amount", name: "withdraw_amount"}
     ],
-    dom: "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+    dom: "R<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     tableTools: {
         sSwfPath: "assets/global/plugins/datatables/extensions/TableTools/swf/copy_csv_xls_pdf.swf",
         aButtons: []
@@ -97,24 +121,7 @@ function add_portlet(target, title, body) {
     $(target + ">.row:last").append(content);
 }
 
-function load_data(div_id, conf) {
-    $.extend(true, $.fn.DataTable.TableTools.classes, {
-        "container": "btn-group tabletools-btn-group pull-right",
-        "buttons": {
-            "normal": "btn btn-sm default",
-            "disabled": "btn btn-sm default disabled"
-        }
-    });
-    var table = $('#' + div_id).DataTable(conf);
-    $("#" + div_id + " tbody").on('click', 'tr', function () {
-        var data = table.row(this).data();
-        var html = generate_cust_data(data);
-        bootbox.dialog({
-            size: "large",
-            message: html,
-            title: "CUST_ID: " + data.id + " <a href='customer.php?id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
-        });
-    });
+function add_segment_filter(table) {
     $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='cust_code_filter'><span>Segment Filter</span></a>");
     $("#cust_code_filter").click(function () {
         var cust_code_filter_label = $("#cust_code_filter>span");
@@ -152,11 +159,66 @@ function load_data(div_id, conf) {
             if (!cust_code_filter_label.html().includes("Filter")) $("#select2_segment").select2("val", cust_code_filter_label.html().replace(/<(.*)>/g, "").replace(/ /g, "").split("&amp;"));
         });
     });
+}
+
+function add_export_btn(table) {
     $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export'><span>Export</span></a>");
     $("#cust_export").click(function () {
         var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "csv=true&" + $.param(table.ajax.params());
         window.open(url);
     });
+}
+
+function add_column_filter(table, conf) {
+    $(".tabletools-btn-group").append("<a class='btn btn-sm blue' id='column_filter'><span>Column Filter</span></a>");
+    $("#column_filter").click(function () {
+        var msg = "";
+        var flag = 0;
+        for (var key in COL_TRANS) {
+            var column = table.column(key + ":name");
+            flag += 1;
+            if (flag % 3 == 1) msg += "<div class='row'>";
+            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + COL_TRANS[key] + "</label></div>";
+            if (flag % 3 == 0) msg += "</div>";
+        }
+        bootbox.dialog({
+            title: "Filter by Column:",
+            message: msg,
+            buttons: {
+                OK: function () {
+                    $(".column_filter_checkbox").each(function () {
+                        var column = table.column($(this).attr("column") + ":name");
+                        if (this.checked) column.visible(true);
+                        else column.visible(false);
+                    })
+                }
+            }
+        });
+        $(".make-switch").bootstrapSwitch();
+    });
+}
+
+function load_data(div_id, conf) {
+    $.extend(true, $.fn.DataTable.TableTools.classes, {
+        "container": "btn-group tabletools-btn-group pull-right",
+        "buttons": {
+            "normal": "btn btn-sm default",
+            "disabled": "btn btn-sm default disabled"
+        }
+    });
+    var table = $('#' + div_id).DataTable(conf);
+    $("#" + div_id + " tbody").on('click', 'tr', function () {
+        var data = table.row(this).data();
+        var html = generate_cust_data(data);
+        bootbox.dialog({
+            size: "large",
+            message: html,
+            title: "CUST_ID: " + data.id + " <a href='customer.php?id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
+        });
+    });
+    add_segment_filter(table);
+    add_column_filter(table, conf);
+    add_export_btn(table);
     $('#customer_table_wrapper').find('.dataTables_length select').select2({
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity

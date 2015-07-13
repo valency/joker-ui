@@ -1,5 +1,5 @@
 <?php
-$API_SERVER = "http://120.25.209.91:9001/";
+$API_SERVER = "https://120.25.209.91:8443/";
 $DOMAIN = $_SERVER['HTTP_HOST'];
 $PROTOCOL = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
 

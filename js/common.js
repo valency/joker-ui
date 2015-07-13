@@ -1,4 +1,4 @@
-var API_SERVER = "http://120.25.209.91:9001/";
+var API_SERVER = "https://120.25.209.91:8443/";
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
 
 $.fn.center = function () {
@@ -38,7 +38,7 @@ function get_url_parameter(p) {
 }
 
 function check_login() {
-    if (Cookies.get('login') != "true") window.location.href = "/joker/login.php";
+    // if (Cookies.get('login') != "true") window.location.href = "/joker/login.php";
 }
 
 function logout() {

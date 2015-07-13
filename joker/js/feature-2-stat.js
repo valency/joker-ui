@@ -15,7 +15,7 @@ function draw_figures() {
             y: ACCUMULATIVE_AVERAGE_ACTIVE_RATE[i]
         });
     }
-    polyline(src, "Avg. Active Rate (PYTD)", "X Axis: Meeting ID<br/>Y Axis: Avg. Active Rate (%)", 0.34);
+    polyline(src, "Avg. Active Rate (PYTD)", "X Axis: Meeting ID<br/>Y Axis: Avg. Active Rate (%)", null, 0.34);
     src = [];
     for (i = 0; i < TURNOVER_COUNT.length; i++) {
         src.push({
