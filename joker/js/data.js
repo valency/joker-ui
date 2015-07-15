@@ -6,12 +6,9 @@ $(document).ready(function () {
 });
 
 function interpret_data_type_desc(data_type) {
-    var data_type_prediction = ["CUST_ID", "LABEL_PROB", "REASON_CODE_1", "REASON_CODE_2", "REASON_CODE_3"];
     var data_type_desc = {
-        feature: ["CUST_ID", "CUST_CODE", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "INV_SEG1", "INV_SEG2", "INV_SEG3", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "WITHDRAW_AMOUNT"],
-        prediction_Grow: data_type_prediction,
-        prediction_Lapse: data_type_prediction,
-        prediction_Growth: data_type_prediction
+        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "REASON_CODE_1", "REASON_CODE_2", "REASON_CODE_3"],
+        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "REGULAR_PROPENSITY", "REASON_CODE_1", "REASON_CODE_2", "REASON_CODE_3"]
     };
     var html = "";
     for (var i = 0; i < data_type_desc[data_type].length; i++) {
@@ -24,10 +21,8 @@ function datafile_import(file) {
     var msg = "<p>The following file will be imported:</p><p class='font-red'>" + file + "</p>";
     msg += "<p>Please specify the type of the data:</p>";
     msg += "<p><select id='select2_data_type' class='form-control select2'>";
-    msg += "<option value='feature'>Features</option>";
-    msg += "<option value='prediction_Grow'>Model 1 Predictions (Grow)</option>";
-    msg += "<option value='prediction_Lapse'>Model 1 Predictions (Decline)</option>";
-    msg += "<option value='prediction_Growth'>Model 2 Predictions</option>";
+    msg += "<option value='model_1'>Model 1</option>";
+    msg += "<option value='model_2'>Model 2</option>";
     msg += "</select></p>";
     msg += "<div id='data_type_desc'></div>";
     bootbox.dialog({
@@ -39,27 +34,15 @@ function datafile_import(file) {
                     message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
                     closeButton: false
                 });
-                if ($("#select2_data_type").val() == "feature") {
-                    $.get(API_SERVER + "joker/api/cust/add_cust_from_csv/?src=" + file, function (r) {
-                        r = eval(r);
-                        var msg = "<p>" + r.processed + " entries have been processed.</p><p>" + r.success + " entries have been imported.</p><p>" + r.fail + " entries are failed to import.</p>";
-                        bootbox.hideAll();
-                        bootbox.alert(msg);
-                    }).fail(function () {
-                        bootbox.hideAll();
-                        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
-                    });
-                } else {
-                    $.get(API_SERVER + "joker/api/cust/assign_pred_from_csv/?src=" + file + "&label=" + $("#select2_data_type").val().split("_")[1], function (r) {
-                        r = eval(r);
-                        var msg = "<p>" + r.processed + " entries have been processed.</p><p>" + r.success + " entries have been imported.</p><p>" + r.fail + " entries are failed to import.</p>";
-                        bootbox.hideAll();
-                        bootbox.alert(msg);
-                    }).fail(function () {
-                        bootbox.hideAll();
-                        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
-                    });
-                }
+                $.get(API_SERVER + "joker/api/cust/add_cust_from_csv/?src=" + file + "&model=" + $("#select2_data_type").val().replace("model_", ""), function (r) {
+                    r = eval(r);
+                    var msg = "<p>" + r.processed + " entries have been processed.</p><p>" + r.success + " entries have been imported.</p><p>" + r.fail + " entries are failed to import.</p>";
+                    bootbox.hideAll();
+                    bootbox.alert(msg);
+                }).fail(function () {
+                    bootbox.hideAll();
+                    bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
+                });
             }
         }
     });

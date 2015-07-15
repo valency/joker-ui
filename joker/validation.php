@@ -73,8 +73,8 @@
                             <div class="input-group">
                                 <span class="input-group-addon">Model</span>
                                 <select id="select2_model" class="form-control">
-                                    <option value="Grow">Grow</option>
-                                    <option value="Lapse">Decline</option>
+                                    <option value="grow_prop">Grow</option>
+                                    <option value="decline_prop">Decline</option>
                                 </select>
                             </div>
                         </div>

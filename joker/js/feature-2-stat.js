@@ -41,7 +41,7 @@ function draw_figures() {
         });
     }
     barchart(src, "Dist. of Avg. Active Rate of New Custs.", "X Axis: Avg. Active Rate of New Custs. (%)<br/>Y Axis: Probabilistic Distribution Function (%)");
-    histogram("age", 0, "Dist. of New Custs.' Age", "X Axis: New Custs.' Age<br/>Y Axis: Probabilistic Distribution Function (%)");
+    histogram("age", 0, "Dist. of New Custs.' Age", "X Axis: New Custs.' Age<br/>Y Axis: Probabilistic Distribution Function (%)", 2);
     src = [];
     for (i = 0; i < BET_TYPE.length; i++) {
         src.push({
@@ -58,5 +58,5 @@ function draw_figures() {
         });
     }
     piechart(src, "New Custs.' Turnover of Channels (PYTD)", "Key: Channel<br/>Value: New Custs.' Turnover of the Channel (%)");
-    histogram("prediction.Growth", 0, "Dist. of New Custs.' Regular Score", "X Axis: New Custs.' Regular Score<br/>Y Axis: Probabilistic Distribution Function (%)");
+    histogram("regular_prop", 0, "Dist. of New Custs.' Regular Score", "X Axis: New Custs.' Regular Score<br/>Y Axis: Probabilistic Distribution Function (%)", 2);
 }

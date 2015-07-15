@@ -27,31 +27,26 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
             <!-- BEGIN PAGE -->
-            <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
-                <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
-                    <thead>
-                    <tr class="heading">
-                        <th class="font-blue">ID</th>
-                        <th class="font-purple">Segment</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Club<br/>Years</th>
-                        <th>Member</th>
-                        <th>Horse<br/>Owner</th>
-                        <th>Major<br/>Channel</th>
-                        <th>Meetings<br/>Attended</th>
-                        <th>Investment</th>
-                        <th>Dividend</th>
-                        <th>Recovery<br/>Rate</th>
-                        <th>Balance</th>
-                        <th>Recharge<br/>Times</th>
-                        <th>Recharge<br/>Amount</th>
-                        <th>Withdraw<br/>Times</th>
-                        <th>Withdraw<br/>Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody id="customer_table_body"></tbody>
-                </table>
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">Model</span>
+                        <select id="select2_model" class="form-control">
+                            <option value="1">Model 1</option>
+                            <option value="2">Model 2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <input id="search_cust_id" class="form-control" value="" placeholder="CUST_ID"/>
+                        <span class="input-group-addon btn red" onclick="cust_search();">ID Search</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row" id="customer_table_wrapper">
+                <div class="col-md-12"></div>
             </div>
             <!-- END PAGE -->
         </div>

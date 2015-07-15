@@ -14,10 +14,10 @@ $(document).ready(function () {
         $("#form").remove();
         $("#canvas").show();
         $("#canvas_label").append("<span class='label bg-blue'><i class='fa fa-file-text-o'></i> " + source + "</span> ");
-        $("#canvas_label").append("<span class='label bg-green'><i class='fa fa-briefcase'></i> " + model + " Model</span> ");
+        $("#canvas_label").append("<span class='label bg-green'><i class='fa fa-briefcase'></i> " + model.replace("_prop", "").toTitleCase() + " Model</span> ");
         $("#canvas_label").append("<span class='label bg-purple'><i class='fa fa-users'></i> " + (segment == "" ? "All" : segment.replace(/,/g, ' & ')) + "</span> ");
         $.get(API_SERVER + "joker/api/csv_to_json/?src=validation/" + source, function (data_csv) {
-            $.get(API_SERVER + "joker/api/cust/get_all/?cust_code=" + segment + "&draw=0&columns[0][data]=prediction&columns[0][name]=prediction." + model + "&order[0][column]=0&order[0][dir]=desc&start=0&length=" + data_csv.content.length, function (data_ours) {
+            $.get(API_SERVER + "joker/api/cust/get_all/?model=" + get_url_parameter("mode") + "&segment=" + segment + "&draw=0&columns[0][data]=" + model + "&columns[0][name]=" + model + "&order[0][column]=0&order[0][dir]=desc&start=0&length=" + data_csv.content.length, function (data_ours) {
                 var hit_msg = "<span class='badge badge-danger pull-right'>Hit!</span>";
                 var truth = [];
                 for (i = 0; i < data_csv.content.length; i++) {
@@ -59,12 +59,12 @@ $(document).ready(function () {
     } else {
         $("#canvas").remove();
         $("#form").show();
-        $.get(API_SERVER + "joker/api/cust/dist/?column=cust_code", function (data) {
+        $.get(API_SERVER + "joker/api/cust/dist/?model=" + get_url_parameter("mode") + "&column=segment", function (data) {
             var segment_tags = [];
             for (var i = 0; i < data.length; i++) {
                 segment_tags.push({
-                    id: data[i].cust_code,
-                    text: "#" + data[i].cust_code + "(" + data[i].total + ")"
+                    id: data[i].segment,
+                    text: "#" + data[i].segment + "(" + data[i].total + ")"
                 });
             }
             $("#select2_segment").select2({
@@ -84,7 +84,7 @@ $(document).ready(function () {
 function validate() {
     var source = $("#select2_source").val();
     var model = $("#select2_model").val();
-    if (get_url_parameter("mode") == 2) model = "Growth";
+    if (get_url_parameter("mode") == 2) model = "regular_prop";
     var segment = $("#select2_segment").val();
     window.location.href = "validation.php?mode=" + get_url_parameter("mode") + "&src=" + source + "&model=" + model + "&seg=" + segment;
 }

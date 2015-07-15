@@ -8,8 +8,8 @@ $.fn.center = function () {
     return this;
 };
 
-String.prototype.toTitleCase = function (str) {
-    return str.replace(/\w\S*/g, function (txt) {
+String.prototype.toTitleCase = function () {
+    return this.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 };

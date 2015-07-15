@@ -10,17 +10,16 @@ $(document).ready(function () {
         minimumResultsForSearch: Infinity
     });
     oConf = DT_CONF;
+    oConf.ajax = API_SERVER + "joker/api/cust/get_all/?model=2";
     oConf.columns.splice(2, 0, {
-        data: "prediction",
-        name: "prediction.Growth",
+        data: "regular_prop",
+        name: "regular_prop",
         render: function (data, type, full, meta) {
             var prefix = "<span class='label bg-red'>";
             var postfix = " %</span>";
-            var r = find_prediction_type(data, "Growth");
-            if (r != null) return prefix + (r.prob * 100.0).toFixed(1) + postfix;
-            else return "-";
+            return prefix + data.toFixed(1) + postfix;
         }
     });
     oConf.order = [[2, "desc"]];
-    oTable = load_data("customer_table", oConf);
+    oTable = load_data("customer_table", oConf, 2);
 });
