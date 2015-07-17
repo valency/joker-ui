@@ -25,10 +25,15 @@ function cust_search() {
     var model = $("#select2_model").val();
     var cust_id = $("#search_cust_id").val();
     $("#customer_table_wrapper>div").html("");
-    //$(".page-title").first().html("CUST_ID: " + get_url_parameter("id"));
     $.get(API_SERVER + "joker/api/cust/get/?model=" + model + "&id=" + cust_id, function (data) {
-        var html = generate_cust_data(data);
+        var html = generate_cust_data(data, model);
         $("#customer_table_wrapper>div").html(html);
+        if (model == 1) {
+            update_cust_rank(data.id, model, "grow_prop");
+            update_cust_rank(data.id, model, "decline_prop");
+        } else if (model == 2) {
+            update_cust_rank(data.id, model, "regular_prop");
+        }
     }).fail(function () {
         $("#customer_table_wrapper>div").html("<span class='font-red'>Not Found</span>");
     });

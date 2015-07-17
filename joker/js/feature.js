@@ -105,11 +105,17 @@ function load_data(div_id, conf, model) {
     var table = $('#' + div_id).DataTable(conf);
     $("#" + div_id + " tbody").on('click', 'tr', function () {
         var data = table.row(this).data();
-        var html = generate_cust_data(data);
+        var html = generate_cust_data(data, model);
         bootbox.dialog({
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         });
+        if (model == 1) {
+            update_cust_rank(data.id, model, "grow_prop");
+            update_cust_rank(data.id, model, "decline_prop");
+        } else if (model == 2) {
+            update_cust_rank(data.id, model, "regular_prop");
+        }
     });
     add_segment_filter(table, model);
     add_column_filter(table, model);
@@ -162,9 +168,14 @@ function add_segment_filter(table, model) {
 }
 
 function add_export_btn(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export'><span>Export</span></a>");
-    $("#cust_export").click(function () {
+    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_csv'><span>Export CSV</span></a>");
+    $("#cust_export_csv").click(function () {
         var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "csv=true&" + $.param(table.ajax.params());
+        window.open(url);
+    });
+    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_xlsx'><span>Export Excel</span></a>");
+    $("#cust_export_xlsx").click(function () {
+        var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "xlsx=true&" + $.param(table.ajax.params());
         window.open(url);
     });
 }
@@ -218,7 +229,33 @@ function add_portlet(target, title, body) {
     $(target + ">.row:last").append(content);
 }
 
-function generate_cust_data(data) {
+function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
+    html = "<div class='col-md-6'>";
+    html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
+    html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
+    html += "<p class='bold font-" + color + "' style='font-size:35px;margin:0;'>" + data[prop_attr_name].toFixed(1) + "</p>";
+    html += "<p style='font-size:10px;'><span class='font-" + color + "'>" + prop_name[0] + "</span><br/>" + prop_name[1] + "</p>";
+    html += "</div>";
+    html += "</div>";
+    html += "<div class='thumbnail' style='height:100px;width:165px;display:inline-block;padding:12px;'>";
+    html += "<p class='bold font-" + color + "' style='margin-bottom:5px;' id='cust_rank_" + prop_attr_name + "'>Loading...</p>";
+    html += "<ul style='padding-left:18px;'>";
+    html += "<li>" + data.reason_code_1 + "</li>";
+    html += "<li>" + data.reason_code_2 + "</li>";
+    html += "<li>" + data.reason_code_3 + "</li>";
+    html += "</ul>";
+    html += "</div>";
+    html += "</div>";
+    return html;
+}
+
+function update_cust_rank(id, model, column) {
+    $.get(API_SERVER + "joker/api/cust/rank/?id=" + id + "&model=" + model + "&column=" + column, function (data) {
+        $("#cust_rank_" + column).html("<i class='fa fa-star'></i> " + (data.rank + 1) + " (" + (100 * (data.rank + 1) / data.total).toFixed(0) + " %)");
+    });
+}
+
+function generate_cust_data(data, model) {
     var html = "<div>";
     html += "<span class='label bg-purple'><i class='fa fa-group'></i> " + data.segment + "</span> ";
     html += "<span class='label bg-" + interpret_gender_color(data.gender) + "'>" + interpret_gender_name(data.gender) + "</span> ";
@@ -241,51 +278,9 @@ function generate_cust_data(data) {
     html += "<span class='font-green'>Withdraw Amount: </span><span>" + data.withdraw_amount + "</span>";
     html += "</div>";
     html += "</div><hr/><div class='row'>";
-    if (data.grow_prop != null) {
-        html += "<div class='col-md-6'>";
-        html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
-        html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
-        html += "<p class='bold font-red' style='font-size:35px;margin:0;'>" + data.grow_prop.toFixed(1) + "</p>";
-        html += "<p style='font-size:10px;'><span class='font-red'>GROW</span><br/>PROPENSITY</p>";
-        html += "</div>";
-        html += "</div>";
-        html += "<div class='thumbnail' style='height:100px;width:165px;display:inline-block;padding:12px;'>";
-        html += "<p><i class='fa fa-arrow-up'></i> " + data.reason_code_1 + "</p>";
-        html += "<p><i class='fa fa-arrow-up'></i> " + data.reason_code_2 + "</p>";
-        html += "<p><i class='fa fa-arrow-up'></i> " + data.reason_code_3 + "</p>";
-        html += "</div>";
-        html += "</div>";
-    }
-    if (data.decline_prop != null) {
-        html += "<div class='col-md-6'>";
-        html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
-        html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
-        html += "<p class='bold font-green' style='font-size:35px;margin:0;'>" + data.decline_prop.toFixed(1) + "</p>";
-        html += "<p style='font-size:10px;'><span class='font-green'>DECLINE</span><br/>PROPENSITY</p>";
-        html += "</div>";
-        html += "</div>";
-        html += "<div class='thumbnail' style='height:100px;width:165px;display:inline-block;padding:12px;'>";
-        html += "<p><i class='fa fa-arrow-down'></i> " + data.reason_code_1 + "</p>";
-        html += "<p><i class='fa fa-arrow-down'></i> " + data.reason_code_2 + "</p>";
-        html += "<p><i class='fa fa-arrow-down'></i> " + data.reason_code_3 + "</p>";
-        html += "</div>";
-        html += "</div>";
-    }
-    if (data.regular_prop != null) {
-        html += "<div class='col-md-12'>";
-        html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
-        html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
-        html += "<p class='bold font-yellow' style='font-size:35px;margin:0;'>" + data.regular_prop.toFixed(1) + "</p>";
-        html += "<p style='font-size:10px;'><span class='font-yellow'>CHANCE</span><br/>TO BE REGULAR</p>";
-        html += "</div>";
-        html += "</div>";
-        html += "<div class='thumbnail' style='height:100px;width:165px;display:inline-block;padding:12px;'>";
-        html += "<p><i class='fa fa-rocket'></i> " + data.reason_code_1 + "</p>";
-        html += "<p><i class='fa fa-rocket'></i> " + data.reason_code_2 + "</p>";
-        html += "<p><i class='fa fa-rocket'></i> " + data.reason_code_3 + "</p>";
-        html += "</div>";
-        html += "</div>";
-    }
+    if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");
+    if (data.decline_prop != null) html += generate_cust_prop(data, model, "decline_prop", ["DECLINE", "PROPENSITY"], "green");
+    if (data.regular_prop != null) html += generate_cust_prop(data, model, "regular_prop", ["CHANCE", "TO BE REGULAR"], "yellow");
     html += "</div>";
     html += "</div>";
     return html;
