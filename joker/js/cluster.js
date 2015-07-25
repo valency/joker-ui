@@ -1,5 +1,6 @@
 var feature_tags = [
-    {id: "cust_code", text: "Segment"},
+    {id: "id", text: "ID"},
+    {id: "segment", text: "Segment"},
     {id: "age", text: "Age"},
     {id: "gender", text: "Gender"},
     {id: "yrs_w_club", text: "Club Years"},
@@ -12,8 +13,8 @@ var feature_tags = [
     {id: "rr", text: "Recovery Rate"},
     {id: "end_bal", text: "Balance"},
     {id: "recharge_times", text: "Recharge Times"},
-    //{id: "recharge_amount", text: "Recharge Amount"},
-    //{id: "withdraw_times", text: "Withdraw Times"},
+    {id: "recharge_amount", text: "Recharge Amount"},
+    {id: "withdraw_times", text: "Withdraw Times"},
     {id: "withdraw_amount", text: "Withdraw Amount"}
 ];
 
@@ -30,18 +31,6 @@ $(document).ready(function () {
         tags: feature_tags
     });
 });
-
-function select_all_features() {
-    var tags = [];
-    for (var i = 0; i < feature_tags.length; i++) {
-        tags.push(feature_tags[i].id);
-    }
-    $("#select2_features").select2("val", tags);
-}
-
-function remove_all_features() {
-    $("#select2_features").select2("val", []);
-}
 
 function interpret_feature_tag(tag) {
     for (var i = 0; i < feature_tags.length; i++) {
@@ -62,7 +51,7 @@ function cluster() {
         message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
         closeButton: false
     });
-    $.get(API_SERVER + "joker/api/cust/kmeans/?header=" + header.join(",") + "&weight=" + weight.join(",") + "&pred_label=" + $("#select2_predictions").select2('data').id + "&n_clusters=" + $("#no_of_clusters").val() + "&n_records=" + $("#no_of_records").val(), function (data) {
+    $.get(API_SERVER + "joker/api/cust/kmeans/?header=" + header.join(",") + "&weight=" + weight.join(",") + "&pred_label=" + $("#select2_predictions").select2('data').id + "&n_clusters=" + $("#no_of_clusters").val() + "&n_records=" + $("#no_of_records").val() + "&model=1", function (data) {
         bootbox.hideAll();
         $("#canvas").html("");
         for (var i = 0; i < header.length; i++) {

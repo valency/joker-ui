@@ -53,8 +53,8 @@
                     <div class="input-group">
                         <span class="input-group-addon">Model</span>
                         <select id="select2_predictions" class="form-control">
-                            <option value="Grow">Grow Propensity</option>
-                            <option value="Lapse">Decline Propensity</option>
+                            <option value="grow_prop">Grow Propensity</option>
+                            <option value="decline_prop">Decline Propensity</option>
                         </select>
                     </div>
                 </div>
