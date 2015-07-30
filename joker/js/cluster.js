@@ -56,7 +56,9 @@ function cluster() {
         $("#canvas").html("");
         for (var i = 0; i < header.length; i++) {
             for (var j = i + 1; j < header.length; j++) {
-                scatter(data, header[i], header[j]);
+                var figid = "figure_" + i + "_" + j;
+                $("#canvas").append("<div id='" + figid + "' style='display:inline-block;'></div>");
+                scatter("#" + figid, data, header[i], header[j]);
             }
         }
     }).fail(function () {
@@ -65,7 +67,7 @@ function cluster() {
     });
 }
 
-function scatter(data, xLabel, yLabel) {
+function scatter(container, data, xLabel, yLabel) {
     var margin = {top: 10, right: 10, bottom: 40, left: 50},
         width = $(".row").width() / 3 - 30 - margin.left - margin.right,
         height = $(".row").width() / 3 - 30 - margin.top - margin.bottom;
@@ -85,18 +87,14 @@ function scatter(data, xLabel, yLabel) {
             return d[yLabel];
         }));
     }
-    var xMap = function (d) {
-            return xScale(d[xLabel]);
-        },
-        xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
-        yMap = function (d) {
-            return yScale(d[yLabel]);
-        },
-        yAxis = d3.svg.axis().scale(yScale).orient("left");
-    var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-    var svg = d3.select("#canvas").append("svg")
+    var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+    var yAxis = d3.svg.axis().scale(yScale).orient("left");
+    var zoom = d3.behavior.zoom().x(xScale).y(yScale).scaleExtent([1, 30]).on("zoom", function () {
+        svg.select(".x.axis").call(xAxis).selectAll("text").style("text-anchor", "end").attr("dx", "-.8em").attr("dy", ".15em").attr("transform", "rotate(-45)");
+        svg.select(".y.axis").call(yAxis);
+        circle.attr("transform", transform);
+    });
+    var svg = d3.select(container).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -105,30 +103,39 @@ function scatter(data, xLabel, yLabel) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
-        .append("text")
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)");
+    svg.append("text")
         .attr("class", "label")
-        .attr("x", width)
-        .attr("y", -6)
+        .attr("x", width - 3)
+        .attr("y", height - 6)
         .style("text-anchor", "end")
         .text(interpret_feature_tag(xLabel));
     svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
+        .call(yAxis);
+    svg.append("text")
         .attr("class", "label")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
+        .attr("x", -3)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text(interpret_feature_tag(yLabel));
-    svg.selectAll(".dot")
+    var circle = svg.selectAll("path")
         .data(data)
-        .enter().append("circle")
-        .attr("class", "dot")
-        .attr("r", 3)
-        .attr("cx", xMap)
-        .attr("cy", yMap)
+        .enter().append("path")
+        .attr("d", d3.svg.symbol().type("cross").size(20))
+        .style("stroke-width", 0)
         .style("fill", function (d) {
             return COLOR_PALETTE[d.cluster];
-        });
+        })
+        .attr("transform", transform);
+    d3.select(container).call(zoom);
+    function transform(d) {
+        return "translate(" + xScale(d[xLabel]) + "," + yScale(d[yLabel]) + ")";
+    }
 }
