@@ -7,6 +7,8 @@
     require_once "../php/common.php";
     require_once "components/css.php";
     ?>
+    <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.Metronic.css" rel="stylesheet" type="text/css"/>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
@@ -28,19 +30,12 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=8'); ?>
             <!-- BEGIN PAGE -->
-            <div class="row form-group">
-                <div class="col-md-3">
+            <div class="row form-group form-horizontal">
+                <label class="col-md-2 control-label">Display Figure As:</label>
+
+                <div class="col-md-5">
                     <div class="input-group">
-                        <span class="input-group-addon">Model</span>
-                        <select id="select_pred_model" class="form-control">
-                            <option value="grow_prop">Grow Propensity</option>
-                            <option value="decline_prop">Decline Propensity</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="input-group">
-                        <span class="input-group-addon">Feature 1</span>
+                        <span class="input-group-addon">Feature of X Axis</span>
                         <select id="select_feature_1" class="form-control">
                             <option value="id">ID</option>
                             <option value="segment">Segment</option>
@@ -62,9 +57,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5">
                     <div class="input-group">
-                        <span class="input-group-addon">Feature 2</span>
+                        <span class="input-group-addon">Feature of Y Axis</span>
                         <select id="select_feature_2" class="form-control">
                             <option value="id">ID</option>
                             <option value="segment">Segment</option>
@@ -86,23 +81,49 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row form-group form-horizontal">
+                <label class="col-md-2 control-label">Choose Data From:</label>
+
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">Data Set</span>
+                        <select id="select_pred_model" class="form-control">
+                            <option value="1">Model 1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">Order By</span>
+                        <select id="select_pred_order" class="form-control">
+                            <option value="grow_prop">Grow Propensity</option>
+                            <option value="decline_prop">Decline Propensity</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-md-2">
                     <div class="input-group">
                         <span class="input-group-addon">Size</span>
                         <input id="no_of_records" class="form-control" type="text" value="500"/>
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <button class="btn green pull-right" type="button" onclick="plot();">Plot</button>
+            </div>
+            <div class="row form-group form-horizontal">
+                <div class="col-md-2">
+                    <label class="pull-right">Filter Data By:</label>
+                </div>
+                <div class="col-md-10" id="filter_list">
+                    <a href="javascript:void(0)" class="label bg-blue" onclick="add_filter();"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
-            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn green pull-right" type="button" onclick="prepare_plot();">Plot</button>
+                </div>
+            </div>
             <div class="row">
                 <div id="canvas" class="col-md-12"></div>
-                <!--                <div id="canvas_tools" class="col-md-3 hidden">-->
-                <!--                    <a class="pull-right" href="javascript:void(0)" onclick="scale(-1);" style="margin-left:5px;"><i class="fa fa-minus"></i></a>-->
-                <!--                    <a class="pull-right" href="javascript:void(0)" onclick="scale(1);" style="margin-left:5px;"><i class="fa fa-plus"></i></a>-->
-                <!--                </div>-->
             </div>
             <!-- END PAGE -->
         </div>
@@ -112,6 +133,7 @@
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
 <script src="/lib/d3.min.js"></script>
+<script src="assets/global/plugins/ion.rangeslider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
 <script src="js/plot.js" type="text/javascript"></script>
 </body>
 </html>

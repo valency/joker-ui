@@ -45,3 +45,8 @@ path {
 .arc path {
     stroke: #fff;
 }
+
+.tick line {
+    stroke: #CCC;
+    stroke-dasharray: 5, 5;
+}
