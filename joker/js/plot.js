@@ -40,11 +40,16 @@ function add_filter() {
         message: msg,
         buttons: {
             Add: function () {
-                var html = "<div style='display:inline-block;'><span class='label bg-grey'>Segment ∈ [1,2]</span>";
-                html += "<a href='javascript:void(0)' class='label bg-red' onclick='$(this).parent().remove();'><i class='fa fa-times'></i></a>";
-                if ($("#filter_list").children().length > 1) html += "<a href='javascript:void(0)' class='filter_operator label bg-blue' style='margin:0 5px 0 5px;' onclick=\"$('.filter_operator').first().html()=='AND'?$('.filter_operator').html('OR'):$('.filter_operator').html('AND');\">AND</a>";
-                html += "</div>";
-                $("#filter_list").prepend(html);
+                var range = $("#filter_detail_selector").val();
+                if (range != null && range != undefined && range != "") {
+                    if (range.indexOf(";") > -1) range = "[" + range.replace(";", ",") + "]";
+                    else range = "{" + range + "}";
+                    var html = "<div class='filter_container' style='display:inline-block;'><span class='label bg-grey' value='" + $("#filter_feature").val() + "'>" + $("#filter_feature option:selected").html() + " ∈ " + range + "</span>";
+                    html += "<a href='javascript:void(0)' class='label bg-red' onclick='$(this).parent().remove();'><i class='fa fa-times'></i></a>";
+                    if ($("#filter_list").children().length > 1) html += "<a href='javascript:void(0)' class='filter_operator label bg-blue' style='margin:0 5px 0 5px;' onclick=\"$('.filter_operator').first().html()=='AND'?$('.filter_operator').html('OR'):$('.filter_operator').html('AND');\">AND</a>";
+                    html += "</div>";
+                    $("#filter_list").prepend(html);
+                }
             }
         },
         show: false
@@ -58,30 +63,33 @@ function add_filter() {
             var filter_comparator = $("#filter_feature option:selected").attr("filter_type");
             if (filter_comparator == "range") {
                 $("#filter_comparator").html("Between Range");
-                $("#filter_detail").html("<input type='text' id='filter_detail_selector' value=''/>");
-                $("#filter_detail_selector").ionRangeSlider({
-                    min: 0,
-                    max: 5000,
-                    from: 1000,
-                    to: 4000,
-                    type: 'double',
-                    step: 1,
-                    prettify: false,
-                    hasGrid: true
+                $("#filter_detail").html("Loading...");
+                $.get(API_SERVER + "joker/api/cust/range/?model=" + $("#select_pred_model").val() + "&field=" + $("#filter_feature").val(), function (data) {
+                    $("#filter_detail").html("<input type='text' id='filter_detail_selector' value=''/>");
+                    $("#filter_detail_selector").ionRangeSlider({
+                        min: data.min,
+                        max: data.max,
+                        type: 'double',
+                        prettify: false,
+                        hasGrid: true
+                    });
                 });
             }
             else {
                 $("#filter_comparator").html("Choose From");
-                $("#filter_detail").html("<input type='hidden' id='filter_detail_selector' class='form-control select2' value=''/>");
-                var filter_tags = [];
-                for (var i = 0; i < 10; i++) {
-                    filter_tags.push({
-                        id: i,
-                        text: "N-" + Math.random()
+                $("#filter_detail").html("Loading...");
+                $.get(API_SERVER + "joker/api/cust/unique/?model=" + $("#select_pred_model").val() + "&field=" + $("#filter_feature").val(), function (data) {
+                    $("#filter_detail").html("<input type='hidden' id='filter_detail_selector' class='form-control select2' value=''/>");
+                    var filter_tags = [];
+                    for (var i = 0; i < data.length; i++) {
+                        filter_tags.push({
+                            id: data[i].toString(),
+                            text: data[i].toString()
+                        });
+                    }
+                    $("#filter_detail_selector").select2({
+                        tags: filter_tags
                     });
-                }
-                $("#filter_detail_selector").select2({
-                    tags: filter_tags
                 });
             }
         });
@@ -91,7 +99,19 @@ function add_filter() {
 }
 
 function prepare_plot() {
-
+    var filter_mode = $('.filter_operator').first().html();
+    if (filter_mode != undefined) filter_mode = filter_mode.toLowerCase();
+    var filters = [];
+    var filter_containers = $(".filter_container span:nth-child(1)");
+    for (var i = 0; i < filter_containers.length; i++) {
+        var filter = $(filter_containers[i]).attr("value") + ",";
+        if ($(filter_containers[i]).html().indexOf("{") > -1) filter += "in,";
+        else filter += "range,";
+        filter += $(filter_containers[i]).html().split(" ")[2].substr(1, $(filter_containers[i]).html().split(" ")[2].length - 2).replace(/,/g, ":");
+        filters.push(filter);
+    }
+    var url = "joker/api/cust/search/?model=" + $("#select_pred_model").val() + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(";") + "&filter_mode=" + filter_mode;
+    window.location.href = API_SERVER + url;
 }
 
 function plot() {
