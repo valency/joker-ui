@@ -44,6 +44,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-red">v0.8.6</span>
+                    <ul>
+                        <li>Modified model 3 test page title to data exploration</li>
+                        <li>Modified data exploration axis to dotted grey</li>
+                        <li>Added data filter for data exploration</li>
+                        <li>Fixed data filter or operation not working bug</li>
+                        <li>Fixed data filter and operation bug (cannot combine same field)</li>
+                    </ul>
                     <span class="font-red">v0.7.30</span>
                     <ul>
                         <li>Added updates log</li>

@@ -119,7 +119,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn green pull-right" type="button" onclick="prepare_plot();">Plot</button>
+                    <button class="btn green pull-right" type="button" onclick="plot();">Plot</button>
                 </div>
             </div>
             <div class="row">

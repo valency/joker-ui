@@ -98,7 +98,8 @@ function add_filter() {
     dialog.modal('show');
 }
 
-function prepare_plot() {
+function plot() {
+    $("#canvas").html("Loading...");
     var filter_mode = $('.filter_operator').first().html();
     if (filter_mode != undefined) filter_mode = filter_mode.toLowerCase();
     var filters = [];
@@ -107,18 +108,11 @@ function prepare_plot() {
         var filter = $(filter_containers[i]).attr("value") + ",";
         if ($(filter_containers[i]).html().indexOf("{") > -1) filter += "in,";
         else filter += "range,";
-        filter += $(filter_containers[i]).html().split(" ")[2].substr(1, $(filter_containers[i]).html().split(" ")[2].length - 2).replace(/,/g, ":");
+        filter += $(filter_containers[i]).html().split(" ")[2].substr(1, $(filter_containers[i]).html().split(" ")[2].length - 2).replace(/,/g, "~");
         filters.push(filter);
     }
-    var url = "joker/api/cust/search/?model=" + $("#select_pred_model").val() + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(";") + "&filter_mode=" + filter_mode;
-    window.location.href = API_SERVER + url;
-}
-
-function plot() {
-    $("#canvas").html("Loading...");
-    // https://120.25.209.91:8443/joker/api/cust/search/?model=1&length=10&order=-grow_prop&filter=segment,in,15&filter_mode=and
-    $.get(API_SERVER + "joker/api/cust/get_all/?model=1&draw=1&start=0&length=" + $("#no_of_records").val() + "&order[0][column]=0&order[0][dir]=desc&columns[0][data]=" + $("#select_pred_order").val() + "&columns[0][name]=" + $("#select_pred_model").val(), function (data) {
-        scatter_data = data.data;
+    $.get(API_SERVER + "joker/api/cust/search/?model=" + $("#select_pred_model").val() + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
+        scatter_data = data;
         $("#canvas").html("<a href='javascript:void(0)' id='canvas_btn_reset' style='position:absolute;right:30px;top:10px;'>Reset</a>");
         scatter(scatter_data, $("#select_feature_1").val(), $("#select_feature_2").val());
     }).fail(function () {
