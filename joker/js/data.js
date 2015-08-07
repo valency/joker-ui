@@ -3,6 +3,13 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
+    $.get(API_SERVER + "joker/api/env/get/?key=last_success_import", function (r) {
+        $(".file-entry").each(function () {
+            if ($(this).attr("href") == "data/" + r.value) {
+                $(this).append("<span class='pull-right badge badge-danger'> current </span>");
+            }
+        });
+    });
 });
 
 function interpret_data_type_desc(data_type) {
@@ -15,6 +22,16 @@ function interpret_data_type_desc(data_type) {
         html += "<span class='label bg-red'>" + data_type_desc[data_type][i] + "</span> ";
     }
     return html;
+}
+
+function datafile_extract(file) {
+    bootbox.dialog({
+        message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+        closeButton: false
+    });
+    $.get(API_SERVER + "joker/api/extract_gzip/?src=" + file, function (r) {
+        location.reload();
+    });
 }
 
 function datafile_import(file) {
@@ -34,14 +51,25 @@ function datafile_import(file) {
                     message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
                     closeButton: false
                 });
-                $.get(API_SERVER + "joker/api/cust/add_cust_from_csv/?src=" + file + "&model=" + $("#select2_data_type").val().replace("model_", ""), function (r) {
-                    r = eval(r);
-                    var msg = "<p>" + r.processed + " entries have been processed.</p><p>" + r.success + " entries have been imported.</p><p>" + r.fail + " entries are failed to import.</p>";
-                    bootbox.hideAll();
-                    bootbox.alert(msg);
+                var data_type = $("#select2_data_type").val().replace("model_", "");
+                $.get(API_SERVER + "joker/api/cust/delete_all/", function (r) {
+                    $.get(API_SERVER + "joker/api/cust/add_cust_from_csv/?src=" + file + "&model=" + data_type, function (r) {
+                        var import_status = eval(r);
+                        $.get(API_SERVER + "joker/api/env/set/?key=last_success_import&value=" + file, function (r) {
+                            var msg = "<p>" + import_status.processed + " entries have been processed.</p><p>" + import_status.success + " entries have been imported.</p><p>" + import_status.fail + " entries are failed to import.</p>";
+                            bootbox.hideAll();
+                            bootbox.alert(msg);
+                        }).fail(function () {
+                            bootbox.hideAll();
+                            bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
+                        });
+                    }).fail(function () {
+                        bootbox.hideAll();
+                        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
+                    });
                 }).fail(function () {
                     bootbox.hideAll();
-                    bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
+                    bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while cleaning database!</span>");
                 });
             }
         }

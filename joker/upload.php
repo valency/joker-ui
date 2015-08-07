@@ -44,8 +44,8 @@
                     echo "<p>Sorry, your file is too large.</p>";
                     $upload_ok = false;
                 }
-                if ($extension != "csv") {
-                    echo "<p>Sorry, only CSV files are allowed.</p>";
+                if ($extension != "csv" and $extension != "gz") {
+                    echo "<p>Sorry, only csv and gz files are allowed.</p>";
                     $upload_ok = false;
                 }
                 if ($upload_ok == false) {

@@ -9,7 +9,7 @@ $(document).ready(function () {
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity
     });
-    $("#canvas").height($(".page-content").height() - 200);
+    $("#canvas").height($(".page-content").height() - 280);
 });
 
 function add_filter() {
@@ -113,7 +113,9 @@ function plot() {
     }
     $.get(API_SERVER + "joker/api/cust/search/?model=" + $("#select_pred_model").val() + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
         scatter_data = data;
-        $("#canvas").html("<a href='javascript:void(0)' id='canvas_btn_reset' style='position:absolute;right:30px;top:10px;'>Reset</a>");
+        $("#canvas").html("<a href='javascript:void(0)' id='canvas_btn_reset' class='font-red' style='position:absolute;right:40px;top:20px;'><i class='fa fa-dot-circle-o'></i></a>");
+        $("#canvas").append("<a href='javascript:void(0)' id='canvas_btn_minus' class='font-red' style='position:absolute;right:70px;top:20px;'><i class='fa fa-minus'></i></a>");
+        $("#canvas").append("<a href='javascript:void(0)' id='canvas_btn_plus' class='font-red' style='position:absolute;right:100px;top:20px;'><i class='fa fa-plus'></i></a>");
         scatter(scatter_data, $("#select_feature_1").val(), $("#select_feature_2").val());
     }).fail(function () {
         $("#canvas").html("<span class='text-danger'>Loading data failed.</span>");
@@ -195,6 +197,41 @@ function scatter(data, xLabel, yLabel) {
             };
         });
     });
+    d3.select("#canvas_btn_plus").on("click", function () {
+        zoom_button("plus");
+    });
+    d3.select("#canvas_btn_minus").on("click", function () {
+        zoom_button("minus");
+    });
+
+    function zoom_button(mode) {
+        d3.event.preventDefault();
+        var center = [width / 2, height / 2],
+            scale = zoom.scale(),
+            extent = zoom.scaleExtent(),
+            translate = zoom.translate(),
+            x = translate[0], y = translate[1],
+            factor = (mode === 'plus') ? 1.2 : 0.8,
+            target_scale = scale * factor;
+        if (target_scale === extent[0] || target_scale === extent[1]) {
+            return false;
+        }
+        var clamped_target_scale = Math.max(extent[0], Math.min(extent[1], target_scale));
+        if (clamped_target_scale != target_scale) {
+            target_scale = clamped_target_scale;
+            factor = target_scale / scale;
+        }
+        x = (x - center[0]) * factor + center[0];
+        y = (y - center[1]) * factor + center[1];
+        d3.transition().duration(350).tween("zoom", function () {
+            var interpolate_scale = d3.interpolate(scale, target_scale),
+                interpolate_trans = d3.interpolate(translate, [x, y]);
+            return function (t) {
+                zoom.scale(interpolate_scale(t)).translate(interpolate_trans(t));
+                zoomed();
+            };
+        });
+    }
 
     function zoomed() {
         svg.select(".x.axis").call(xAxis);

@@ -40,13 +40,17 @@
                     <tbody>
                     <?php if ($handle = opendir('./data/')) {
                         while (false !== ($entry = readdir($handle))) {
-                            if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
+                            if ($entry != "." && $entry != ".." && (pathinfo($entry, PATHINFO_EXTENSION) == "csv" || pathinfo($entry, PATHINFO_EXTENSION) == "gz")) {
                                 echo "<tr>";
-                                echo "<td class='font-green bold'><a href='data/" . $entry . "' target='_blank'><i class='fa fa-file-o'></i> " . $entry . "</a></td>";
+                                echo "<td class='font-green bold'><a class='file-entry' href='data/" . $entry . "' target='_blank'><i class='fa fa-file-o'></i> " . $entry . "</a></td>";
                                 echo "<td>" . number_format(filesize('./data/' . $entry)) . "</td>";
                                 echo "<td>" . date("F d Y, H:i:s", filemtime('./data/' . $entry)) . "</td>";
                                 echo "<td>";
-                                echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue'><i class='fa fa-edit'></i> Import</button>";
+                                if (pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
+                                    echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue'><i class='fa fa-edit'></i> Import</button>";
+                                } elseif (pathinfo($entry, PATHINFO_EXTENSION) == "gz") {
+                                    echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple'><i class='fa fa-download'></i> Extract</button>";
+                                }
                                 echo "<button onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";

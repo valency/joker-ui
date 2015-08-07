@@ -168,14 +168,9 @@ function add_segment_filter(table, model) {
 }
 
 function add_export_btn(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_csv'><span>Export CSV</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_csv'><span>Export</span></a>");
     $("#cust_export_csv").click(function () {
         var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "csv=true&" + $.param(table.ajax.params());
-        window.open(url);
-    });
-    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_xlsx'><span>Export Excel</span></a>");
-    $("#cust_export_xlsx").click(function () {
-        var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "xlsx=true&" + $.param(table.ajax.params());
         window.open(url);
     });
 }
