@@ -44,6 +44,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-red">v0.8.7</span>
+                    <ul>
+                        <li>Fixed exporting of large csv file bug</li>
+                        <li>Removed exporting to excel</li>
+                        <li>Added cleaning database before importing data</li>
+                        <li>Added current working data set indicator</li>
+                        <li>Added gzip support</li>
+                        <li>Added zoom in / out buttons</li>
+                    </ul>
                     <span class="font-red">v0.8.6</span>
                     <ul>
                         <li>Modified model 3 test page title to data exploration</li>
