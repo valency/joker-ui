@@ -1,11 +1,11 @@
 <html>
 <head>
     <?php
+    require_once "components/common.php";
+    require_once "components/lib.php";
+    require_once "components/css.php";
     require_once "components/menu.php";
     echo "<title>SmartCube | " . $sub_words[2][0] . "</title>";
-    require_once "../php/lib.php";
-    require_once "../php/common.php";
-    require_once "components/css.php";
     ?>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">

@@ -1,7 +1,6 @@
 $(document).ready(function () {
     handle_login();
     handle_register();
-    handleForgetPassword();
 });
 
 function handle_login() {
@@ -60,14 +59,18 @@ function login() {
     if ($('.login-form').validate().form()) {
         var username = $("input[name='username']", $('.login-form')).val();
         var password = CryptoJS.MD5($("input[name='password']", $('.login-form')).val()).toString();
-        $.post(API_SERVER + "joker/api/user/login/", {
+        $.post(API_SERVER + "joker/auth/sign-in/", {
             username: username,
             password: password
         }, function (data) {
             if ($("input[name='remember']").prop('checked')) {
-                Cookies.set('login', 'true', {expires: 7});
+                Cookies.set('joker_id', data.id, {expires: 7});
+                Cookies.set('joker_username', username, {expires: 7});
+                Cookies.set('joker_ticket', data.ticket, {expires: 7});
             } else {
-                Cookies.set('login', 'true');
+                Cookies.set('joker_id', data.id);
+                Cookies.set('joker_username', username);
+                Cookies.set('joker_ticket', data.ticket);
             }
             window.location.href = "index.php";
         }, "json").fail(function () {
@@ -168,7 +171,7 @@ function register() {
     if ($('.register-form').validate().form()) {
         var username = $("input[name='username']", $('.register-form')).val();
         var password = CryptoJS.MD5($("input[name='password']", $('.register-form')).val()).toString();
-        $.post(API_SERVER + "joker/api/user/register/", {
+        $.post(API_SERVER + "joker/auth/register/", {
             username: username,
             password: password
         }, function (data) {
@@ -179,70 +182,8 @@ function register() {
             setTimeout(function () {
                 window.location.href = "login.php";
             }, 3000);
-        }, "json");
+        }, "json").fail(function () {
+            bootbox.alert("Something is wrong during registration.<br/>Maybe the username is already registered.");
+        });
     }
 }
-
-
-var handleForgetPassword = function () {
-    $('.forget-form').validate({
-        errorElement: 'span', //default input error message container
-        errorClass: 'help-block', // default input error message class
-        focusInvalid: false, // do not focus the last invalid input
-        ignore: "",
-        rules: {
-            email: {
-                required: true,
-                email: true
-            }
-        },
-
-        messages: {
-            email: {
-                required: "Email is required."
-            }
-        },
-
-        invalidHandler: function (event, validator) { //display error alert on form submit
-
-        },
-
-        highlight: function (element) { // hightlight error inputs
-            $(element)
-                .closest('.form-group').addClass('has-error'); // set error class to the control group
-        },
-
-        success: function (label) {
-            label.closest('.form-group').removeClass('has-error');
-            label.remove();
-        },
-
-        errorPlacement: function (error, element) {
-            error.insertAfter(element.closest('.input-icon'));
-        },
-
-        submitHandler: function (form) {
-            form.submit();
-        }
-    });
-
-    $('.forget-form input').keypress(function (e) {
-        if (e.which == 13) {
-            if ($('.forget-form').validate().form()) {
-                $('.forget-form').submit();
-            }
-            return false;
-        }
-    });
-
-    jQuery('#forget-password').click(function () {
-        jQuery('.login-form').hide();
-        jQuery('.forget-form').show();
-    });
-
-    jQuery('#back-btn').click(function () {
-        jQuery('.login-form').show();
-        jQuery('.forget-form').hide();
-    });
-
-};

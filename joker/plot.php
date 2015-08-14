@@ -1,11 +1,11 @@
 <html>
 <head>
     <?php
+    require_once "components/common.php";
+    require_once "components/lib.php";
+    require_once "components/css.php";
     require_once "components/menu.php";
     echo "<title>SmartCube | " . $sub_words[1][8] . "</title>";
-    require_once "../php/lib.php";
-    require_once "../php/common.php";
-    require_once "components/css.php";
     ?>
     <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
     <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.Metronic.css" rel="stylesheet" type="text/css"/>

@@ -2,7 +2,7 @@
 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 <li class="dropdown dropdown-user">
     <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-        <span class="username username-hide-on-mobile"> Valency </span>
+        <span class="username username-hide-on-mobile"></span>
         <i class="fa fa-angle-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-menu-default">

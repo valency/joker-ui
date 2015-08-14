@@ -1,11 +1,11 @@
 <html>
 <head>
     <?php
+    require_once "components/common.php";
+    require_once "components/lib.php";
+    require_once "components/css.php";
     require_once "components/menu.php";
     echo "<title>SmartCube | Login</title>";
-    require_once "../php/lib.php";
-    require_once "../php/common.php";
-    require_once "components/css.php";
     ?>
     <link href="assets/admin/pages/css/login3.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -47,20 +47,11 @@
             <label class="checkbox"><input type="checkbox" name="remember" value="1"/> Remember me </label>
             <button class="btn green-haze pull-right" onclick="login();">Login</button>
         </div>
-        <div class="forget-password">
-            <h4>Forgot your password ?</h4>
-
-            <p>
-                No worries, click <a href="javascript:" id="forget-password">
-                    here </a>
-                to reset your password.
-            </p>
-        </div>
         <div class="create-account">
-            <p>
-                Don't have an account yet ?&nbsp; <a href="javascript:" id="register-btn">
-                    Create an account </a>
-            </p>
+            <p>Don't have an account yet ? <a href="javascript:" id="register-btn">Create an account </a></p>
+        </div>
+        <div>
+            <p>First time visitor ? <a href="data/deepera.cer" target="_blank">Download certificate</a></p>
         </div>
     </form>
     <!-- END LOGIN FORM -->
@@ -68,9 +59,7 @@
     <form class="forget-form" method="post">
         <h3>Forget Password ?</h3>
 
-        <p>
-            Enter your e-mail address below to reset your password.
-        </p>
+        <p>Enter your e-mail address below to reset your password.</p>
 
         <div class="form-group">
             <div class="input-icon">
@@ -121,9 +110,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label>
-                <input type="checkbox" name="tnc"/> I agree to the <a href="javascript:">Terms of Service</a> and <a href="javascript:">Privacy Policy</a>
-            </label>
+            <label><input type="checkbox" name="tnc"/> I agree to the <a href="javascript:">Terms and Conditions</a></label>
 
             <div id="register_tnc_error"></div>
         </div>
@@ -136,9 +123,7 @@
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
-<div class="copyright">
-    2015 &copy; <a href="http://www.ust.hk/" target="_blank">The Hong Kong University of Science and Technology</a>
-</div>
+<div class="copyright">2015 &copy; <a href="http://www.ust.hk/" target="_blank">The Hong Kong University of Science and Technology</a></div>
 <!-- END COPYRIGHT -->
 <?php require_once "components/js.php"; ?>
 <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>

@@ -2,6 +2,7 @@ $(document).ready(function () {
     Metronic.init();
     Layout.init();
     QuickSidebar.init();
+    check_login();
     $('.btn-file>input:file').on('fileselect', function (event, nfiles, label) {
         console.log("fileselect");
         var input = $(this).parents('.input-group').find(':text');

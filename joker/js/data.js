@@ -3,10 +3,10 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    $.get(API_SERVER + "joker/api/env/get/?key=last_success_import", function (r) {
+    $.get(API_SERVER + "joker/tool/env/get/?key=last_success_import", function (r) {
         $(".file-entry").each(function () {
             if ($(this).attr("href") == "data/" + r.value) {
-                $(this).append("<span class='pull-right badge badge-danger'> current </span>");
+                $(this).append("<span class='pull-right badge badge-danger'> latest </span>");
             }
         });
     });
@@ -19,7 +19,8 @@ function interpret_data_type_desc(data_type) {
     };
     var html = "";
     for (var i = 0; i < data_type_desc[data_type].length; i++) {
-        html += "<span class='label bg-red'>" + data_type_desc[data_type][i] + "</span> ";
+        if (i > 0)html += ", ";
+        html += "<span class='font-green'>" + data_type_desc[data_type][i] + "</span>";
     }
     return html;
 }
@@ -29,7 +30,7 @@ function datafile_extract(file) {
         message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
         closeButton: false
     });
-    $.get(API_SERVER + "joker/api/extract_gzip/?src=" + file, function (r) {
+    $.get(API_SERVER + "joker/tool/extract_gzip/?src=" + file, function (r) {
         location.reload();
     });
 }
@@ -52,10 +53,10 @@ function datafile_import(file) {
                     closeButton: false
                 });
                 var data_type = $("#select2_data_type").val().replace("model_", "");
-                $.get(API_SERVER + "joker/api/cust/delete_all/", function (r) {
-                    $.get(API_SERVER + "joker/api/cust/add_cust_from_csv/?src=" + file + "&model=" + data_type, function (r) {
+                $.get(API_SERVER + "joker/model/" + data_type + "/delete_all/", function (r) {
+                    $.get(API_SERVER + "joker/model/" + data_type + "/add_cust_from_csv/?src=" + file, function (r) {
                         var import_status = eval(r);
-                        $.get(API_SERVER + "joker/api/env/set/?key=last_success_import&value=" + file, function (r) {
+                        $.get(API_SERVER + "joker/tool/env/set/?key=last_success_import&value=" + file, function (r) {
                             var msg = "<p>" + import_status.processed + " entries have been processed.</p><p>" + import_status.success + " entries have been imported.</p><p>" + import_status.fail + " entries are failed to import.</p>";
                             bootbox.hideAll();
                             bootbox.alert(msg);
@@ -76,7 +77,7 @@ function datafile_import(file) {
     });
     $("#select2_data_type").select2();
     $("#select2_data_type").on("change", function (e) {
-        $("#data_type_desc").html("<p>Required headers:</p><p style='line-height:2'>" + interpret_data_type_desc($("#select2_data_type").val()) + "</p>");
+        $("#data_type_desc").html("<p>Required headers:</p><p>" + interpret_data_type_desc($("#select2_data_type").val()) + "</p>");
     });
     $("#select2_data_type").change();
 }
