@@ -3,14 +3,76 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    $.get(API_SERVER + "joker/tool/env/get/?key=last_success_import", function (r) {
-        $(".file-entry").each(function () {
-            if ($(this).attr("href") == "data/" + r.value) {
-                $(this).append("<span class='pull-right badge badge-danger'> latest </span>");
+    for (var model = 1; model <= 2; model++) {
+        add_deco_badge(model);
+    }
+    $('#file_upload').fileupload({
+        dataType: 'json',
+        acceptFileTypes: '/(\.|\/)(csv|gz)$/i',
+        done: function (e, data) {
+            window.location.reload();
+        }
+    });
+});
+
+function add_deco_badge(model) {
+    $.get(API_SERVER + "joker/tool/env/get/?key=model_" + model + "_active_" + Cookies.get('joker_id')).always(function (active) {
+        var active_badge = "<span class='pull-right badge badge-danger'> active </span>";
+        $.get(API_SERVER + "joker/model/" + model + "/source/", function (r) {
+            for (var i = 0; i < r.length; i++) {
+                var found = false;
+                var clear_db = "<button onclick=\"clear_db('" + r[i] + "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Clear DB</button>";
+                var model_badge = "<span class='pull-right badge badge-success'> model " + model + " </span>";
+                var active_btn = "<button onclick=\"set_active(" + model + ",'" + r[i] + "')\" class='btn default btn-xs red'><i class='fa fa-trash-o'></i> Activate</button>";
+                $(".file-entry").each(function () {
+                    if (r.indexOf($(this).attr("href").replace("data/", "")) >= 0) {
+                        found = true;
+                        $(this).append(model_badge);
+                        $(this).parent().next().next().next().append(clear_db);
+                        if ($(this).attr("href").replace("data/", "") == active.value) {
+                            $(this).append(active_badge);
+                        } else {
+                            $(this).parent().next().next().next().prepend(active_btn);
+                        }
+                    }
+                });
+                if (!found) {
+                    var html = "<tr><td>";
+                    html += "<span class='file-entry' href='data/" + r[i] + "'><i class='fa fa-file-text-o'></i> " + r[i] + "</span>";
+                    html += model_badge;
+                    if (r[i] == active.value) html += active_badge;
+                    html += "</td><td>-</td><td>-</td><td>";
+                    if (r[i] != active.value) html += active_btn;
+                    html += clear_db + "</td>";
+                    html += "</tr>";
+                    $(".table-scrollable>table>tbody").append(html);
+                }
             }
         });
     });
-});
+}
+
+function set_active(model, source) {
+    $.get(API_SERVER + "joker/tool/env/set/?key=model_" + model + "_active_" + Cookies.get('joker_id') + "&value=" + source, function (r) {
+        window.location.reload();
+    }).fail(function () {
+        bootbox.hideAll();
+        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while activating data set!</span>");
+    });
+}
+
+function clear_db(source) {
+    bootbox.dialog({
+        message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+        closeButton: false
+    });
+    $.get(API_SERVER + "joker/model/" + data_type + "/delete_all/?source=" + file, function (r) {
+        window.location.reload();
+    }).fail(function () {
+        bootbox.hideAll();
+        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while cleaning database!</span>");
+    });
+}
 
 function interpret_data_type_desc(data_type) {
     var data_type_desc = {
@@ -53,7 +115,7 @@ function datafile_import(file) {
                     closeButton: false
                 });
                 var data_type = $("#select2_data_type").val().replace("model_", "");
-                $.get(API_SERVER + "joker/model/" + data_type + "/delete_all/", function (r) {
+                $.get(API_SERVER + "joker/model/" + data_type + "/delete_all/?source=" + file, function (r) {
                     $.get(API_SERVER + "joker/model/" + data_type + "/add_cust_from_csv/?src=" + file, function (r) {
                         var import_status = eval(r);
                         $.get(API_SERVER + "joker/tool/env/set/?key=last_success_import&value=" + file, function (r) {

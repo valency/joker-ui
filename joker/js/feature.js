@@ -19,6 +19,7 @@ var COL_TRANS = {
 };
 
 var DT_CONF = {
+    jokerSource: null,
     stateSave: true,
     searching: false,
     ordering: true,
@@ -26,7 +27,7 @@ var DT_CONF = {
     serverSide: true,
     deferRender: true,
     lengthMenu: [10, 50, 100, 500],
-    ajax: API_SERVER + "joker/api/cust/get_all/?model=0",
+    ajax: API_SERVER + "joker/model/0/get_all/?source=",
     columns: [
         {
             data: "id",
@@ -111,12 +112,13 @@ function load_data(div_id, conf, model) {
             title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         });
         if (model == 1) {
-            update_cust_rank(data.id, model, "grow_prop");
-            update_cust_rank(data.id, model, "decline_prop");
+            update_cust_rank(data.id, model, "grow_prop", conf.jokerSource);
+            update_cust_rank(data.id, model, "decline_prop", conf.jokerSource);
         } else if (model == 2) {
-            update_cust_rank(data.id, model, "regular_prop");
+            update_cust_rank(data.id, model, "regular_prop", conf.jokerSource);
         }
     });
+    add_dataset_badge(table, model);
     add_segment_filter(table, model);
     add_column_filter(table, model);
     add_export_btn(table, model);
@@ -125,6 +127,10 @@ function load_data(div_id, conf, model) {
         minimumResultsForSearch: Infinity
     });
     return table;
+}
+
+function add_dataset_badge(table, model) {
+    $(".tabletools-btn-group").append("<a class='btn btn-sm red'><span><i class='fa fa-briefcase'></i> " + DT_CONF.jokerSource.replace(".csv", "") + "</span></a>");
 }
 
 function add_segment_filter(table, model) {
@@ -143,15 +149,15 @@ function add_segment_filter(table, model) {
                             segment_set.push(selected[i].id);
                         }
                         segment_filter_label.html("<i class='fa fa-group'></i> " + segment_set.join(" & "));
-                        table.ajax.url(API_SERVER + "joker/api/cust/get_all/?model=" + model + "&segment=" + segment_set.join(",")).load();
+                        table.ajax.url(API_SERVER + "joker/model/" + model + "/get_all/?source=" + DT_CONF.jokerSource + "&segment=" + segment_set.join(",")).load();
                     } else {
                         segment_filter_label.html("<span>Segment Filter</span>");
-                        table.ajax.url(API_SERVER + "joker/api/cust/get_all/?model=" + model).load();
+                        table.ajax.url(API_SERVER + "joker/model/" + model + "/get_all/?source=" + DT_CONF.jokerSource).load();
                     }
                 }
             }
         });
-        $.get(API_SERVER + "joker/api/cust/dist/?column=segment&model=" + model, function (data) {
+        $.get(API_SERVER + "joker/model/" + model + "/dist/?source=" + DT_CONF.jokerSource + "&field=segment", function (data) {
             var segment_tags = [];
             for (var i = 0; i < data.length; i++) {
                 segment_tags.push({
@@ -244,8 +250,8 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
     return html;
 }
 
-function update_cust_rank(id, model, column) {
-    $.get(API_SERVER + "joker/api/cust/rank/?id=" + id + "&model=" + model + "&column=" + column, function (data) {
+function update_cust_rank(id, model, column, source) {
+    $.get(API_SERVER + "joker/model/" + model + "/rank/?source=" + source + "&id=" + id + "&field=" + column, function (data) {
         $("#cust_rank_" + column).html("<i class='fa fa-star'></i> " + (data.rank + 1) + " (" + (100 * (data.rank + 1) / data.total).toFixed(0) + " %)");
     });
 }
@@ -535,7 +541,7 @@ function barset(src, table_title, table_desc, label1, label2) {
         });
 }
 
-function histogram(column, categorical, table_title, table_desc, model) {
+function histogram(column, categorical, table_title, table_desc, model, data_source) {
     var figid = guid();
     var container = "<div style='display:inline-block;text-align:center;'>";
     container += "<span class='bold'>" + table_title + "</span><br/>";
@@ -543,7 +549,7 @@ function histogram(column, categorical, table_title, table_desc, model) {
     container += "<div id='figure_container_" + figid + "'></div>";
     container += "</div>";
     add_portlet("#figure_container", table_title, container);
-    $.get(API_SERVER + "joker/api/cust/histogram/?model=" + model + "&column=" + column + "&categorical=" + categorical, function (data) {
+    $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical, function (data) {
         var src = [];
         for (var i = 0; i < data.hist.length; i++) {
             src.push({
@@ -602,6 +608,6 @@ function histogram(column, categorical, table_title, table_desc, model) {
                 return height - y(d.hist);
             });
     }).fail(function () {
-        $("#figure_container_" + figid).html("Loading schema '" + column + "' failed.<br/>Error message: " + data.content);
+        $("#figure_container_" + figid).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
     });
 }

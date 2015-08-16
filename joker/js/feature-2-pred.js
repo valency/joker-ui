@@ -10,16 +10,23 @@ $(document).ready(function () {
         minimumResultsForSearch: Infinity
     });
     oConf = DT_CONF;
-    oConf.ajax = API_SERVER + "joker/api/cust/get_all/?model=2";
-    oConf.columns.splice(2, 0, {
-        data: "regular_prop",
-        name: "regular_prop",
-        render: function (data, type, full, meta) {
-            var prefix = "<span class='label bg-red'>";
-            var postfix = " %</span>";
-            return prefix + data.toFixed(1) + postfix;
-        }
+    $.get(API_SERVER + "joker/tool/env/get/?key=model_2_active_" + Cookies.get('joker_id'), function (active) {
+        oConf.jokerSource = active.value;
+        oConf.ajax = API_SERVER + "joker/model/2/get_all/?source=" + active.value;
+        oConf.columns.splice(2, 0, {
+            data: "regular_prop",
+            name: "regular_prop",
+            render: function (data, type, full, meta) {
+                var prefix = "<span class='label bg-red'>";
+                var postfix = " %</span>";
+                return prefix + data.toFixed(1) + postfix;
+            }
+        });
+        oConf.order = [[2, "desc"]];
+        oTable = load_data("customer_table", oConf, 2);
+    }).fail(function () {
+        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+            window.location.href = "data.php";
+        });
     });
-    oConf.order = [[2, "desc"]];
-    oTable = load_data("customer_table", oConf, 2);
 });

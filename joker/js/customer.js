@@ -25,16 +25,22 @@ function cust_search() {
     var model = $("#select2_model").val();
     var cust_id = $("#search_cust_id").val();
     $("#customer_table_wrapper>div").html("");
-    $.get(API_SERVER + "joker/api/cust/get/?model=" + model + "&id=" + cust_id, function (data) {
-        var html = generate_cust_data(data, model);
-        $("#customer_table_wrapper>div").html(html);
-        if (model == 1) {
-            update_cust_rank(data.id, model, "grow_prop");
-            update_cust_rank(data.id, model, "decline_prop");
-        } else if (model == 2) {
-            update_cust_rank(data.id, model, "regular_prop");
-        }
+    $.get(API_SERVER + "joker/tool/env/get/?key=model_" + model + "_active_" + Cookies.get('joker_id'), function (active) {
+        $.get(API_SERVER + "joker/model/" + model + "/get/?source=" + active.value + "&id=" + cust_id, function (data) {
+            var html = generate_cust_data(data, model);
+            $("#customer_table_wrapper>div").html(html);
+            if (model == 1) {
+                update_cust_rank(data.id, model, "grow_prop", active.value);
+                update_cust_rank(data.id, model, "decline_prop", active.value);
+            } else if (model == 2) {
+                update_cust_rank(data.id, model, "regular_prop", active.value);
+            }
+        }).fail(function () {
+            $("#customer_table_wrapper>div").html("<span class='font-red'>Not Found</span>");
+        });
     }).fail(function () {
-        $("#customer_table_wrapper>div").html("<span class='font-red'>Not Found</span>");
+        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+            window.location.href = "data.php";
+        });
     });
 }

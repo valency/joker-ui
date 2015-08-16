@@ -6,14 +6,14 @@
         <i class="fa fa-angle-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-menu-default">
-        <li>
-            <a href="javascript:void(0);">
-                <i class="icon-user"></i> Profile </a>
-        </li>
-        <li>
-            <a href="javascript:void(0);">
-                <i class="icon-lock"></i> Settings </a>
-        </li>
+        <!--        <li>-->
+        <!--            <a href="javascript:void(0);">-->
+        <!--                <i class="icon-user"></i> Profile </a>-->
+        <!--        </li>-->
+        <!--        <li>-->
+        <!--            <a href="javascript:void(0);">-->
+        <!--                <i class="icon-lock"></i> Settings </a>-->
+        <!--        </li>-->
         <li>
             <a href="javascript:void(0);" onclick="logout();">
                 <i class="icon-key"></i> Logout </a>
