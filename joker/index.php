@@ -44,6 +44,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-red">v0.8.16</span>
+                    <ul>
+                        <li>Modified API subsystem architecture</li>
+                        <li>Added user system</li>
+                        <li>Added source of data</li>
+                        <li>Removed upload page</li>
+                        <li>Added uploading in data management</li>
+                        <li>Added data source system</li>
+                        <li>Modified exporting file name as data source and configurations</li>
+                    </ul>
                     <span class="font-red">v0.8.7</span>
                     <ul>
                         <li>Fixed exporting of large csv file bug</li>
