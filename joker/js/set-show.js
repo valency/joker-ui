@@ -1,5 +1,3 @@
-scatter_data = null;
-
 $(document).ready(function () {
     Metronic.init();
     Layout.init();
@@ -9,93 +7,20 @@ $(document).ready(function () {
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity
     });
-    $("#canvas").height($(".page-content").height() - 280);
+    $("#select_features").select2({
+        tags: FEATURE_TAGS_MODEL_1
+    });
+    if (get_url_parameter("id") != undefined) {
+        $("#input_set_id").val(get_url_parameter("id"));
+    }
 });
 
-function add_filter() {
-    var msg = '<div><select class="form-control" id="filter_feature">';
-    msg += '<option value="id" filter_type="range">ID</option>';
-    msg += '<option value="segment" filter_type="in">Segment</option>';
-    msg += '<option value="age" filter_type="range">Age</option>';
-    msg += '<option value="gender" filter_type="in">Gender</option>';
-    msg += '<option value="yrs_w_club" filter_type="range">Club Years</option>';
-    msg += '<option value="is_member" filter_type="in">Member</option>';
-    msg += '<option value="is_hrs_owner" filter_type="in">Horse Owner</option>';
-    msg += '<option value="major_channel" filter_type="in">Major Channel</option>';
-    msg += '<option value="mtg_num" filter_type="range">Meetings Attended</option>';
-    msg += '<option value="inv" filter_type="range">Investment</option>';
-    msg += '<option value="div" filter_type="range">Dividend</option>';
-    msg += '<option value="rr" filter_type="range">Recovery Rate</option>';
-    msg += '<option value="end_bal" filter_type="range">Balance</option>';
-    msg += '<option value="recharge_times" filter_type="range">Recharge Times</option>';
-    msg += '<option value="recharge_amount" filter_type="range">Recharge Amount</option>';
-    msg += '<option value="withdraw_times" filter_type="range">Withdraw Times</option>';
-    msg += '<option value="withdraw_amount" filter_type="range">Withdraw Amount</option>';
-    msg += '</select></div>';
-    msg += '<div style="text-align:center;margin:10px;"><span id="filter_comparator" class="font-red">Loading...</span></div>';
-    msg += "<div id='filter_detail'></div>";
-    msg += "</div>";
-    var dialog = bootbox.dialog({
-        title: "Add Data Filter",
-        message: msg,
-        buttons: {
-            Add: function () {
-                var range = $("#filter_detail_selector").val();
-                if (range != null && range != undefined && range != "") {
-                    if (range.indexOf(";") > -1) range = "[" + range.replace(";", ",") + "]";
-                    else range = "{" + range + "}";
-                    var html = "<div class='filter_container' style='display:inline-block;'><span class='label bg-grey' value='" + $("#filter_feature").val() + "'>" + $("#filter_feature option:selected").html() + " ∈ " + range + "</span>";
-                    html += "<a href='javascript:void(0)' class='label bg-red' onclick='$(this).parent().remove();'><i class='fa fa-times'></i></a>";
-                    if ($("#filter_list").children().length > 1) html += "<a href='javascript:void(0)' class='filter_operator label bg-blue' style='margin:0 5px 0 5px;' onclick=\"$('.filter_operator').first().html()=='AND'?$('.filter_operator').html('OR'):$('.filter_operator').html('AND');\">AND</a>";
-                    html += "</div>";
-                    $("#filter_list").prepend(html);
-                }
-            }
-        },
-        show: false
+function cluster() {
+    $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/search/?id=" + $("#input_set_id").val(), function (data) {
+        $("#canvas").html(data.length);
+    }).fail(function () {
+        $("#canvas").html("<span class='text-danger'>Loading data failed.</span>");
     });
-    dialog.on("shown.bs.modal", function () {
-        $("select").select2({
-            dropdownAutoWidth: 'true',
-            minimumResultsForSearch: Infinity
-        });
-        $("#filter_feature").select2().on("change", function () {
-            var filter_comparator = $("#filter_feature option:selected").attr("filter_type");
-            if (filter_comparator == "range") {
-                $("#filter_comparator").html("Between Range");
-                $("#filter_detail").html("Loading...");
-                $.get(API_SERVER + "joker/api/cust/range/?model=" + $("#select_pred_model").val() + "&field=" + $("#filter_feature").val(), function (data) {
-                    $("#filter_detail").html("<input type='text' id='filter_detail_selector' value=''/>");
-                    $("#filter_detail_selector").ionRangeSlider({
-                        min: data.min,
-                        max: data.max,
-                        type: 'double',
-                        prettify: false,
-                        hasGrid: true
-                    });
-                });
-            }
-            else {
-                $("#filter_comparator").html("Choose From");
-                $("#filter_detail").html("Loading...");
-                $.get(API_SERVER + "joker/api/cust/unique/?model=" + $("#select_pred_model").val() + "&field=" + $("#filter_feature").val(), function (data) {
-                    $("#filter_detail").html("<input type='hidden' id='filter_detail_selector' class='form-control select2' value=''/>");
-                    var filter_tags = [];
-                    for (var i = 0; i < data.length; i++) {
-                        filter_tags.push({
-                            id: data[i].toString(),
-                            text: data[i].toString()
-                        });
-                    }
-                    $("#filter_detail_selector").select2({
-                        tags: filter_tags
-                    });
-                });
-            }
-        });
-        $("#filter_feature").select2("val", $("#filter_feature").first().val(), true);
-    });
-    dialog.modal('show');
 }
 
 function plot() {

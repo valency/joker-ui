@@ -1,5 +1,24 @@
 var API_SERVER = "https://120.25.209.91:8443/";
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
+var FEATURE_TAGS_MODEL_1 = [
+    {id: "id", text: "ID"},
+    {id: "segment", text: "Segment"},
+    {id: "age", text: "Age"},
+    {id: "gender", text: "Gender"},
+    {id: "yrs_w_club", text: "Club Years"},
+    {id: "is_member", text: "Member"},
+    {id: "is_hrs_owner", text: "Horse Owner"},
+    {id: "major_channel", text: "Major Channel"},
+    {id: "mtg_num", text: "Meetings Attended"},
+    {id: "inv", text: "Investment"},
+    {id: "div", text: "Dividend"},
+    {id: "rr", text: "Recovery Rate"},
+    {id: "end_bal", text: "Balance"},
+    {id: "recharge_times", text: "Recharge Times"},
+    {id: "recharge_amount", text: "Recharge Amount"},
+    {id: "withdraw_times", text: "Withdraw Times"},
+    {id: "withdraw_amount", text: "Withdraw Amount"}
+];
 
 String.prototype.toTitleCase = function () {
     return this.replace(/\w\S*/g, function (txt) {

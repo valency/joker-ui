@@ -5,7 +5,7 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][2] . "</title>";
+    echo "<title>SmartCube | " . $sub_words[1][1] . "</title>";
     ?>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
@@ -21,11 +21,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=2'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=1'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=2'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=1'); ?>
             <!-- BEGIN PAGE -->
             <div class="row">
                 <div class="col-md-12">
