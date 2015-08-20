@@ -44,6 +44,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-red">v0.8.20</span>
+                    <ul>
+                        <li>Added customer set model</li>
+                        <li>Removed data exploration page</li>
+                        <li>Added customer set management pages</li>
+                        <li>Modified clustering for customer sets</li>
+                        <li>Modified first time usage policy</li>
+                        <li>Modified certificates</li>
+                    </ul>
                     <span class="font-red">v0.8.16</span>
                     <ul>
                         <li>Modified API subsystem architecture</li>
