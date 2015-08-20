@@ -51,7 +51,7 @@
             <p>Don't have an account yet ? <a href="javascript:" id="register-btn">Create an account </a></p>
         </div>
         <div>
-            <p>First time visitor ? <a href="data/deepera.cer" target="_blank">Download certificate</a></p>
+            <p>First time visitor ? <a href="<?php echo $API_SERVER; ?>joker/auth/trust/" target="_blank">Trust</a> or <a href="data/deepera.root.cer" target="_blank">download certificate</a></p>
         </div>
     </form>
     <!-- END LOGIN FORM -->
