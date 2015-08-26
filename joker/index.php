@@ -44,6 +44,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.8.26</span>
+                    <ul>
+                        <li><span class='font-purple'>Fixed</span> clear database bug</li>
+                        <li><span class='font-yellow'>Modified</span> # of reason codes to 6</li>
+                        <li><span class='font-yellow'>Modified</span> investment to turnover (TO)</li>
+                        <li><span class='font-yellow'>Modified</span> meetings attended to active meetings</li>
+                        <li><span class='font-red'>Removed</span> displays of recharge / withdrawal information</li>
+                        <li><span class='font-green'>Added</span> links on dashboard</li>
+                        <li><span class='font-green'>Added</span> colors to updates</li>
+                        <li><span class='font-green'>Added</span> turnover parts</li>
+                    </ul>
                     <span class="font-blue">v0.8.20</span>
                     <ul>
                         <li><span class='font-green'>Added</span> customer set model</li>
