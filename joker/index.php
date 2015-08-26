@@ -8,8 +8,8 @@
     echo "<title>SmartCube | " . $menu_words[0] . "</title>";
     ?>
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
-<div class="page-header -i navbar navbar-fixed-top">
+<body class="page-header-<span class='font-purple'>Fixed</span> page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
+<div class="page-header -i navbar navbar-<span class='font-purple'>Fixed</span>-top">
     <div class="page-header-inner">
         <?php require_once "components/logo.php"; ?>
         <div class="top-menu">
@@ -29,132 +29,146 @@
             <!-- BEGIN PAGE -->
             <div class="row">
                 <div class="col-md-12">
+                    <h3>Features List</h3>
+                    <?php for ($i = 1; $i < count($menu_words); $i++) {
+                        echo "<p class='font-red'><i class='" . $menu_icons[$i] . "'></i> " . $menu_words[$i] . "</p>";
+                        echo "<ul class='sub-menu'>";
+                        for ($j = 0; $j < count($sub_words[$i]); $j++) {
+                            echo "<li><a href=" . $sub_urls[$i][$j] . "><i class=" . $sub_icons[$i][$j] . "></i> " . $sub_words[$i][$j] . "</a></li>";
+                        }
+                        echo "</ul></li>";
+                    } ?>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
                     <h3>Updates</h3>
-                    <span class="font-red">v0.8.20</span>
+                    <span class="font-blue">v0.8.20</span>
                     <ul>
-                        <li>Added customer set model</li>
-                        <li>Removed data exploration page</li>
-                        <li>Added customer set management pages</li>
-                        <li>Modified clustering for customer sets</li>
-                        <li>Modified first time usage policy</li>
-                        <li>Modified certificates</li>
+                        <li><span class='font-green'>Added</span> customer set model</li>
+                        <li><span class='font-red'>Removed</span> data exploration page</li>
+                        <li><span class='font-green'>Added</span> customer set management pages</li>
+                        <li><span class='font-yellow'>Modified</span> clustering for customer sets</li>
+                        <li><span class='font-yellow'>Modified</span> first time usage policy</li>
+                        <li><span class='font-yellow'>Modified</span> certificates</li>
                     </ul>
-                    <span class="font-red">v0.8.16</span>
+                    <span class="font-blue">v0.8.16</span>
                     <ul>
-                        <li>Modified API subsystem architecture</li>
-                        <li>Added user system</li>
-                        <li>Added source of data</li>
-                        <li>Removed upload page</li>
-                        <li>Added uploading in data management</li>
-                        <li>Added data source system</li>
-                        <li>Modified exporting file name as data source and configurations</li>
+                        <li><span class='font-yellow'>Modified</span> API subsystem architecture</li>
+                        <li><span class='font-green'>Added</span> user system</li>
+                        <li><span class='font-green'>Added</span> source of data</li>
+                        <li><span class='font-red'>Removed</span> upload page</li>
+                        <li><span class='font-green'>Added</span> uploading in data management</li>
+                        <li><span class='font-green'>Added</span> data source system</li>
+                        <li><span class='font-yellow'>Modified</span> exporting file name as data source and configurations</li>
                     </ul>
-                    <span class="font-red">v0.8.7</span>
+                    <span class="font-blue">v0.8.7</span>
                     <ul>
-                        <li>Fixed exporting of large csv file bug</li>
-                        <li>Removed exporting to excel</li>
-                        <li>Added cleaning database before importing data</li>
-                        <li>Added current working data set indicator</li>
-                        <li>Added gzip support</li>
-                        <li>Added zoom in / out buttons</li>
+                        <li><span class='font-purple'>Fixed</span> exporting of large csv file bug</li>
+                        <li><span class='font-red'>Removed</span> exporting to excel</li>
+                        <li><span class='font-green'>Added</span> cleaning database before importing data</li>
+                        <li><span class='font-green'>Added</span> current working data set indicator</li>
+                        <li><span class='font-green'>Added</span> gzip support</li>
+                        <li><span class='font-green'>Added</span> zoom in / out buttons</li>
                     </ul>
-                    <span class="font-red">v0.8.6</span>
+                    <span class="font-blue">v0.8.6</span>
                     <ul>
-                        <li>Modified model 3 test page title to data exploration</li>
-                        <li>Modified data exploration axis to dotted grey</li>
-                        <li>Added data filter for data exploration</li>
-                        <li>Fixed data filter or operation not working bug</li>
-                        <li>Fixed data filter and operation bug (cannot combine same field)</li>
+                        <li><span class='font-yellow'>Modified</span> model 3 test page title to data exploration</li>
+                        <li><span class='font-yellow'>Modified</span> data exploration axis to dotted grey</li>
+                        <li><span class='font-green'>Added</span> data filter for data exploration</li>
+                        <li><span class='font-purple'>Fixed</span> data filter or operation not working bug</li>
+                        <li><span class='font-purple'>Fixed</span> data filter and operation bug (cannot combine same field)</li>
                     </ul>
-                    <span class="font-red">v0.7.30</span>
+                    <span class="font-blue">v0.7.30</span>
                     <ul>
-                        <li>Added updates log</li>
-                        <li>Fixed overlapping bug of the x axis of figures</li>
-                        <li>Added plot test page</li>
-                        <li>Added figure zoom / pan features (non-categorical only)</li>
+                        <li><span class='font-green'>Added</span> updates log</li>
+                        <li><span class='font-purple'>Fixed</span> overlapping bug of the x axis of figures</li>
+                        <li><span class='font-green'>Added</span> plot test page</li>
+                        <li><span class='font-green'>Added</span> figure zoom / pan features (non-categorical only)</li>
                     </ul>
-                    <span class="font-red">v0.7.25</span>
+                    <span class="font-blue">v0.7.25</span>
                     <ul>
-                        <li>Fixed model 3 api call bug</li>
-                        <li>Modified distance model to cosine distance for clustering</li>
-                        <li>Added categorical clustering support</li>
+                        <li><span class='font-purple'>Fixed</span> model 3 api call bug</li>
+                        <li><span class='font-yellow'>Modified</span> distance model to cosine distance for clustering</li>
+                        <li><span class='font-green'>Added</span> categorical clustering support</li>
                     </ul>
-                    <span class="font-red">v0.7.15</span>
+                    <span class="font-blue">v0.7.15</span>
                     <ul>
-                        <li>Added https certificate at footer, please import to os before using the system</li>
-                        <li>Modified data model to model-oriented</li>
-                        <li>Removed model 2 data</li>
+                        <li><span class='font-green'>Added</span> https certificate at footer, please import to os before using the system</li>
+                        <li><span class='font-yellow'>Modified</span> data model to model-oriented</li>
+                        <li><span class='font-red'>Removed</span> model 2 data</li>
                     </ul>
-                    <span class="font-red">v0.7.13</span>
+                    <span class="font-blue">v0.7.13</span>
                     <ul>
-                        <li>Fixed model 2 figure 1 bug</li>
-                        <li>Modified api subsystem to nginx / gunicorn</li>
-                        <li>Added table column dragging</li>
-                        <li>Added table column hide / show</li>
+                        <li><span class='font-purple'>Fixed</span> model 2 figure 1 bug</li>
+                        <li><span class='font-yellow'>Modified</span> api subsystem to nginx / gunicorn</li>
+                        <li><span class='font-green'>Added</span> table column dragging</li>
+                        <li><span class='font-green'>Added</span> table column hide / show</li>
                     </ul>
-                    <span class="font-red">v0.6.29</span>
+                    <span class="font-blue">v0.6.29</span>
                     <ul>
-                        <li>Added registration</li>
-                        <li>Modified model 1 data set</li>
-                        <li>Added uploading model validation files on-the-fly</li>
-                        <li>Modified separated pages of model validation</li>
-                        <li>Added enlarging model statistics figure</li>
+                        <li><span class='font-green'>Added</span> registration</li>
+                        <li><span class='font-yellow'>Modified</span> model 1 data set</li>
+                        <li><span class='font-green'>Added</span> uploading model validation files on-the-fly</li>
+                        <li><span class='font-yellow'>Modified</span> separated pages of model validation</li>
+                        <li><span class='font-green'>Added</span> enlarging model statistics figure</li>
                     </ul>
-                    <span class="font-red">v0.6.28</span>
+                    <span class="font-blue">v0.6.28</span>
                     <ul>
-                        <li>Modified words of lapse to decline</li>
-                        <li>Modified predictions to the front of tables</li>
-                        <li>Added export all data (exporting large amount of data (>3000 records) is very slow)</li>
-                        <li>Added printing of current page</li>
-                        <li>Added portlet to statistical figures</li>
-                        <li>Added model validation</li>
-                        <li>Added fake login (username: smartcube, password: 1ac14128-4467-40f3-bf81-ebe0fad3f866)</li>
-                        <li>Modified clustering only on model 1</li>
-                        <li>Fixed model 3 plotting bug</li>
-                        <li>Modified user profile page</li>
-                        <li>Modified demo url to: http://120.25.209.91/joker/</li>
+                        <li><span class='font-yellow'>Modified</span> words of lapse to decline</li>
+                        <li><span class='font-yellow'>Modified</span> predictions to the front of tables</li>
+                        <li><span class='font-green'>Added</span> export all data (exporting large amount of data (>3000 records) is very slow)</li>
+                        <li><span class='font-green'>Added</span> printing of current page</li>
+                        <li><span class='font-green'>Added</span> portlet to statistical figures</li>
+                        <li><span class='font-green'>Added</span> model validation</li>
+                        <li><span class='font-green'>Added</span> fake login (username: smartcube, password: 1ac14128-4467-40f3-bf81-ebe0fad3f866)</li>
+                        <li><span class='font-yellow'>Modified</span> clustering only on model 1</li>
+                        <li><span class='font-purple'>Fixed</span> model 3 plotting bug</li>
+                        <li><span class='font-yellow'>Modified</span> user profile page</li>
+                        <li><span class='font-yellow'>Modified</span> demo url to: http://120.25.209.91/joker/</li>
                     </ul>
-                    <span class="font-red">v0.6.11</span>
+                    <span class="font-blue">v0.6.11</span>
                     <ul>
-                        <li>Modified API system to Django</li>
-                        <li>Modified UI system to Bootstrap</li>
-                        <li>Modified default sorting mode to sync with query</li>
-                        <li>Added exporting feature</li>
-                        <li>Added show / hide column feature</li>
-                        <li>Removed prediction mode of model 1</li>
-                        <li>Added predictions in model tables</li>
-                        <li>Added separated customer page</li>
+                        <li><span class='font-yellow'>Modified</span> API system to Django</li>
+                        <li><span class='font-yellow'>Modified</span> UI system to Bootstrap</li>
+                        <li><span class='font-yellow'>Modified</span> default sorting mode to sync with query</li>
+                        <li><span class='font-green'>Added</span> exporting feature</li>
+                        <li><span class='font-green'>Added</span> show / hide column feature</li>
+                        <li><span class='font-red'>Removed</span> prediction mode of model 1</li>
+                        <li><span class='font-green'>Added</span> predictions in model tables</li>
+                        <li><span class='font-green'>Added</span> separated customer page</li>
                     </ul>
-                    <span class="font-red">v0.5.16</span>
+                    <span class="font-blue">v0.5.16</span>
                     <ul>
-                        <li>Modified YTD to PYTD</li>
-                        <li>Modified prediction period list</li>
-                        <li>Removed options in detail window</li>
-                        <li>Added ranking in detail window</li>
-                        <li>Fixed model 2 ordering bug</li>
+                        <li><span class='font-yellow'>Modified</span> YTD to PYTD</li>
+                        <li><span class='font-yellow'>Modified</span> prediction period list</li>
+                        <li><span class='font-red'>Removed</span> options in detail window</li>
+                        <li><span class='font-green'>Added</span> ranking in detail window</li>
+                        <li><span class='font-purple'>Fixed</span> model 2 ordering bug</li>
                     </ul>
-                    <span class="font-red">v0.5.14</span>
+                    <span class="font-blue">v0.5.14</span>
                     <ul>
-                        <li>Added ordering function</li>
-                        <li>Modified yearly to annual in period selection of model 1</li>
-                        <li>Modified Fig 1.1 to Growth Rate of Turnover (YTD)</li>
-                        <li>Added KPI in Fig 1.1 & 2.1</li>
-                        <li>Modified Fig 1.2 to Turnover per Meeting</li>
-                        <li>Modified color palette for all piecharts</li>
-                        <li>Modified Fig 1.5 & 1.6 to Turnover of … (YTD)</li>
-                        <li>Modified the format of propensity in data table to percentage</li>
-                        <li>Modified Fig 2.1 to Avg. Act. Rate (YTD)</li>
-                        <li>Modified Fig 2.2 to # of Active Custs. per Meeting</li>
-                        <li>Modified the x axis of Fig 1.3, 2.3, and 2.4</li>
-                        <li>Modified Fig 2.6 & 2.7 to New Custs.' Turnover of … (YTD)</li>
+                        <li><span class='font-green'>Added</span> ordering function</li>
+                        <li><span class='font-yellow'>Modified</span> yearly to annual in period selection of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> Fig 1.1 to Growth Rate of Turnover (YTD)</li>
+                        <li><span class='font-green'>Added</span> KPI in Fig 1.1 & 2.1</li>
+                        <li><span class='font-yellow'>Modified</span> Fig 1.2 to Turnover per Meeting</li>
+                        <li><span class='font-yellow'>Modified</span> color palette for all piecharts</li>
+                        <li><span class='font-yellow'>Modified</span> Fig 1.5 & 1.6 to Turnover of … (YTD)</li>
+                        <li><span class='font-yellow'>Modified</span> the format of propensity in data table to percentage</li>
+                        <li><span class='font-yellow'>Modified</span> Fig 2.1 to Avg. Act. Rate (YTD)</li>
+                        <li><span class='font-yellow'>Modified</span> Fig 2.2 to # of Active Custs. per Meeting</li>
+                        <li><span class='font-yellow'>Modified</span> the x axis of Fig 1.3, 2.3, and 2.4</li>
+                        <li><span class='font-yellow'>Modified</span> Fig 2.6 & 2.7 to New Custs.' Turnover of … (YTD)</li>
                     </ul>
-                    <span class="font-red">v0.5.2</span>
+                    <span class="font-blue">v0.5.2</span>
                     <ul>
-                        <li>Fixed removing data source</li>
-                        <li>Fixed expression of prop.</li>
-                        <li>Added figures for model 1 and model 2</li>
-                        <li>Fixed expression of growth 10%</li>
-                        <li>Fixed sorting by LABEL_PROB</li>
+                        <li><span class='font-purple'>Fixed</span> removing data source</li>
+                        <li><span class='font-purple'>Fixed</span> expression of prop.</li>
+                        <li><span class='font-green'>Added</span> figures for model 1 and model 2</li>
+                        <li><span class='font-purple'>Fixed</span> expression of growth 10%</li>
+                        <li><span class='font-purple'>Fixed</span> sorting by LABEL_PROB</li>
                     </ul>
                 </div>
             </div>
