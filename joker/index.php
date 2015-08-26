@@ -29,20 +29,6 @@
             <!-- BEGIN PAGE -->
             <div class="row">
                 <div class="col-md-12">
-                    <h3>System Status</h3>
-                    <?php if ($handle = opendir('./')) {
-                        while (false !== ($entry = readdir($handle))) {
-                            if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "php") {
-                                echo "<span><a href='" . $entry . "'>" . $entry . "</a> (Last Update: " . date("F d Y, H:i:s", filemtime($entry)) . ")</span><br/>";
-                            }
-                        }
-                        closedir($handle);
-                    } ?>
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="col-md-12">
                     <h3>Updates</h3>
                     <span class="font-red">v0.8.20</span>
                     <ul>

@@ -1,23 +1,3 @@
-var feature_tags = [
-    {id: "id", text: "ID"},
-    {id: "segment", text: "Segment"},
-    {id: "age", text: "Age"},
-    {id: "gender", text: "Gender"},
-    {id: "yrs_w_club", text: "Club Years"},
-    {id: "is_member", text: "Member"},
-    {id: "is_hrs_owner", text: "Horse Owner"},
-    {id: "major_channel", text: "Major Channel"},
-    {id: "mtg_num", text: "Meetings Attended"},
-    {id: "inv", text: "Investment"},
-    {id: "div", text: "Dividend"},
-    {id: "rr", text: "Recovery Rate"},
-    {id: "end_bal", text: "Balance"},
-    {id: "recharge_times", text: "Recharge Times"},
-    {id: "recharge_amount", text: "Recharge Amount"},
-    {id: "withdraw_times", text: "Withdraw Times"},
-    {id: "withdraw_amount", text: "Withdraw Amount"}
-];
-
 $(document).ready(function () {
     Metronic.init();
     Layout.init();
@@ -28,13 +8,13 @@ $(document).ready(function () {
         minimumResultsForSearch: Infinity
     });
     $("#select2_features").select2({
-        tags: feature_tags
+        tags: FEATURE_TAGS_MODEL_1
     });
 });
 
 function interpret_feature_tag(tag) {
-    for (var i = 0; i < feature_tags.length; i++) {
-        if (feature_tags[i].id == tag) return feature_tags[i].text;
+    for (var i = 0; i < FEATURE_TAGS_MODEL_1.length; i++) {
+        if (FEATURE_TAGS_MODEL_1[i].id == tag) return FEATURE_TAGS_MODEL_1[i].text;
     }
     return null;
 }
@@ -139,10 +119,6 @@ function scatter(container, data, xLabel, yLabel) {
         return "translate(" + xScale(d[xLabel]) + "," + yScale(d[yLabel]) + ")";
     }
 }
-
-
-
-
 
 
 // PLOT.JS

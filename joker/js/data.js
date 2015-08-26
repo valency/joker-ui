@@ -21,7 +21,7 @@ function add_deco_badge(model) {
         $.get(API_SERVER + "joker/model/" + model + "/source/", function (r) {
             for (var i = 0; i < r.length; i++) {
                 var found = false;
-                var clear_db = "<button onclick=\"clear_db('" + r[i] + "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Clear DB</button>";
+                var clear_db = "<button onclick=\"clear_db(" + model + ",'" + r[i] + "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Clear DB</button>";
                 var model_badge = "<span class='pull-right badge badge-success'> model " + model + " </span>";
                 var active_btn = "<button onclick=\"set_active(" + model + ",'" + r[i] + "')\" class='btn default btn-xs red'><i class='fa fa-trash-o'></i> Activate</button>";
                 $(".file-entry").each(function () {
@@ -61,12 +61,12 @@ function set_active(model, source) {
     });
 }
 
-function clear_db(source) {
+function clear_db(model, source) {
     bootbox.dialog({
         message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
         closeButton: false
     });
-    $.get(API_SERVER + "joker/model/" + data_type + "/delete_all/?source=" + file, function (r) {
+    $.get(API_SERVER + "joker/model/" + model + "/delete_all/?source=" + source, function (r) {
         window.location.reload();
     }).fail(function () {
         bootbox.hideAll();
@@ -76,7 +76,7 @@ function clear_db(source) {
 
 function interpret_data_type_desc(data_type) {
     var data_type_desc = {
-        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "REASON_CODE_1", "REASON_CODE_2", "REASON_CODE_3"],
+        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_1", "GROW_REASON_CODE_2", "GROW_REASON_CODE_3", "DECLINE_REASON_CODE_1", "DECLINE_REASON_CODE_2", "DECLINE_REASON_CODE_3"],
         model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "REGULAR_PROPENSITY", "REASON_CODE_1", "REASON_CODE_2", "REASON_CODE_3"]
     };
     var html = "";

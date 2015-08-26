@@ -9,6 +9,20 @@ $(document).ready(function () {
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity
     });
+    // Configure table header
+    var table_header_div = $("#customer_table>thead>tr");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "age", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "gender", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "yrs_w_club", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "is_member", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "is_hrs_owner", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "major_channel", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "mtg_num", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "inv", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "text").replace(" ", "<br/>") + "</th>");
+    table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "text").replace(" ", "<br/>") + "</th>");
+    // Draw table
     oConf = DT_CONF;
     $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         oConf.jokerSource = active.value;

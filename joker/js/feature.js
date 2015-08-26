@@ -1,23 +1,3 @@
-var COL_TRANS = {
-    id: "ID",
-    segment: "Segment",
-    age: "Age",
-    gender: "Gender",
-    yrs_w_club: "Club Years",
-    is_member: "Member",
-    is_hrs_owner: "Horse Owner",
-    major_channel: "Major Channel",
-    mtg_num: "Meetings Attended",
-    inv: "Investment",
-    div: "Dividend",
-    rr: "Recovery Rate",
-    end_bal: "Balance",
-    recharge_times: "Recharge Times",
-    recharge_amount: "Recharge Amount",
-    withdraw_times: "Withdraw Times",
-    withdraw_amount: "Withdraw Amount"
-};
-
 var DT_CONF = {
     jokerSource: null,
     stateSave: true,
@@ -65,11 +45,7 @@ var DT_CONF = {
         {data: "inv", name: "inv"},
         {data: "div", name: "div"},
         {data: "rr", name: "rr"},
-        {data: "end_bal", name: "end_bal"},
-        {data: "recharge_times", name: "recharge_times"},
-        {data: "recharge_amount", name: "recharge_amount"},
-        {data: "withdraw_times", name: "withdraw_times"},
-        {data: "withdraw_amount", name: "withdraw_amount"}
+        {data: "end_bal", name: "end_bal"}
     ],
     dom: "R<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     tableTools: {
@@ -186,11 +162,12 @@ function add_column_filter(table, model) {
     $("#column_filter").click(function () {
         var msg = "";
         var flag = 0;
-        for (var key in COL_TRANS) {
+        for (var i = 0; i < FEATURE_TAGS_MODEL_1.length; i++) {
+            var key = FEATURE_TAGS_MODEL_1[i].id;
             var column = table.column(key + ":name");
             flag += 1;
             if (flag % 3 == 1) msg += "<div class='row'>";
-            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + COL_TRANS[key] + "</label></div>";
+            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + FEATURE_TAGS_MODEL_1[i].text + "</label></div>";
             if (flag % 3 == 0) msg += "</div>";
         }
         bootbox.dialog({
@@ -231,7 +208,7 @@ function add_portlet(target, title, body) {
 }
 
 function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
-    html = "<div class='col-md-6'>";
+    var html = "<div class='col-md-6'>";
     html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
     html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
     html += "<p class='bold font-" + color + "' style='font-size:35px;margin:0;'>" + data[prop_attr_name].toFixed(1) + "</p>";
@@ -241,9 +218,9 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
     html += "<div class='thumbnail' style='height:100px;width:165px;display:inline-block;padding:12px;'>";
     html += "<p class='bold font-" + color + "' style='margin-bottom:5px;' id='cust_rank_" + prop_attr_name + "'>Loading...</p>";
     html += "<ul style='padding-left:18px;'>";
-    html += "<li>" + data.reason_code_1 + "</li>";
-    html += "<li>" + data.reason_code_2 + "</li>";
-    html += "<li>" + data.reason_code_3 + "</li>";
+    html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_1"] + "</li>";
+    html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_2"] + "</li>";
+    html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_3"] + "</li>";
     html += "</ul>";
     html += "</div>";
     html += "</div>";
@@ -264,19 +241,19 @@ function generate_cust_data(data, model) {
     html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-6'>";
-    html += "<span class='font-green'>Age: </span><span>" + data.age + "</span><br/>";
-    html += "<span class='font-green'>Club Years: </span><span>" + data.yrs_w_club + "</span><br/>";
-    html += "<span class='font-green'>Major Channel: </span><span>" + data.major_channel + "</span><br/>";
-    html += "<span class='font-green'>Meetings Attended in Last Season: </span><span>" + data.mtg_num + "</span><br/>";
-    html += "<span class='font-green'>Total Investment: </span><span>" + data.inv + "</span><br/>";
-    html += "<span class='font-green'>Dividend: </span><span>" + data.div + "</span>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "age", "text") + ": </span><span>" + data.age + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "yrs_w_club", "text") + ": </span><span>" + data.yrs_w_club + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "major_channel", "text") + ": </span><span>" + data.major_channel + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "mtg_num", "text") + ": </span><span>" + data.mtg_num + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "inv", "text") + ": </span><span>" + data.inv + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "text") + ": </span><span>" + data.div + "</span>";
     html += "</div><div class='col-md-6'>";
-    html += "<span class='font-green'>Recovery Rate: </span><span>" + data.rr + "</span><br/>";
-    html += "<span class='font-green'>Balance: </span><span>" + data.end_bal + "</span><br/>";
-    html += "<span class='font-green'>Recharge Times: </span><span>" + data.recharge_times + "</span><br/>";
-    html += "<span class='font-green'>Recharge Amount: </span><span>" + data.recharge_amount + "</span><br/>";
-    html += "<span class='font-green'>Withdraw Times: </span><span>" + data.withdraw_times + "</span><br/>";
-    html += "<span class='font-green'>Withdraw Amount: </span><span>" + data.withdraw_amount + "</span>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "text") + ": </span><span>" + data.rr + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "text") + ": </span><span>" + data.end_bal + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "text") + ": </span><span>" + data.recharge_times + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "text") + ": </span><span>" + data.recharge_amount + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "text") + ": </span><span>" + data.withdraw_times + "</span><br/>";
+    html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + data.withdraw_amount + "</span>";
     html += "</div>";
     html += "</div><hr/><div class='row'>";
     if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");

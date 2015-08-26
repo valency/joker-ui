@@ -37,21 +37,6 @@
                                 <th class="font-purple">Segment</th>
                                 <th class="font-red">Grow<br/>Propensity</th>
                                 <th class="font-green">Decline<br/>Propensity</th>
-                                <th>Age</th>
-                                <th>Gender</th>
-                                <th>Club<br/>Years</th>
-                                <th>Member</th>
-                                <th>Horse<br/>Owner</th>
-                                <th>Major<br/>Channel</th>
-                                <th>Meetings<br/>Attended</th>
-                                <th>Investment</th>
-                                <th>Dividend</th>
-                                <th>Recovery<br/>Rate</th>
-                                <th>Balance</th>
-                                <th>Recharge<br/>Times</th>
-                                <th>Recharge<br/>Amount</th>
-                                <th>Withdraw<br/>Times</th>
-                                <th>Withdraw<br/>Amount</th>
                             </tr>
                             </thead>
                             <tbody id="customer_table_body"></tbody>

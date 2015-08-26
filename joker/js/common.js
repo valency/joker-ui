@@ -9,8 +9,8 @@ var FEATURE_TAGS_MODEL_1 = [
     {id: "is_member", text: "Member"},
     {id: "is_hrs_owner", text: "Horse Owner"},
     {id: "major_channel", text: "Major Channel"},
-    {id: "mtg_num", text: "Meetings Attended"},
-    {id: "inv", text: "Investment"},
+    {id: "mtg_num", text: "Active Meetings"},
+    {id: "inv", text: "Turnover"},
     {id: "div", text: "Dividend"},
     {id: "rr", text: "Recovery Rate"},
     {id: "end_bal", text: "Balance"},
@@ -24,6 +24,12 @@ String.prototype.toTitleCase = function () {
     return this.replace(/\w\S*/g, function (txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
+};
+
+Array.prototype.findKeyValue = function (key_desc, key, value_desc) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i][key_desc] == key)return this[i][value_desc];
+    }
 };
 
 function guid() {
