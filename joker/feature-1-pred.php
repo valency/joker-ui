@@ -7,6 +7,7 @@
     require_once "components/menu.php";
     echo "<title>SmartCube | " . $sub_words[1][1] . "</title>";
     ?>
+    <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
 <div class="page-header -i navbar navbar-fixed-top">
@@ -51,6 +52,8 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
+<script src="/lib/d3.min.js"></script>
+<script src="js/figure.js" type="text/javascript"></script>
 <script src="js/feature.js" type="text/javascript"></script>
 <script src="js/feature-1-pred.js" type="text/javascript"></script>
 </body>

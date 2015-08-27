@@ -10,7 +10,7 @@
     fill: orange;
 }
 
-.axis {
+.axis, .axis-label {
     font: 10px sans-serif;
 }
 

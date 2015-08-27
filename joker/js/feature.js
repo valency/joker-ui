@@ -86,6 +86,8 @@ function load_data(div_id, conf, model) {
         bootbox.dialog({
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
+        }).on('shown.bs.modal', function (e) {
+            generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part);
         });
         if (model == 1) {
             update_cust_rank(data.id, model, "grow_prop", conf.jokerSource);
@@ -256,12 +258,23 @@ function generate_cust_data(data, model) {
     html += "<span class='font-green'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + data.withdraw_amount + "</span>";
     html += "</div>";
     html += "</div><hr/><div class='row'>";
+    html += "<div class='col-md-12'><div id='cust_detail_turnover_barchart'>";
+    html += "</div></div>";
+    html += "</div><hr/><div class='row'>";
     if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");
     if (data.decline_prop != null) html += generate_cust_prop(data, model, "decline_prop", ["DECLINE", "PROPENSITY"], "green");
     if (data.regular_prop != null) html += generate_cust_prop(data, model, "regular_prop", ["CHANCE", "TO BE REGULAR"], "yellow");
     html += "</div>";
     html += "</div>";
     return html;
+}
+
+function generate_cust_turnover_barchart(container, inv_part) {
+    var data = [];
+    for (var i = 0; i < inv_part.length; i++) {
+        data.push({x: i + 1, y: inv_part[i]});
+    }
+    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 40, right: 10, width: $(container).width(), height: 200}, {x: "", y: "Turnover"});
 }
 
 function piechart(src, table_title, table_desc) {
