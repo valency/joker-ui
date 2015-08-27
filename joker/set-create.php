@@ -33,15 +33,11 @@
             <div class="row form-group form-horizontal">
                 <label class="col-md-2 control-label">Choose Data From:</label>
 
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-addon">Data Set</span>
-                        <select id="select_pred_model" class="form-control">
-                            <option value="1">Model 1</option>
-                        </select>
-                    </div>
+                <div class="col-md-3">
+                    <a href="data.php" id="data_source_btn" class='form-control btn red no-border'><span>Loading...</span></a>
+                    <input id="select_pred_model" value="1" hidden/>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="input-group">
                         <span class="input-group-addon">Order By</span>
                         <select id="select_pred_order" class="form-control">
@@ -65,10 +61,14 @@
                     <a href="javascript:void(0)" class="label bg-blue" onclick="add_filter();"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn green pull-right" onclick="create_set();">Create Customer Set</button>
-                    <button id="data_source_btn" class='btn red pull-right' style="margin-right:5px;"><span>Loading...</span></button>
+            <hr/>
+            <div class="row form-group form-horizontal">
+                <div class="col-md-6"></div>
+                <div class="col-md-4">
+                    <input class="form-control" id="set_title" placeholder="Name of the Customer Set"/>
+                </div>
+                <div class="col-md-2">
+                    <button class="form-control btn green no-border" onclick="create_set();">Create</button>
                 </div>
             </div>
             <!-- END PAGE -->

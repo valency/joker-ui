@@ -10,9 +10,17 @@ $(document).ready(function () {
     $("#select_features").select2({
         tags: FEATURE_TAGS_MODEL_1
     });
-    if (get_url_parameter("id") != undefined) {
-        $("#input_set_id").val(get_url_parameter("id"));
-    }
+    $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/retrieve_all_id/", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            $("#input_set_id").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
+        }
+        $("#input_set_id").select2({
+            dropdownAutoWidth: 'true'
+        });
+        if (get_url_parameter("id") != undefined) {
+            $("#input_set_id").select2("val", get_url_parameter("id"));
+        }
+    });
 });
 
 function interpret_feature_tag(tag) {

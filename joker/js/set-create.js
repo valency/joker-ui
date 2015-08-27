@@ -118,10 +118,12 @@ function create_set() {
         var filter = $(filter_containers[i]).attr("value") + ",";
         if ($(filter_containers[i]).html().indexOf("{") > -1) filter += "in,";
         else filter += "range,";
-        filter += $(filter_containers[i]).html().split(" ")[2].substr(1, $(filter_containers[i]).html().split(" ")[2].length - 2).replace(/,/g, "~");
+        var filter_ranges = $(filter_containers[i]).html().split("∈")[1].trim();
+        filter_ranges = filter_ranges.substr(1, filter_ranges.length - 2);
+        filter += filter_ranges.replace(/,/g, "~");
         filters.push(filter);
     }
-    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
+    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?name=" + $("#set_title").val() + "&source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
         window.location.href = "set-show.php?id=" + data.id;
     }).fail(function () {
         bootbox.hideAll();

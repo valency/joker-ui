@@ -41,26 +41,19 @@
             <div class="row form-group">
                 <div class="col-md-3">
                     <div class="input-group">
-                        <span class="input-group-addon">Data Set</span>
-                        <select id="select_data_set" class="form-control">
-                            <option value="1">Model 1</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="input-group">
                         <span class="input-group-addon"># of Clusters</span>
                         <input id="input_clusters" class="form-control" type="text" value="5"/>
+                        <input id="select_data_set" value="1" hidden/>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">Customer Set</span>
-                        <input id="input_set_id" class="form-control" value="" placeholder="CUST_SET_ID"/>
+                        <select id="input_set_id" class="form-control"></select>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <button class="btn red pull-right" onclick="cluster();">Perform Clustering</button>
+                <div class="col-md-3">
+                    <button class="form-control btn red no-border" onclick="cluster();">Perform Clustering</button>
                 </div>
             </div>
             <hr/>
