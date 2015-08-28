@@ -29,20 +29,6 @@
             <!-- BEGIN PAGE -->
             <div class="row">
                 <div class="col-md-12">
-                    <h3>Features List</h3>
-                    <?php for ($i = 1; $i < count($menu_words); $i++) {
-                        echo "<p class='font-red'><i class='" . $menu_icons[$i] . "'></i> " . $menu_words[$i] . "</p>";
-                        echo "<ul class='sub-menu'>";
-                        for ($j = 0; $j < count($sub_words[$i]); $j++) {
-                            echo "<li><a href=" . $sub_urls[$i][$j] . "><i class=" . $sub_icons[$i][$j] . "></i> " . $sub_words[$i][$j] . "</a></li>";
-                        }
-                        echo "</ul></li>";
-                    } ?>
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="col-md-12">
                     <h3>Updates</h3>
                     <span class="font-blue">v0.8.26</span>
                     <ul>
