@@ -39,7 +39,33 @@
             </div>
             <hr/>
             <div class="row">
-                <div id="canvas" class="col-md-12"></div>
+                <div id="canvas-hint" class="col-md-12"></div>
+                <div id="canvas" class="col-md-9"></div>
+                <div id="canvas-control" class="col-md-3 hidden" style="border-left:1px solid black;">
+                    <p class="nowrap"><span id="canvas-control-name" class="font-red bold">Loading...</span></p>
+
+                    <p class="font-xs">
+                        <span class="bold"># of Clusters: </span>
+                        <span id="canvas-control-clusters">Loading...</span><br/>
+                        <span class="bold">Created on: </span>
+                        <span id="canvas-control-create-time">Loading...</span><br/>
+                        <span class="bold">Clustered on: </span>
+                        <span id="canvas-control-cluster-time">Loading...</span>
+                    </p>
+
+                    <p>
+                        <button class="btn btn-xs green"><i class="fa fa-download"></i> Download</button>
+                        <button class="btn btn-xs grey"><i class="fa fa-times"></i> Delete</button>
+                    </p>
+                    <hr/>
+                    <div>
+
+                    </div>
+                    <hr/>
+                    <div>
+
+                    </div>
+                </div>
             </div>
             <!-- END PAGE -->
         </div>

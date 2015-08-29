@@ -50,3 +50,10 @@ path {
     stroke: #CCC;
     stroke-dasharray: 5, 5;
 }
+
+.nowrap {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
