@@ -42,7 +42,7 @@ function add_filter() {
     msg += '<div style="text-align:center;margin:10px;"><span id="filter_comparator" class="font-red">Loading...</span></div>';
     msg += "<div id='filter_detail'></div>";
     msg += "</div>";
-    var dialog = bootbox.dialog({
+    bootbox.dialog({
         title: "Add Data Filter",
         message: msg,
         buttons: {
@@ -58,10 +58,8 @@ function add_filter() {
                     $("#filter_list").prepend(html);
                 }
             }
-        },
-        show: false
-    });
-    dialog.on("shown.bs.modal", function () {
+        }
+    }).on("shown.bs.modal", function () {
         $("select").select2({
             dropdownAutoWidth: 'true',
             minimumResultsForSearch: Infinity
@@ -102,7 +100,6 @@ function add_filter() {
         });
         $("#filter_feature").select2("val", $("#filter_feature").first().val(), true);
     });
-    dialog.modal('show');
 }
 
 function create_set() {
