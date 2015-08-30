@@ -30,6 +30,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.8.30</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> display of turnover and active rate trends</li>
+                        <li><span class='font-green'>Added</span> auto-complete for customer set search</li>
+                        <li><span class='font-red'>Removed</span> features list from dashboard</li>
+                        <li><span class='font-green'>Added</span> responsive menu toggle on small screens (mobile version)</li>
+                        <li><span class='font-yellow'>Modified</span> model 3 UI design</li>
+                        <li><span class='font-yellow'>Modified</span> figures to be resized to maximized screen space</li>
+                        <li><span class='font-green'>Added</span> zooming only on x / y axis</li>
+                    </ul>
                     <span class="font-blue">v0.8.26</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> clear database bug</li>
