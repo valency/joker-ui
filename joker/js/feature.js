@@ -164,7 +164,7 @@ function add_column_filter(table, model) {
     $("#column_filter").click(function () {
         var msg = "";
         var flag = 0;
-        for (var i = 0; i < FEATURE_TAGS_MODEL_1.length; i++) {
+        for (var i = 0; i < FEATURE_TAGS_MODEL_1.length - 4; i++) {
             var key = FEATURE_TAGS_MODEL_1[i].id;
             var column = table.column(key + ":name");
             flag += 1;
@@ -210,14 +210,15 @@ function add_portlet(target, title, body) {
 }
 
 function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
-    var html = "<div class='col-md-6'>";
-    html += "<div class='thumbnail' style='height:100px;width:100px;vertical-align:bottom;display:inline-block;'>";
+    var html = "<div class='row' style='margin-bottom:10px;'><div class='col-md-12'>";
+    html += "<div style='border:1px solid #ddd;overflow:hidden;height:104px;'>";
+    html += "<div class='thumbnail no-border' style='height:100px;width:100px;display:inline-block;'>";
     html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;'>";
     html += "<p class='bold font-" + color + "' style='font-size:35px;margin:0;'>" + data[prop_attr_name].toFixed(1) + "</p>";
     html += "<p style='font-size:10px;'><span class='font-" + color + "'>" + prop_name[0] + "</span><br/>" + prop_name[1] + "</p>";
     html += "</div>";
     html += "</div>";
-    html += "<div class='thumbnail' style='height:100px;width:165px;display:inline-block;padding:12px;'>";
+    html += "<div class='thumbnail no-border' style='height:100px;width:auto;display:inline-block;padding:12px;'>";
     html += "<p class='bold font-" + color + "' style='margin-bottom:5px;' id='cust_rank_" + prop_attr_name + "'>Loading...</p>";
     html += "<ul style='padding-left:18px;'>";
     html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_1"] + "</li>";
@@ -226,6 +227,7 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
     html += "</ul>";
     html += "</div>";
     html += "</div>";
+    html += "</div></div>";
     return html;
 }
 
@@ -260,11 +262,10 @@ function generate_cust_data(data, model) {
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-12'><div id='cust_detail_turnover_barchart'>";
     html += "</div></div>";
-    html += "</div><hr/><div class='row'>";
+    html += "</div><hr/>";
     if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");
     if (data.decline_prop != null) html += generate_cust_prop(data, model, "decline_prop", ["DECLINE", "PROPENSITY"], "green");
     if (data.regular_prop != null) html += generate_cust_prop(data, model, "regular_prop", ["CHANCE", "TO BE REGULAR"], "yellow");
-    html += "</div>";
     html += "</div>";
     return html;
 }
@@ -272,9 +273,10 @@ function generate_cust_data(data, model) {
 function generate_cust_turnover_barchart(container, inv_part) {
     var data = [];
     for (var i = 0; i < inv_part.length; i++) {
-        data.push({x: i + 1, y: inv_part[i]});
+        data.push({x: inv_part.length - i, y: inv_part[i]});
     }
-    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 40, right: 10, width: $(container).width(), height: 200}, {x: "", y: "Turnover"});
+    data.reverse();
+    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 40, right: 10, width: $(container).width(), height: 200}, {x: "", y: "Turnover"}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
 }
 
 function piechart(src, table_title, table_desc) {

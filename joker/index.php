@@ -30,6 +30,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.9.1</span>
+                    <ul>
+                        <li><span class='font-red'>Removed</span> withdraw / recharge options from column filters</li>
+                        <li><span class='font-purple'>Fixed</span> reason code display bug</li>
+                        <li><span class='font-purple'>Fixed</span> x axis too dense bug of turnover distribution figure</li>
+                        <li><span class='font-purple'>Fixed</span> x axis order bug of turnover distribution figure</li>
+                    </ul>
                     <span class="font-blue">v0.8.30</span>
                     <ul>
                         <li><span class='font-green'>Added</span> display of turnover and active rate trends</li>

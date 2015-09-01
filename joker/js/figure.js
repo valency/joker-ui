@@ -1,4 +1,4 @@
-function figure_bar_chart(data, container, margin, label) {
+function figure_bar_chart(data, container, margin, label, tick) {
     // Container: jQuery / D3.js compatible selector, e.g., "#figure_container"
     // Data: [{x: 0, y: 0},...]
     // Margin: {top: 10, bottom: 30, left: 30, right: 10, width: 100, height: 100}
@@ -9,6 +9,10 @@ function figure_bar_chart(data, container, margin, label) {
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().scale(x).orient("bottom");
     var yAxis = d3.svg.axis().scale(y).orient("left");
+    if (tick != undefined && tick != null) {
+        if (tick.x != null) xAxis = xAxis.tickValues(tick.x);
+        if (tick.y != null) yAxis = yAxis.tickValues(tick.y);
+    }
     var svg = d3.select(container).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
