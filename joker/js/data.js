@@ -25,7 +25,7 @@ function add_deco_badge(model) {
                 var model_badge = "<span class='pull-right badge badge-success'> model " + model + " </span>";
                 var active_btn = "<button onclick=\"set_active(" + model + ",'" + r[i] + "')\" class='btn default btn-xs red'><i class='fa fa-trash-o'></i> Activate</button>";
                 $(".file-entry").each(function () {
-                    if (r.indexOf($(this).attr("href").replace("data/", "")) >= 0) {
+                    if (r[i] == $(this).attr("href").replace("data/", "")) {
                         found = true;
                         $(this).append(model_badge);
                         $(this).parent().next().next().next().append(clear_db);
