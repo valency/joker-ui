@@ -30,6 +30,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.9.7</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> hints for customer table and details</li>
+                        <li><span class='font-green'>Added</span> responsive design for review of customer sets</li>
+                    </ul>
                     <span class="font-blue">v0.9.2</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> multiple badges bug on data management page</li>
