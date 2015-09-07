@@ -23,6 +23,11 @@ $(document).ready(function () {
             });
         }
     });
+    $(window).resize(function () {
+        WaitForFinalEvent(function () {
+            if (cust_list.length > 0) cust_set_draw();
+        }, 500, "window-resize");
+    });
 });
 
 function cust_set_search() {

@@ -1,24 +1,39 @@
 var API_SERVER = "https://120.25.209.91:8443/";
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
 var FEATURE_TAGS_MODEL_1 = [
-    {id: "id", text: "ID"},
-    {id: "segment", text: "Segment"},
-    {id: "age", text: "Age"},
-    {id: "gender", text: "Gender"},
-    {id: "yrs_w_club", text: "Club Years"},
-    {id: "is_member", text: "Member"},
-    {id: "is_hrs_owner", text: "Horse Owner"},
-    {id: "major_channel", text: "Major Channel"},
-    {id: "mtg_num", text: "Active Meetings"},
-    {id: "inv", text: "Turnover"},
-    {id: "div", text: "Dividend"},
-    {id: "rr", text: "Recovery Rate"},
-    {id: "end_bal", text: "Balance"},
-    {id: "recharge_times", text: "Recharge Times"},
-    {id: "recharge_amount", text: "Recharge Amount"},
-    {id: "withdraw_times", text: "Withdraw Times"},
-    {id: "withdraw_amount", text: "Withdraw Amount"}
+    {id: "id", text: "ID", hint: "Customer ID"},
+    {id: "segment", text: "Segment", hint: "Customer Segment"},
+    {id: "age", text: "Age", hint: "Customer Age"},
+    {id: "gender", text: "Gender", hint: "Customer Gender"},
+    {id: "yrs_w_club", text: "Club Years", hint: "Years with the Club"},
+    {id: "is_member", text: "Member", hint: "Whether the Customer Is a Member"},
+    {id: "is_hrs_owner", text: "Horse Owner", hint: "Whether the Customer Is a Horse Owner"},
+    {id: "major_channel", text: "Major Channel", hint: "Major Racing Betting Channel"},
+    {id: "mtg_num", text: "Active Meetings", hint: "# of Active Meetings in Recent 83 Meetings"},
+    {id: "inv", text: "Turnover", hint: "Total Turnover of Recent 83 Meetings"},
+    {id: "div", text: "Dividend", hint: "Total Dividend of Recent 83 Meetings"},
+    {id: "rr", text: "Recovery Rate", hint: "Divide Dividend by Turnover"},
+    {id: "end_bal", text: "Balance", hint: "Balance of Account(s)"},
+    {id: "recharge_times", text: "Recharge Times", hint: ""},
+    {id: "recharge_amount", text: "Recharge Amount", hint: ""},
+    {id: "withdraw_times", text: "Withdraw Times", hint: ""},
+    {id: "withdraw_amount", text: "Withdraw Amount", hint: ""}
 ];
+
+var FEATURE_TAGS_PROP = [
+    {id: "grow_prop", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow"},
+    {id: "decline_prop", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline"},
+    {id: "regular_prop", text: "Chance to be Regular", hint: ""}
+];
+
+var WaitForFinalEvent = (function () {
+    var timers = {};
+    return function (callback, ms, uniqueId) {
+        if (!uniqueId)  uniqueId = "Don't call this twice without a uniqueId";
+        if (timers[uniqueId]) clearTimeout(timers[uniqueId]);
+        timers[uniqueId] = setTimeout(callback, ms);
+    };
+})();
 
 String.prototype.toTitleCase = function () {
     return this.replace(/\w\S*/g, function (txt) {
@@ -28,7 +43,7 @@ String.prototype.toTitleCase = function () {
 
 Array.prototype.findKeyValue = function (key_desc, key, value_desc) {
     for (var i = 0; i < this.length; i++) {
-        if (this[i][key_desc] == key)return this[i][value_desc];
+        if (this[i][key_desc] == key) return this[i][value_desc];
     }
 };
 

@@ -22,6 +22,13 @@ $(document).ready(function () {
     table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "text").replace(" ", "<br/>") + "</th>");
     table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "text").replace(" ", "<br/>") + "</th>");
     table_header_div.append("<th>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "text").replace(" ", "<br/>") + "</th>");
+    // Add hint for table header
+    $("#customer_table>thead>tr>th").each(function () {
+        var th_text = $(this).html().replace("<br>", " ");
+        var th_hint = FEATURE_TAGS_MODEL_1.findKeyValue("text", th_text, "hint");
+        if (th_hint == null) th_hint = FEATURE_TAGS_PROP.findKeyValue("text", th_text, "hint");
+        $(this).attr("title", th_hint);
+    });
     // Draw table
     oConf = DT_CONF;
     $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
