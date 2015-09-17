@@ -30,6 +30,19 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.9.17</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> source data</li>
+                        <li><span class='font-yellow'>Modified</span> reason code with two digits</li>
+                        <li><span class='font-green'>Added</span> select all for creating customer sets</li>
+                        <li><span class='font-red'>Removed</span> timezone support for api subsystem</li>
+                        <li><span class='font-red'>Removed</span> categorical variables from model 3 review, now numerical variables only</li>
+                        <li><span class='font-yellow'>Modified</span> # of reason codes to 4</li>
+                    </ul>
+                    <span class="font-blue">v0.9.15</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> support of model 2</li>
+                    </ul>
                     <span class="font-blue">v0.9.7</span>
                     <ul>
                         <li><span class='font-green'>Added</span> hints for customer table and details</li>
