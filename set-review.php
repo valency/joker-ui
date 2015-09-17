@@ -94,7 +94,7 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
-<script src="/lib/d3.min.js"></script>
+<script src="lib/d3.min.js"></script>
 <script src="js/set-review.js" type="text/javascript"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][3] . "</title>";
+    echo "<title>SmartCube | " . $sub_words[1][0] . "</title>";
     ?>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -22,11 +22,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=3'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=0'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=3'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
             <!-- BEGIN PAGE -->
             <div id="figure_container"></div>
             <!-- END PAGE -->
@@ -36,9 +36,9 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
-<script src="/lib/d3.min.js"></script>
+<script src="lib/d3.min.js"></script>
 <script src="data/feature.js" type="text/javascript"></script>
 <script src="js/feature.js" type="text/javascript"></script>
-<script src="js/feature-2-stat.js" type="text/javascript"></script>
+<script src="js/feature-1-stat.js" type="text/javascript"></script>
 </body>
 </html>

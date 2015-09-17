@@ -109,9 +109,9 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
-<script src="/lib/jquery-file-upload-9.10.1/js/vendor/jquery.ui.widget.js"></script>
-<script src="/lib/jquery-file-upload-9.10.1/js/jquery.iframe-transport.js"></script>
-<script src="/lib/jquery-file-upload-9.10.1/js/jquery.fileupload.js"></script>
+<script src="lib/jquery-file-upload-9.10.1/js/vendor/jquery.ui.widget.js"></script>
+<script src="lib/jquery-file-upload-9.10.1/js/jquery.iframe-transport.js"></script>
+<script src="lib/jquery-file-upload-9.10.1/js/jquery.fileupload.js"></script>
 <script src="js/feature.js" type="text/javascript"></script>
 <script src="js/validation.js" type="text/javascript"></script>
 </body>

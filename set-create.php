@@ -71,6 +71,11 @@
                     <button class="form-control btn green no-border" onclick="create_set();">Create</button>
                 </div>
             </div>
+            <div class="row" style="position:absolute;bottom:10px;">
+                <div class="col-md-12 small">
+                    * Size: input 0 for all data
+                </div>
+            </div>
             <!-- END PAGE -->
         </div>
     </div>
@@ -78,7 +83,7 @@
 </div>
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
-<script src="/lib/d3.min.js"></script>
+<script src="lib/d3.min.js"></script>
 <script src="assets/global/plugins/ion.rangeslider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
 <script src="js/set-create.js" type="text/javascript"></script>
 </body>

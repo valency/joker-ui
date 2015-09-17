@@ -65,9 +65,11 @@ function cust_set_search() {
         x_btn.html("");
         y_btn.html("");
         for (i = 0; i < FEATURE_TAGS_MODEL_1.length; i++) {
-            html = "<option value='" + FEATURE_TAGS_MODEL_1[i].id + "'>" + FEATURE_TAGS_MODEL_1[i].text + "</option>";
-            x_btn.append(html);
-            y_btn.append(html);
+            if (CATEGORICAL_COLUMNS.indexOf(FEATURE_TAGS_MODEL_1[i].id) < 0) {
+                html = "<option value='" + FEATURE_TAGS_MODEL_1[i].id + "'>" + FEATURE_TAGS_MODEL_1[i].text + "</option>";
+                x_btn.append(html);
+                y_btn.append(html);
+            }
         }
         x_btn.select2({
             dropdownAutoWidth: 'true',
@@ -77,8 +79,8 @@ function cust_set_search() {
             dropdownAutoWidth: 'true',
             minimumResultsForSearch: Infinity
         });
-        x_btn.select2("val", data["cluster_features"][0]);
-        y_btn.select2("val", data["cluster_features"][1]);
+        if (CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][0]) < 0) x_btn.select2("val", data["cluster_features"][0]);
+        if (CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][1]) < 0) y_btn.select2("val", data["cluster_features"][1]);
         // Figure
         cust_list = [];
         for (i = 0; i < data.cust.length; i++) {
