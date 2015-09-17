@@ -76,8 +76,8 @@ function clear_db(model, source) {
 
 function interpret_data_type_desc(data_type) {
     var data_type_desc = {
-        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_(1-3)", "DECLINE_REASON_CODE_(1-3)", "INV(1-83)"],
-        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "REGULAR_PROPENSITY", "REASON_CODE_1", "REASON_CODE_2", "REASON_CODE_3"]
+        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_(1-4)", "DECLINE_REASON_CODE_(1-4)", "INV(1-83)"],
+        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)"]
     };
     var html = "";
     for (var i = 0; i < data_type_desc[data_type].length; i++) {

@@ -25,7 +25,7 @@ var CATEGORICAL_COLUMNS = ["id", "segment", "age", "gender", "is_member", "is_hr
 var FEATURE_TAGS_PROP = [
     {id: "grow_prop", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow"},
     {id: "decline_prop", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline"},
-    {id: "regular_prop", text: "Chance to be Regular", hint: ""}
+    {id: "chance_to_be_regular", text: "Chance to be Regular", hint: ""}
 ];
 
 var WaitForFinalEvent = (function () {

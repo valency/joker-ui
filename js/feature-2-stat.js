@@ -59,7 +59,7 @@ function draw_figures() {
             });
         }
         piechart(src, "New Custs.' Turnover of Channels (PYTD)", "Key: Channel<br/>Value: New Custs.' Turnover of the Channel (%)");
-        histogram("regular_prop", 0, "Dist. of New Custs.' Regular Score", "X Axis: New Custs.' Regular Score<br/>Y Axis: Probabilistic Distribution Function (%)", 2, active.value);
+        histogram("chance_to_be_regular", 0, "Dist. of New Custs.' Regular Score", "X Axis: New Custs.' Regular Score<br/>Y Axis: Probabilistic Distribution Function (%)", 2, active.value);
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";

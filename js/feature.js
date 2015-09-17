@@ -79,6 +79,7 @@ function load_data(div_id, conf, model) {
             "disabled": "btn btn-sm default disabled"
         }
     });
+    console.log(conf);
     var table = $('#' + div_id).DataTable(conf);
     $("#" + div_id + " tbody").on('click', 'tr', function () {
         var data = table.row(this).data();
@@ -93,7 +94,7 @@ function load_data(div_id, conf, model) {
             update_cust_rank(data.id, model, "grow_prop", conf.jokerSource);
             update_cust_rank(data.id, model, "decline_prop", conf.jokerSource);
         } else if (model == 2) {
-            update_cust_rank(data.id, model, "regular_prop", conf.jokerSource);
+            update_cust_rank(data.id, model, "chance_to_be_regular", conf.jokerSource);
         }
     });
     add_dataset_badge(table, model);
@@ -218,12 +219,13 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
     html += "<p style='font-size:10px;'><span class='font-" + color + "'>" + prop_name[0] + "</span><br/>" + prop_name[1] + "</p>";
     html += "</div>";
     html += "</div>";
-    html += "<div class='thumbnail no-border' style='height:100px;width:auto;display:inline-block;padding:12px;'>";
-    html += "<p class='bold font-" + color + "' style='margin-bottom:5px;' id='cust_rank_" + prop_attr_name + "'>Loading...</p>";
-    html += "<ul style='padding-left:18px;'>";
+    html += "<div class='thumbnail no-border' style='height:100px;width:auto;display:inline-block;'>";
+    html += "<p class='bold font-" + color + "' style='margin-bottom:2px;' id='cust_rank_" + prop_attr_name + "'>Loading...</p>";
+    html += "<ul style='padding-left:18px;line-height:16px;margin-bottom:0;'>";
     html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_1"] + "</li>";
     html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_2"] + "</li>";
     html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_3"] + "</li>";
+    html += "<li>" + data[prop_attr_name.replace("prop", "") + "reason_code_4"] + "</li>";
     html += "</ul>";
     html += "</div>";
     html += "</div>";
@@ -253,11 +255,11 @@ function generate_cust_data(data, model) {
     html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "text") + ": </span><span>" + data.div + "</span>";
     html += "</div><div class='col-md-6'>";
     html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "text") + ": </span><span>" + data.rr + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "text") + ": </span><span>" + data.end_bal + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "text") + ": </span><span>" + data.recharge_times + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "text") + ": </span><span>" + data.recharge_amount + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "text") + ": </span><span>" + data.withdraw_times + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + data.withdraw_amount + "</span>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "text") + ": </span><span>" + (data.end_bal ? data.end_bal : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "text") + ": </span><span>" + (data.recharge_times ? data.recharge_times : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "text") + ": </span><span>" + (data.recharge_amount ? data.recharge_amount : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "text") + ": </span><span>" + (data.withdraw_times ? data.withdraw_times : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + (data.withdraw_amount ? data.withdraw_amount : "-") + "</span>";
     html += "</div>";
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-12'><div id='cust_detail_turnover_barchart'>";
@@ -265,7 +267,7 @@ function generate_cust_data(data, model) {
     html += "</div><hr/>";
     if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");
     if (data.decline_prop != null) html += generate_cust_prop(data, model, "decline_prop", ["DECLINE", "PROPENSITY"], "green");
-    if (data.regular_prop != null) html += generate_cust_prop(data, model, "regular_prop", ["CHANCE", "TO BE REGULAR"], "yellow");
+    if (data.chance_to_be_regular != null) html += generate_cust_prop(data, model, "chance_to_be_regular", ["CHANCE", "TO BE REGULAR"], "yellow");
     html += "</div>";
     return html;
 }

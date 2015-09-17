@@ -16,7 +16,7 @@ $(document).ready(function () {
     });
     if (get_url_parameter("id") != undefined && get_url_parameter("model") != undefined) {
         $("#search_cust_id").val(get_url_parameter("id"));
-        $("#select2_model").val(get_url_parameter("model"));
+        $("#select2_model").select2("val", get_url_parameter("model"));
         cust_search();
     }
 });
@@ -34,7 +34,7 @@ function cust_search() {
                 update_cust_rank(data.id, model, "grow_prop", active.value);
                 update_cust_rank(data.id, model, "decline_prop", active.value);
             } else if (model == 2) {
-                update_cust_rank(data.id, model, "regular_prop", active.value);
+                update_cust_rank(data.id, model, "chance_to_be_regular", active.value);
             }
         }).fail(function () {
             $("#customer_table_wrapper>div").html("<span class='font-red'>Not Found</span>");
