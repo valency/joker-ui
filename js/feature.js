@@ -165,12 +165,12 @@ function add_column_filter(table, model) {
     $("#column_filter").click(function () {
         var msg = "";
         var flag = 0;
-        for (var i = 0; i < FEATURE_TAGS_MODEL_1.length - 4; i++) {
-            var key = FEATURE_TAGS_MODEL_1[i].id;
+        for (var i = 0; i < FEATURE_TAGS.length - 4; i++) {
+            var key = FEATURE_TAGS[i].id;
             var column = table.column(key + ":name");
             flag += 1;
             if (flag % 3 == 1) msg += "<div class='row'>";
-            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + FEATURE_TAGS_MODEL_1[i].text + "</label></div>";
+            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + FEATURE_TAGS[i].text + "</label></div>";
             if (flag % 3 == 0) msg += "</div>";
         }
         bootbox.dialog({
@@ -241,25 +241,25 @@ function update_cust_rank(id, model, column, source) {
 
 function generate_cust_data(data, model) {
     var html = "<div>";
-    html += "<span class='label bg-purple' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "segment", "hint") + "'><i class='fa fa-group'></i> " + data.segment + "</span> ";
-    html += "<span class='label bg-" + interpret_gender_color(data.gender) + "' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "gender", "hint") + "'>" + interpret_gender_name(data.gender) + "</span> ";
-    html += "<span class='label bg-" + (data.is_member ? "yellow" : "grey") + "' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "is_member", "hint") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
-    html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "is_hrs_owner", "hint") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
+    html += "<span class='label bg-purple' title='" + FEATURE_TAGS.findKeyValue("id", "segment", "hint") + "'><i class='fa fa-group'></i> " + data.segment + "</span> ";
+    html += "<span class='label bg-" + interpret_gender_color(data.gender) + "' title='" + FEATURE_TAGS.findKeyValue("id", "gender", "hint") + "'>" + interpret_gender_name(data.gender) + "</span> ";
+    html += "<span class='label bg-" + (data.is_member ? "yellow" : "grey") + "' title='" + FEATURE_TAGS.findKeyValue("id", "is_member", "hint") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
+    html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "' title='" + FEATURE_TAGS.findKeyValue("id", "is_hrs_owner", "hint") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-6'>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "age", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "age", "text") + ": </span><span>" + data.age + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "yrs_w_club", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "yrs_w_club", "text") + ": </span><span>" + data.yrs_w_club + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "major_channel", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "major_channel", "text") + ": </span><span>" + data.major_channel + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "mtg_num", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "mtg_num", "text") + ": </span><span>" + data.mtg_num + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "inv", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "inv", "text") + ": </span><span>" + data.inv + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "div", "text") + ": </span><span>" + data.div + "</span>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "age", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "age", "text") + ": </span><span>" + data.age + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "yrs_w_club", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "yrs_w_club", "text") + ": </span><span>" + data.yrs_w_club + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "major_channel", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "major_channel", "text") + ": </span><span>" + data.major_channel + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "mtg_num", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "mtg_num", "text") + ": </span><span>" + data.mtg_num + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "inv", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "inv", "text") + ": </span><span>" + data.inv + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "div", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "div", "text") + ": </span><span>" + data.div + "</span>";
     html += "</div><div class='col-md-6'>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "rr", "text") + ": </span><span>" + data.rr + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "end_bal", "text") + ": </span><span>" + (data.end_bal ? data.end_bal : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_times", "text") + ": </span><span>" + (data.recharge_times ? data.recharge_times : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "recharge_amount", "text") + ": </span><span>" + (data.recharge_amount ? data.recharge_amount : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_times", "text") + ": </span><span>" + (data.withdraw_times ? data.withdraw_times : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "hint") + "'>" + FEATURE_TAGS_MODEL_1.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + (data.withdraw_amount ? data.withdraw_amount : "-") + "</span>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "rr", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "rr", "text") + ": </span><span>" + data.rr + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "end_bal", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "end_bal", "text") + ": </span><span>" + (data.end_bal ? data.end_bal : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "recharge_times", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "recharge_times", "text") + ": </span><span>" + (data.recharge_times ? data.recharge_times : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "recharge_amount", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "recharge_amount", "text") + ": </span><span>" + (data.recharge_amount ? data.recharge_amount : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "withdraw_times", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "withdraw_times", "text") + ": </span><span>" + (data.withdraw_times ? data.withdraw_times : "-") + "</span><br/>";
+    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "withdraw_amount", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + (data.withdraw_amount ? data.withdraw_amount : "-") + "</span>";
     html += "</div>";
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-12'><div id='cust_detail_turnover_barchart'>";

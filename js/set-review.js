@@ -5,6 +5,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
+    init_widget();
     $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/retrieve_all_id/", function (data) {
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
@@ -64,9 +65,9 @@ function cust_set_search() {
         var y_btn = $("#canvas-control-cluster-draw-y");
         x_btn.html("");
         y_btn.html("");
-        for (i = 0; i < FEATURE_TAGS_MODEL_1.length; i++) {
-            if (CATEGORICAL_COLUMNS.indexOf(FEATURE_TAGS_MODEL_1[i].id) < 0) {
-                html = "<option value='" + FEATURE_TAGS_MODEL_1[i].id + "'>" + FEATURE_TAGS_MODEL_1[i].text + "</option>";
+        for (i = 0; i < FEATURE_TAGS.length; i++) {
+            if (CATEGORICAL_COLUMNS.indexOf(FEATURE_TAGS[i].id) < 0) {
+                html = "<option value='" + FEATURE_TAGS[i].id + "'>" + FEATURE_TAGS[i].text + "</option>";
                 x_btn.append(html);
                 y_btn.append(html);
             }

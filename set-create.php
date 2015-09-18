@@ -41,15 +41,16 @@
                     <div class="input-group">
                         <span class="input-group-addon">Order By</span>
                         <select id="select_pred_order" class="form-control">
-                            <option value="grow_prop">Grow Propensity</option>
-                            <option value="decline_prop">Decline Propensity</option>
+                            <option value="random">Random</option>
+                            <option value="-grow_prop">Grow Propensity</option>
+                            <option value="-decline_prop">Decline Propensity</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="input-group">
                         <span class="input-group-addon">Size</span>
-                        <input id="no_of_records" class="form-control" type="text" value="500"/>
+                        <input id="no_of_records" class="form-control" type="text" value="500" data-toggle="tooltip" title="0 = All Data"/>
                     </div>
                 </div>
             </div>
@@ -69,11 +70,6 @@
                 </div>
                 <div class="col-md-2">
                     <button class="form-control btn green no-border" onclick="create_set();">Create</button>
-                </div>
-            </div>
-            <div class="row" style="position:absolute;bottom:10px;">
-                <div class="col-md-12 small">
-                    * Size: input 0 for all data
                 </div>
             </div>
             <!-- END PAGE -->

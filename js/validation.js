@@ -3,10 +3,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    $("select").select2({
-        dropdownAutoWidth: 'true',
-        minimumResultsForSearch: Infinity
-    });
+    init_widget();
     var source = get_url_parameter("src");
     var model = get_url_parameter("model");
     var segment = get_url_parameter("seg");

@@ -3,6 +3,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
+    init_widget();
     for (var model = 1; model <= 2; model++) {
         add_deco_badge(model);
     }

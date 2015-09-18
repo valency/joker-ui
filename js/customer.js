@@ -3,10 +3,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    $("select").select2({
-        dropdownAutoWidth: 'true',
-        minimumResultsForSearch: Infinity
-    });
+    init_widget();
     $("#search_cust_id").keyup(function (e) {
         var code = e.which;
         if (code == 13)e.preventDefault();

@@ -3,6 +3,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
+    init_widget();
     draw_figures();
 });
 

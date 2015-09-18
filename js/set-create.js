@@ -5,10 +5,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    $("select").select2({
-        dropdownAutoWidth: 'true',
-        minimumResultsForSearch: Infinity
-    });
+    init_widget();
     $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         active_set = active.value;
         $("#data_source_btn>span").html("<i class='fa fa-briefcase'></i> " + active_set);
@@ -120,7 +117,7 @@ function create_set() {
         filter += filter_ranges.replace(/,/g, "~");
         filters.push(filter);
     }
-    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?name=" + $("#set_title").val() + "&source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=-" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
+    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?name=" + $("#set_title").val() + "&source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
         window.location.href = "set-show.php?id=" + data.id;
     }).fail(function () {
         bootbox.hideAll();

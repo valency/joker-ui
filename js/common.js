@@ -1,6 +1,6 @@
 var API_SERVER = "https://127.0.0.1:8443/";
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
-var FEATURE_TAGS_MODEL_1 = [
+var FEATURE_TAGS = [
     {id: "id", text: "ID", hint: "Customer ID"},
     {id: "segment", text: "Segment", hint: "Customer Segment"},
     {id: "age", text: "Age", hint: "Customer Age"},
@@ -19,9 +19,7 @@ var FEATURE_TAGS_MODEL_1 = [
     {id: "withdraw_times", text: "Withdraw Times", hint: ""},
     {id: "withdraw_amount", text: "Withdraw Amount", hint: ""}
 ];
-
 var CATEGORICAL_COLUMNS = ["id", "segment", "age", "gender", "is_member", "is_hrs_owner", "major_channel"];
-
 var FEATURE_TAGS_PROP = [
     {id: "grow_prop", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow"},
     {id: "decline_prop", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline"},
@@ -82,4 +80,12 @@ function logout() {
     Cookies.remove("joker_username");
     Cookies.remove("joker_ticket");
     window.location.href = "/joker/login.php";
+}
+
+function init_widget() {
+    $('[data-toggle="tooltip"]').tooltip();
+    $("select").select2({
+        dropdownAutoWidth: 'true',
+        minimumResultsForSearch: Infinity
+    });
 }

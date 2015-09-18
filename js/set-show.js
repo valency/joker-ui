@@ -3,12 +3,9 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    $("select").select2({
-        dropdownAutoWidth: 'true',
-        minimumResultsForSearch: Infinity
-    });
+    init_widget();
     $("#select_features").select2({
-        tags: FEATURE_TAGS_MODEL_1
+        tags: FEATURE_TAGS
     });
     $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/retrieve_all_id/", function (data) {
         for (var i = 0; i < data.length; i++) {
