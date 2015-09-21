@@ -14,27 +14,13 @@ function draw_figures() {
         for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
             src.push({
                 x: GROWTH_RATE_TURNOVER_COUNT[i],
-                y: ACCUMULATIVE_AVERAGE_ACTIVE_RATE[i]
+                y: ACCUMULATIVE_AVERAGE_ACTIVE_RATE[i],
+                last_season: ACTIVE_CUSTOMERS_LAST_SEASON[i],
+                this_season: ACTIVE_CUSTOMERS_THIS_SEASON[i]
             });
         }
-        polyline(src, "Avg. Active Rate (PYTD)", "X Axis: Meeting ID<br/>Y Axis: Avg. Active Rate (%)", null, 0.34);
-        src = [];
-        for (i = 0; i < TURNOVER_COUNT.length; i++) {
-            src.push({
-                x: TURNOVER_COUNT[i],
-                y1: ACTIVE_CUSTOMERS_LAST_SEASON[i],
-                y2: ACTIVE_CUSTOMERS_THIS_SEASON[i]
-            });
-        }
-        barset(src, "# of Active Custs. per Meeting", "X Axis: Meeting ID<br/>Y Axis: # of Active Custs.", "Last Season", "This Season");
-        src = [];
-        for (i = 0; i < PDF_ACTIVE_RATE_COUNT.length; i++) {
-            src.push({
-                x: PDF_ACTIVE_RATE_COUNT[i],
-                y: PDF_ACTIVE_RATE[i]
-            });
-        }
-        barchart(src, "Dist. of New Custs.' Active Rate", "X Axis: New Custs.' Active Rate (%)<br/>Y Axis: Probabilistic Distribution Function (%)");
+        stat_figure_growth_rate_of_turnover(src, "Avg. Active Rate (PYTD)", {x: "Meeting ID", y: "Avg. Active Rate (%)", last_season: "# of Active Custs. of Last Season", this_season: "# of Active Custs. of This Season"}, 0.34);
+        stat_figure_bar_chart(src, "Dist. of New Custs.' Active Rate", "New Custs.' Active Rate (%)", "Probabilistic Distribution Function (%)");
         src = [];
         for (i = 0; i < PDF_GROWTH_RATE_ACTIVE_RATE_COUNT.length; i++) {
             src.push({
@@ -42,8 +28,8 @@ function draw_figures() {
                 y: PDF_GROWTH_RATE_ACTIVE_RATE[i]
             });
         }
-        barchart(src, "Dist. of Avg. Active Rate of New Custs.", "X Axis: Avg. Active Rate of New Custs. (%)<br/>Y Axis: Probabilistic Distribution Function (%)");
-        histogram("age", 0, "Dist. of New Custs.' Age", "X Axis: New Custs.' Age<br/>Y Axis: Probabilistic Distribution Function (%)", 2, active.value);
+        stat_figure_bar_chart(src, "Dist. of Avg. Active Rate of New Custs.", "Avg. Active Rate of New Custs. (%)", "Probabilistic Distribution Function (%)");
+        stat_figure_histogram("age", 0, "Dist. of New Custs.' Age", "New Custs.' Age", "Probabilistic Distribution Function (%)", 2, active.value);
         src = [];
         for (i = 0; i < BET_TYPE.length; i++) {
             src.push({
@@ -51,7 +37,7 @@ function draw_figures() {
                 value: PERCENTAGE_NEW_BET_TYPE[i]
             });
         }
-        piechart(src, "New Custs.' Turnover of Bet Types (PYTD)", "Key: Bet Type<br/>Value: New Custs.' Turnover of the Bet Type (%)");
+        stat_figure_pie_chart(src, "New Custs.' Turnover of Bet Types (PYTD)", "Bet Type", "New Custs.' Turnover of the Bet Type (%)");
         src = [];
         for (i = 0; i < MAJOR_CHANNEL_LABEL.length; i++) {
             src.push({
@@ -59,8 +45,8 @@ function draw_figures() {
                 value: PERCENTAGE_MAJOR_CHANNEL[i]
             });
         }
-        piechart(src, "New Custs.' Turnover of Channels (PYTD)", "Key: Channel<br/>Value: New Custs.' Turnover of the Channel (%)");
-        histogram("chance_to_be_regular", 0, "Dist. of New Custs.' Regular Score", "X Axis: New Custs.' Regular Score<br/>Y Axis: Probabilistic Distribution Function (%)", 2, active.value);
+        stat_figure_pie_chart(src, "New Custs.' Turnover of Channels (PYTD)", "Channel", "New Custs.' Turnover of the Channel (%)");
+        stat_figure_histogram("chance_to_be_regular", 0, "Dist. of New Custs.' Regular Score", "New Custs.' Regular Score", "Probabilistic Distribution Function (%)", 2, active.value);
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";

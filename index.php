@@ -30,6 +30,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.9.21</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> hint of select all for creating customer sets</li>
+                        <li><span class='font-green'>Added</span> random selection of model 3</li>
+                        <li><span class='font-purple'>Fixed</span> reason code display bug in customer details</li>
+                        <li><span class='font-red'>Removed</span> the figure of turnover per meeting</li>
+                        <li><span class='font-yellow'>Modified</span> the figure of growth rate of turnover</li>
+                    </ul>
                     <span class="font-blue">v0.9.17</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> source data</li>

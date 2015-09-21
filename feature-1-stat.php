@@ -28,7 +28,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
             <!-- BEGIN PAGE -->
-            <div id="figure_container"></div>
+            <div id="figure-container"></div>
             <!-- END PAGE -->
         </div>
     </div>
@@ -38,7 +38,7 @@
 <?php require_once "components/js.php"; ?>
 <script src="lib/d3.min.js"></script>
 <script src="data/feature.js" type="text/javascript"></script>
-<script src="js/feature.js" type="text/javascript"></script>
 <script src="js/feature-1-stat.js" type="text/javascript"></script>
+<script src="js/figure-stats.js" type="text/javascript"></script>
 </body>
 </html>
