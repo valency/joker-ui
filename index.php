@@ -30,6 +30,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.9.22</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> clustering formulas for model 3</li>
+                        <li><span class='font-purple'>Fixed</span> alert bug in clustering page</li>
+                        <li><span class='font-green'>Added</span> cluster ids of customers for extracted csv file in model 3</li>
+                    </ul>
                     <span class="font-blue">v0.9.21</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> hint of select all for creating customer sets</li>
