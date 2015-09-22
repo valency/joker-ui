@@ -32,10 +32,10 @@ function cluster() {
         message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
         closeButton: false
     });
-    $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/kmeans/?header=" + header.join(",") + "&n_clusters=" + $("#input_clusters").val() + "&set_id=" + $("#input_set_id").val(), function (data) {
+    $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/kmeans/?header=" + header.join(",") + "&metric=" + $("#select_metric").val() + "&n_clusters=" + $("#input_clusters").val() + "&set_id=" + $("#input_set_id").val(), function (data) {
         window.location.href = "set-review.php?id=" + $("#input_set_id").val();
     }).fail(function () {
         bootbox.hideAll();
-        $("#canvas").html("<div class='alert alert-danger'><strong>Error!</strong> Something is wrong during clustering.</div>");
+        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong during clustering!</span>");
     });
 }
