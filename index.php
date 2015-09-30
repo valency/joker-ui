@@ -30,6 +30,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.9.30</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> new model 2 data</li>
+                        <li><span class='font-purple'>Fixed</span> data import refreshing bug</li>
+                        <li><span class='font-green'>Added</span> active rate of previous 83 races for model 2</li>
+                        <li><span class='font-purple'>Fixed</span> model 2 badge display error in customer details</li>
+                        <li><span class='font-purple'>Fixed</span> model 2 tag display error in customer details</li>
+                        <li><span class='font-purple'>Fixed</span> y axis label display bug of customer turnover bar chart</li>
+                        <li><span class='font-purple'>Fixed</span> model 2 column filter bug</li>
+                    </ul>
                     <span class="font-blue">v0.9.22</span>
                     <ul>
                         <li><span class='font-green'>Added</span> clustering formulas for model 3</li>
