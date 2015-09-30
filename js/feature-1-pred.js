@@ -6,28 +6,21 @@ $(document).ready(function () {
     QuickSidebar.init();
     check_login();
     init_widget();
+    oConf = DT_CONF;
     // Configure table header
     var table_header_div = $("#customer_table>thead>tr");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "age", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "gender", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "yrs_w_club", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "is_member", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "is_hrs_owner", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "major_channel", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "mtg_num", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "inv", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "div", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "rr", "text").replace(" ", "<br/>") + "</th>");
-    table_header_div.append("<th>" + FEATURE_TAGS.findKeyValue("id", "end_bal", "text").replace(" ", "<br/>") + "</th>");
+    for (var i = 2; i < FEATURE_TAGS[0].length - 4; i++) {
+        table_header_div.append("<th>" + FEATURE_TAGS[0][i]["text"].splitMiddle().join("<br/>") + "</th>");
+        oConf.columns.push({data: FEATURE_TAGS[0][i]["id"], name: FEATURE_TAGS[0][i]["id"]});
+    }
     // Add hint for table header
     $("#customer_table>thead>tr>th").each(function () {
         var th_text = $(this).html().replace("<br>", " ");
-        var th_hint = FEATURE_TAGS.findKeyValue("text", th_text, "hint");
+        var th_hint = FEATURE_TAGS[0].findKeyValue("text", th_text, "hint");
         if (th_hint == null) th_hint = FEATURE_TAGS_PROP.findKeyValue("text", th_text, "hint");
         $(this).attr("title", th_hint);
     });
     // Draw table
-    oConf = DT_CONF;
     $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         oConf.jokerSource = active.value;
         oConf.ajax = API_SERVER + "joker/model/1/get_all/?source=" + active.value;

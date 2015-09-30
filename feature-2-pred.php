@@ -36,7 +36,7 @@
                             <tr class="heading">
                                 <th class="font-blue">ID</th>
                                 <th class="font-purple">Segment</th>
-                                <th class="font-red">Chance to<br/>be Regular</th>
+                                <th class="font-red">Chance to<br/>Be Regular</th>
                             </tr>
                             </thead>
                             <tbody id="customer_table_body"></tbody>

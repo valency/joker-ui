@@ -22,30 +22,7 @@ var DT_CONF = {
             render: function (data, type, full, meta) {
                 return "<span class='label bg-purple'><i class='fa fa-group'></i> " + data + "</span>";
             }
-        },
-        {data: "age", name: "age"},
-        {data: "gender", name: "gender"},
-        {data: "yrs_w_club", name: "yrs_w_club"},
-        {
-            data: "is_member",
-            name: "is_member",
-            render: function (data, type, full, meta) {
-                return data ? "Yes" : "No";
-            }
-        },
-        {
-            data: "is_hrs_owner",
-            name: "is_hrs_owner",
-            render: function (data, type, full, meta) {
-                return data ? "Yes" : "No";
-            }
-        },
-        {data: "major_channel", name: "major_channel"},
-        {data: "mtg_num", name: "mtg_num"},
-        {data: "inv", name: "inv"},
-        {data: "div", name: "div"},
-        {data: "rr", name: "rr"},
-        {data: "end_bal", name: "end_bal"}
+        }
     ],
     dom: "R<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     tableTools: {
@@ -79,7 +56,6 @@ function load_data(div_id, conf, model) {
             "disabled": "btn btn-sm default disabled"
         }
     });
-    console.log(conf);
     var table = $('#' + div_id).DataTable(conf);
     $("#" + div_id + " tbody").on('click', 'tr', function () {
         var data = table.row(this).data();
@@ -109,7 +85,7 @@ function load_data(div_id, conf, model) {
 }
 
 function add_dataset_badge(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm red'><span><i class='fa fa-briefcase'></i> " + DT_CONF.jokerSource.replace(".csv", "") + "</span></a>");
+    $(".tabletools-btn-group").append("<a href='data.php' class='btn btn-sm red'><span><i class='fa fa-briefcase'></i> " + DT_CONF.jokerSource.replace(".csv", "") + "</span></a>");
 }
 
 function add_segment_filter(table, model) {
@@ -165,12 +141,12 @@ function add_column_filter(table, model) {
     $("#column_filter").click(function () {
         var msg = "";
         var flag = 0;
-        for (var i = 0; i < FEATURE_TAGS.length - 4; i++) {
-            var key = FEATURE_TAGS[i].id;
+        for (var i = 0; i < (model == 1 ? FEATURE_TAGS[model - 1].length - 4 : FEATURE_TAGS[model - 1].length); i++) {
+            var key = FEATURE_TAGS[model - 1][i].id;
             var column = table.column(key + ":name");
             flag += 1;
             if (flag % 3 == 1) msg += "<div class='row'>";
-            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + FEATURE_TAGS[i].text + "</label></div>";
+            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + FEATURE_TAGS[model - 1][i].text + "</label></div>";
             if (flag % 3 == 0) msg += "</div>";
         }
         bootbox.dialog({
@@ -196,7 +172,7 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
     html += "<div class='thumbnail no-border' style='height:100px;width:100px;display:inline-block;'>";
     html += "<div class='thumbnail bg-grey' style='width:100%;height:100%;text-align:center;' title='" + FEATURE_TAGS_PROP.findKeyValue("id", prop_attr_name, "hint") + "'>";
     html += "<p class='bold font-" + color + "' style='font-size:35px;margin:0;'>" + data[prop_attr_name].toFixed(1) + "</p>";
-    html += "<p style='font-size:10px;'><span class='font-" + color + "'>" + prop_name[0] + "</span><br/>" + prop_name[1] + "</p>";
+    html += "<p style='font-size:9.5px;'><span class='font-" + color + "'>" + prop_name[0] + "</span><br/>" + prop_name[1] + "</p>";
     html += "</div>";
     html += "</div>";
     html += "<div class='thumbnail no-border' style='height:100px;width:auto;display:inline-block;'>";
@@ -223,26 +199,17 @@ function update_cust_rank(id, model, column, source) {
 
 function generate_cust_data(data, model) {
     var html = "<div>";
-    html += "<span class='label bg-purple' title='" + FEATURE_TAGS.findKeyValue("id", "segment", "hint") + "'><i class='fa fa-group'></i> " + data.segment + "</span> ";
-    html += "<span class='label bg-" + interpret_gender_color(data.gender) + "' title='" + FEATURE_TAGS.findKeyValue("id", "gender", "hint") + "'>" + interpret_gender_name(data.gender) + "</span> ";
-    html += "<span class='label bg-" + (data.is_member ? "yellow" : "grey") + "' title='" + FEATURE_TAGS.findKeyValue("id", "is_member", "hint") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
-    html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "' title='" + FEATURE_TAGS.findKeyValue("id", "is_hrs_owner", "hint") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
+    html += "<span class='label bg-purple' title='" + FEATURE_TAGS[model - 1].findKeyValue("id", "segment", "hint") + "'><i class='fa fa-group'></i> " + data.segment + "</span> ";
+    html += "<span class='label bg-" + interpret_gender_color(data.gender) + "' title='" + FEATURE_TAGS[model - 1].findKeyValue("id", "gender", "hint") + "'>" + interpret_gender_name(data.gender) + "</span> ";
+    html += "<span class='label bg-" + (data.is_member ? "yellow" : "grey") + "' title='" + FEATURE_TAGS[model - 1].findKeyValue("id", "is_member", "hint") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
+    html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "' title='" + FEATURE_TAGS[model - 1].findKeyValue("id", "is_hrs_owner", "hint") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
     html += "</div><hr/><div class='row'>";
-    html += "<div class='col-md-6'>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "age", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "age", "text") + ": </span><span>" + data.age + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "yrs_w_club", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "yrs_w_club", "text") + ": </span><span>" + data.yrs_w_club + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "major_channel", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "major_channel", "text") + ": </span><span>" + data.major_channel + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "mtg_num", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "mtg_num", "text") + ": </span><span>" + data.mtg_num + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "inv", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "inv", "text") + ": </span><span>" + data.inv + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "div", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "div", "text") + ": </span><span>" + data.div + "</span>";
-    html += "</div><div class='col-md-6'>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "rr", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "rr", "text") + ": </span><span>" + data.rr + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "end_bal", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "end_bal", "text") + ": </span><span>" + (data.end_bal ? data.end_bal : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "recharge_times", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "recharge_times", "text") + ": </span><span>" + (data.recharge_times ? data.recharge_times : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "recharge_amount", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "recharge_amount", "text") + ": </span><span>" + (data.recharge_amount ? data.recharge_amount : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "withdraw_times", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "withdraw_times", "text") + ": </span><span>" + (data.withdraw_times ? data.withdraw_times : "-") + "</span><br/>";
-    html += "<span class='font-green' title='" + FEATURE_TAGS.findKeyValue("id", "withdraw_amount", "hint") + "'>" + FEATURE_TAGS.findKeyValue("id", "withdraw_amount", "text") + ": </span><span>" + (data.withdraw_amount ? data.withdraw_amount : "-") + "</span>";
-    html += "</div>";
+    for (var i = 2; i < FEATURE_TAGS[model - 1].length; i++) {
+        var tag_id = FEATURE_TAGS[model - 1][i]["id"];
+        if (tag_id != "gender" && tag_id != "is_hrs_owner" && tag_id != "is_member") {
+            html += "<div class='col-md-6'><span class='font-green' title='" + FEATURE_TAGS[model - 1][i]["hint"] + "'>" + FEATURE_TAGS[model - 1][i]["text"] + ": </span><span>" + data[tag_id] + "</span></div>";
+        }
+    }
     html += "</div><hr/><div class='row'>";
     html += "<div class='col-md-12'><div id='cust_detail_turnover_barchart'>";
     html += "</div></div>";
@@ -260,5 +227,5 @@ function generate_cust_turnover_barchart(container, inv_part) {
         data.push({x: inv_part.length - i, y: inv_part[i]});
     }
     data.reverse();
-    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 40, right: 10, width: $(container).width(), height: 200}, {x: "", y: "Turnover"}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
+    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 50, right: 10, width: $(container).width(), height: 200}, {x: "", y: "Turnover"}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
 }

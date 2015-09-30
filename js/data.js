@@ -78,7 +78,7 @@ function clear_db(model, source) {
 function interpret_data_type_desc(data_type) {
     var data_type_desc = {
         model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_(1-4)", "DECLINE_REASON_CODE_(1-4)", "INV(1-83)"],
-        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)"]
+        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)", "ACTIVE_RATE_PREVIOUS_83"]
     };
     var html = "";
     for (var i = 0; i < data_type_desc[data_type].length; i++) {
@@ -122,7 +122,9 @@ function datafile_import(file) {
                         $.get(API_SERVER + "joker/tool/env/set/?key=last_success_import&value=" + file, function (r) {
                             var msg = "<p>" + import_status.processed + " entries have been processed.</p><p>" + import_status.success + " entries have been imported.</p><p>" + import_status.fail + " entries are failed to import.</p>";
                             bootbox.hideAll();
-                            bootbox.alert(msg);
+                            bootbox.alert(msg, function () {
+                                location.reload();
+                            });
                         }).fail(function () {
                             bootbox.hideAll();
                             bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
