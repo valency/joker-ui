@@ -1,4 +1,5 @@
 var cust_list = [];
+var cust_set = null;
 
 $(document).ready(function () {
     Metronic.init();
@@ -34,6 +35,7 @@ $(document).ready(function () {
 function cust_set_search() {
     $("#canvas-hint").html("<div class='alert alert-info'>Loading...</div>");
     $.get(API_SERVER + "joker/model/1/set/search/?id=" + $("#input_set_id").val(), function (data) {
+        cust_set = data;
         // Clean up
         $("#canvas-hint").html("");
         // Control: title, details, and buttons
@@ -44,6 +46,7 @@ function cust_set_search() {
         $("#canvas-control-cluster-time").html(data.cluster_time == null ? "-" : data.cluster_time.substring(0, 19).replace("T", " "));
         $("#canvas-control-clusters").html(data.cluster_count);
         $("#canvas-control-customers").html(data.cust.length);
+        $("#canvas-control-metric").html(CLUSTERING_METRICS.findKeyValue("id", data["cluster_metric"], "text"));
         $("#canvas-control-download-set").attr("href", API_SERVER + "joker/model/1/set/csv/?id=" + $("#input_set_id").val());
         // Control: details of clusters
         $("#canvas-control-cluster-details").html("");
@@ -65,9 +68,9 @@ function cust_set_search() {
         var y_btn = $("#canvas-control-cluster-draw-y");
         x_btn.html("");
         y_btn.html("");
-        for (i = 0; i < FEATURE_TAGS.length; i++) {
-            if (CATEGORICAL_COLUMNS.indexOf(FEATURE_TAGS[i].id) < 0) {
-                html = "<option value='" + FEATURE_TAGS[i].id + "'>" + FEATURE_TAGS[i].text + "</option>";
+        for (i = 0; i < FEATURE_TAGS[0].length; i++) {
+            if (CATEGORICAL_COLUMNS.indexOf(FEATURE_TAGS[0][i].id) < 0) {
+                html = "<option value='" + FEATURE_TAGS[0][i].id + "'>" + FEATURE_TAGS[0][i].text + "</option>";
                 x_btn.append(html);
                 y_btn.append(html);
             }
@@ -95,6 +98,39 @@ function cust_set_search() {
     });
 }
 
+function cust_set_change_metric() {
+    var html = "<select id='select_metric' class='form-control'>";
+    for (var i = 0; i < CLUSTERING_METRICS.length; i++) {
+        html += "<option value='" + CLUSTERING_METRICS[i]["id"] + "'>" + CLUSTERING_METRICS[i]["text"] + "</option>";
+    }
+    html += "</select>";
+    bootbox.dialog({
+        title: "Change Clustering Metric",
+        message: html,
+        buttons: {
+            Proceed: function () {
+                bootbox.dialog({
+                    message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+                    closeButton: false
+                });
+                $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/kmeans/?header=" + cust_set["cluster_features"].join(",") + "&metric=" + $("#select_metric").val() + "&n_clusters=" + cust_set["cluster_count"] + "&set_id=" + cust_set["id"], function (data) {
+                    bootbox.hideAll();
+                    $("#input_set_id").val(cust_set["id"]);
+                    cust_set_search();
+                }).fail(function () {
+                    bootbox.hideAll();
+                    bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong during clustering!</span>");
+                });
+            }
+        }
+    }).on("shown.bs.modal", function () {
+        $("#select_metric").select2({
+            dropdownAutoWidth: 'true',
+            minimumResultsForSearch: Infinity
+        });
+    });
+}
+
 function cust_set_delete() {
     bootbox.dialog({
         title: "Delete Customer Set",
@@ -112,7 +148,6 @@ function cust_set_delete() {
         }
     });
 }
-
 
 function cust_set_draw() {
     $("#canvas").html("");

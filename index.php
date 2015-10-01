@@ -30,6 +30,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.1</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> changing metric for model 3 review set page</li>
+                        <li><span class='font-purple'>Fixed</span> model 3 axis label display bug</li>
+                    </ul>
                     <span class="font-blue">v0.9.30</span>
                     <ul>
                         <li><span class='font-green'>Added</span> new model 2 data</li>

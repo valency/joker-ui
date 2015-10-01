@@ -39,6 +39,30 @@ var FEATURE_TAGS_PROP = [
     {id: "decline_prop", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline"},
     {id: "chance_to_be_regular", text: "Chance to Be Regular", hint: "The Chance of a Customer Becoming a Regular Customer"}
 ];
+var CLUSTERING_METRICS = [
+    {id: "euclidean", text: "Euclidean"},
+    {id: "minkowski", text: "Minkowski"},
+    {id: "cityblock", text: "Manhattan"},
+    {id: "seuclidean", text: "Standardized Euclidean"},
+    {id: "sqeuclidean", text: "Squared Euclidean"},
+    {id: "cosine", text: "Cosine"},
+    {id: "correlation", text: "Correlation"},
+    {id: "hamming", text: "Normalized Hamming"},
+    {id: "jaccard", text: "Jaccard"},
+    {id: "chebyshev", text: "Chebyshev"},
+    {id: "canberra", text: "Canberra"},
+    {id: "braycurtis", text: "Bray-Curtis"},
+    {id: "mahalanobis", text: "Mahalanobis"},
+    {id: "yule", text: "Yule"},
+    {id: "matching", text: "Matching"},
+    {id: "dice", text: "Dice"},
+    {id: "kulsinski", text: "Kulsinski"},
+    {id: "rogerstanimoto", text: "Rogers-Tanimoto"},
+    {id: "russellrao", text: "Russell-Rao"},
+    {id: "sokalmichener", text: "Sokal-Michener"},
+    {id: "sokalsneath", text: "Sokal-Sneath"},
+    {id: "wminkowski", text: "Weighted Minkowski"}
+];
 
 var WaitForFinalEvent = (function () {
     var timers = {};

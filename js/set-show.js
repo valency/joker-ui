@@ -3,9 +3,12 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
+    for (var i = 0; i < CLUSTERING_METRICS.length; i++) {
+        $("#select_metric").append("<option value='" + CLUSTERING_METRICS[i]["id"] + "'>" + CLUSTERING_METRICS[i]["text"] + "</option>");
+    }
     init_widget();
     $("#select_features").select2({
-        tags: FEATURE_TAGS
+        tags: FEATURE_TAGS[0]
     });
     $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/retrieve_all_id/", function (data) {
         for (var i = 0; i < data.length; i++) {

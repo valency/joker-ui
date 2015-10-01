@@ -49,30 +49,7 @@
                 <div class="col-md-3">
                     <div class="input-group">
                         <span class="input-group-addon">Metric</span>
-                        <select id="select_metric" class="form-control">
-                            <option value="euclidean">Euclidean</option>
-                            <option value="minkowski">Minkowski</option>
-                            <option value="cityblock">Manhattan</option>
-                            <option value="seuclidean">Standardized Euclidean</option>
-                            <option value="sqeuclidean">Squared Euclidean</option>
-                            <option value="cosine">Cosine</option>
-                            <option value="correlation">Correlation</option>
-                            <option value="hamming">Normalized Hamming</option>
-                            <option value="jaccard">Jaccard</option>
-                            <option value="chebyshev">Chebyshev</option>
-                            <option value="canberra">Canberra</option>
-                            <option value="braycurtis">Bray-Curtis</option>
-                            <option value="mahalanobis">Mahalanobis</option>
-                            <option value="yule">Yule</option>
-                            <option value="matching">Matching</option>
-                            <option value="dice">Dice</option>
-                            <option value="kulsinski">Kulsinski</option>
-                            <option value="rogerstanimoto">Rogers-Tanimoto</option>
-                            <option value="russellrao">Russell-Rao</option>
-                            <option value="sokalmichener">Sokal-Michener</option>
-                            <option value="sokalsneath">Sokal-Sneath</option>
-                            <option value="wminkowski">Weighted Minkowski</option>
-                        </select>
+                        <select id="select_metric" class="form-control"></select>
                     </div>
                 </div>
                 <div class="col-md-6">

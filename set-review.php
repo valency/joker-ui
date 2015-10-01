@@ -52,6 +52,8 @@
                         <span id="canvas-control-clusters">Loading...</span><br/>
                         <span class="bold"># of Customers: </span>
                         <span id="canvas-control-customers">Loading...</span><br/>
+                        <span class="bold">Metric: </span>
+                        <a id="canvas-control-metric" href="javascript:void(0)" onclick="cust_set_change_metric();">Loading...</a><br/>
                         <span class="bold">Created on: </span>
                         <span id="canvas-control-create-time">Loading...</span><br/>
                         <span class="bold">Clustered on: </span>
