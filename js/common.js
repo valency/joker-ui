@@ -32,12 +32,30 @@ var FEATURE_TAGS = [[
     {id: "div", text: "Dividend", hint: "Total Dividend of Recent 83 Meetings"},
     {id: "rr", text: "Recovery Rate", hint: "Divide Dividend by Turnover"},
     {id: "active_rate_previous_83", text: "Active Rate (Prev. 83)", hint: "Active Rate of Previous 83 Meetings"}
+],[],[
+    {id: "id", text: "ID", hint: "Customer ID"},
+    {id: "segment", text: "Segment", hint: "Customer Segment"},
+    {id: "age", text: "Age", hint: "Customer Age"},
+    {id: "gender", text: "Gender", hint: "Customer Gender"},
+    {id: "yrs_w_club", text: "Club Years", hint: "Years with the Club"},
+    {id: "is_member", text: "Member", hint: "Whether the Customer Is a Member"},
+    {id: "is_hrs_owner", text: "Horse Owner", hint: "Whether the Customer Is a Horse Owner"},
+    {id: "major_channel", text: "Major Channel", hint: "Major Racing Betting Channel"},
+    {id: "active_rate", text: "Active Rate", hint: ""},
+    {id: "active_rate_exotic", text: "Active Rate (Exotic)", hint: ""},
+    {id: "inv", text: "Turnover", hint: "Total Turnover of Recent 83 Meetings"},
+    {id: "inv_exotic", text: "Turnover (Exotic)", hint: ""},
+    {id: "div", text: "Dividend", hint: "Total Dividend of Recent 83 Meetings"},
+    {id: "div_exotic", text: "Dividend (Exotic)", hint: ""},
+    {id: "rr", text: "Recovery Rate", hint: "Divide Dividend by Turnover"},
+    {id: "rr_exotic", text: "Recovery Rate (Exotic)", hint: ""}
 ]];
 var CATEGORICAL_COLUMNS = ["id", "segment", "age", "gender", "is_member", "is_hrs_owner", "major_channel"];
 var FEATURE_TAGS_PROP = [
     {id: "grow_prop", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow"},
     {id: "decline_prop", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline"},
-    {id: "chance_to_be_regular", text: "Chance to Be Regular", hint: "The Chance of a Customer Becoming a Regular Customer"}
+    {id: "chance_to_be_regular", text: "Chance to Be Regular", hint: "The Chance of a Customer Becoming a Regular Customer"},
+    {id: "score", text: "Score", hint: ""}
 ];
 var CLUSTERING_METRICS = [
     {id: "euclidean", text: "Euclidean"},

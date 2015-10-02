@@ -13,7 +13,7 @@ $(document).ready(function () {
             $("#form").remove();
             $("#canvas").show();
             $("#canvas_label").append("<span class='label bg-blue'><i class='fa fa-file-text-o'></i> " + source + "</span> ");
-            $("#canvas_label").append("<span class='label bg-green'><i class='fa fa-cube'></i> " + model.replace("_prop", "").toTitleCase() + " Model</span> ");
+            $("#canvas_label").append("<span class='label bg-green'><i class='fa fa-cube'></i> " + FEATURE_TAGS_PROP.findKeyValue("id", model, "text") + "</span> ");
             $("#canvas_label").append("<span class='label bg-red'><i class='fa fa-briefcase'></i> " + active.value.replace(".csv", "") + "</span> ");
             $("#canvas_label").append("<span class='label bg-purple'><i class='fa fa-users'></i> " + (segment == "" ? "All" : segment.replace(/,/g, ' & ')) + "</span> ");
             $.get(API_SERVER + "joker/tool/csv_to_json/?src=validation/" + source, function (data_csv) {
@@ -89,7 +89,8 @@ $(document).ready(function () {
 function validate() {
     var source = $("#select2_source").val();
     var model = $("#select2_model").val();
-    if (get_url_parameter("mode") == 2) model = "regular_prop";
+    if (get_url_parameter("mode") == 2) model = "chance_to_be_regular";
+    else if (get_url_parameter("mode") == 4) model = "score";
     var segment = $("#select2_segment").val();
     window.location.href = "validation.php?mode=" + get_url_parameter("mode") + "&src=" + source + "&model=" + model + "&seg=" + segment;
 }
@@ -100,12 +101,23 @@ function show_detail(id, model, source) {
         bootbox.dialog({
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
+        }).on('shown.bs.modal', function (e) {
+            if (model == 4) generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_exotic_part, {x: "", y: "Turnover (Exotic)"});
+            else generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
         });
         if (model == 1) {
             update_cust_rank(data.id, model, "grow_prop", source);
             update_cust_rank(data.id, model, "decline_prop", source);
         } else if (model == 2) {
-            update_cust_rank(data.id, model, "regular_prop", source);
+            update_cust_rank(data.id, model, "chance_to_be_regular", source);
+        } else if (model == 4) {
+            update_cust_rank(data.id, model, "score", source);
         }
+    });
+}
+
+function delete_validation_file() {
+    $.get("data/validation/delete.php?f=" + $("#select2_source").val(), function (r) {
+        location.reload();
     });
 }

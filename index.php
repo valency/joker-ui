@@ -30,6 +30,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.2</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> model 4 support pages</li>
+                        <li><span class='font-green'>Added</span> model 4 data</li>
+                        <li><span class='font-yellow'>Modified</span> turnover figure in customer details to exotic turnover figure for model 4</li>
+                        <li><span class='font-purple'>Fixed</span> validation bug of model 2</li>
+                        <li><span class='font-purple'>Fixed</span> validation figure display bug</li>
+                    </ul>
                     <span class="font-blue">v0.10.1</span>
                     <ul>
                         <li><span class='font-green'>Added</span> changing metric for model 3 review set page</li>

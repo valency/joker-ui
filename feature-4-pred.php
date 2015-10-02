@@ -5,7 +5,7 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[2][0] . "</title>";
+    echo "<title>SmartCube | " . $sub_words[1][10] . "</title>";
     ?>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -22,33 +22,27 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=2&sub=0'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=10'); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=2&sub=0'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=10'); ?>
             <!-- BEGIN PAGE -->
-            <div class="row form-group">
-                <div class="col-md-3">
-                    <div class="input-group">
-                        <span class="input-group-addon">Model</span>
-                        <select id="select2_model" class="form-control">
-                            <option value="1">Model 1</option>
-                            <option value="2">Model 2</option>
-                            <option value="4">Model 4</option>
-                        </select>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
+                        <table id="customer_table" class="table table-striped table-bordered table-advance table-hover">
+                            <thead>
+                            <tr class="heading">
+                                <th class="font-blue">ID</th>
+                                <th class="font-purple">Segment</th>
+                                <th class="font-red">Score</th>
+                            </tr>
+                            </thead>
+                            <tbody id="customer_table_body"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="input-group">
-                        <input id="search_cust_id" class="form-control" value="" placeholder="CUST_ID"/>
-                        <span class="input-group-addon btn red" onclick="cust_search();">ID Search</span>
-                    </div>
-                </div>
-            </div>
-            <hr/>
-            <div class="row" id="customer_table_wrapper">
-                <div class="col-md-12"></div>
             </div>
             <!-- END PAGE -->
         </div>
@@ -60,6 +54,6 @@
 <script src="lib/d3.min.js"></script>
 <script src="js/figure.js" type="text/javascript"></script>
 <script src="js/feature.js" type="text/javascript"></script>
-<script src="js/customer.js" type="text/javascript"></script>
+<script src="js/feature-4-pred.js" type="text/javascript"></script>
 </body>
 </html>

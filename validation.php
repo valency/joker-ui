@@ -5,8 +5,13 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][($_GET["mode"] == 1 ? 2 : 5)] . "</title>";
+    $sub_menu_index = -1;
+    if ($_GET["mode"] == 1) $sub_menu_index = 2;
+    elseif ($_GET["mode"] == 2) $sub_menu_index = 5;
+    elseif ($_GET["mode"] == 4) $sub_menu_index = 11;
+    echo "<title>SmartCube | " . $sub_words[1][$sub_menu_index] . "</title>";
     ?>
+    <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
 <div class="page-header -i navbar navbar-fixed-top">
@@ -21,11 +26,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=' . ($_GET["mode"] == 1 ? 2 : 5)); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=' . $sub_menu_index); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=' . ($_GET["mode"] == 1 ? 2 : 5)); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=' . $sub_menu_index); ?>
             <!-- BEGIN PAGE -->
             <div id="form" style="display:none;">
                 <div class="row">
@@ -39,7 +44,7 @@
                 </div>
                 <hr/>
                 <div class="row form-group">
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="input-group">
                             <span class="input-group-addon">Source File</span>
                             <select id="select2_source" class="form-control select2">
@@ -54,11 +59,10 @@
                                     closedir($handle);
                                 } ?>
                             </select>
+                            <span class="input-group-btn"><button class="btn purple" type="button" style="margin-left:10px;" onclick="$('#file_upload').click();"><i class="fa fa-upload"></i> Upload New Data</button></span>
+                            <span class="input-group-btn"><button class="btn red" type="button" style="margin-left:10px;" onclick="delete_validation_file();"><i class="fa fa-times"></i> Delete</button></span>
+                            <input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=validation" multiple>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn purple pull-right" type="button" onclick="$('#file_upload').click();"><i class="fa fa-upload"></i> Upload New Data</button>
-                        <input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=validation" multiple>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -112,6 +116,8 @@
 <script src="lib/jquery-file-upload-9.10.1/js/vendor/jquery.ui.widget.js"></script>
 <script src="lib/jquery-file-upload-9.10.1/js/jquery.iframe-transport.js"></script>
 <script src="lib/jquery-file-upload-9.10.1/js/jquery.fileupload.js"></script>
+<script src="lib/d3.min.js"></script>
+<script src="js/figure.js" type="text/javascript"></script>
 <script src="js/feature.js" type="text/javascript"></script>
 <script src="js/validation.js" type="text/javascript"></script>
 </body>

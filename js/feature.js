@@ -64,13 +64,16 @@ function load_data(div_id, conf, model) {
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         }).on('shown.bs.modal', function (e) {
-            generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part);
+            if (model == 4) generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_exotic_part, {x: "", y: "Turnover (Exotic)"});
+            else generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
         });
         if (model == 1) {
             update_cust_rank(data.id, model, "grow_prop", conf.jokerSource);
             update_cust_rank(data.id, model, "decline_prop", conf.jokerSource);
         } else if (model == 2) {
             update_cust_rank(data.id, model, "chance_to_be_regular", conf.jokerSource);
+        } else if (model == 4) {
+            update_cust_rank(data.id, model, "score", conf.jokerSource);
         }
     });
     add_dataset_badge(table, model);
@@ -217,15 +220,16 @@ function generate_cust_data(data, model) {
     if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");
     if (data.decline_prop != null) html += generate_cust_prop(data, model, "decline_prop", ["DECLINE", "PROPENSITY"], "green");
     if (data.chance_to_be_regular != null) html += generate_cust_prop(data, model, "chance_to_be_regular", ["CHANCE", "TO BE REGULAR"], "yellow");
+    if (data.score != null) html += generate_cust_prop(data, model, "score", ["SCORE", "&nbsp;"], "blue");
     html += "</div>";
     return html;
 }
 
-function generate_cust_turnover_barchart(container, inv_part) {
+function generate_cust_turnover_barchart(container, src, axis_label) {
     var data = [];
-    for (var i = 0; i < inv_part.length; i++) {
-        data.push({x: inv_part.length - i, y: inv_part[i]});
+    for (var i = 0; i < src.length; i++) {
+        data.push({x: src.length - i, y: src[i]});
     }
     data.reverse();
-    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 50, right: 10, width: $(container).width(), height: 200}, {x: "", y: "Turnover"}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
+    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 50, right: 10, width: $(container).width(), height: 200}, {x: axis_label["x"], y: axis_label["y"]}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
 }

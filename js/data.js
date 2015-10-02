@@ -4,9 +4,9 @@ $(document).ready(function () {
     QuickSidebar.init();
     check_login();
     init_widget();
-    for (var model = 1; model <= 2; model++) {
-        add_deco_badge(model);
-    }
+    add_deco_badge(1);
+    add_deco_badge(2);
+    add_deco_badge(4);
     $('#file_upload').fileupload({
         dataType: 'json',
         acceptFileTypes: '/(\.|\/)(csv|gz)$/i',
@@ -78,7 +78,8 @@ function clear_db(model, source) {
 function interpret_data_type_desc(data_type) {
     var data_type_desc = {
         model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_(1-4)", "DECLINE_REASON_CODE_(1-4)", "INV(1-83)"],
-        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)", "ACTIVE_RATE_PREVIOUS_83"]
+        model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)", "ACTIVE_RATE_PREVIOUS_83"],
+        model_4: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "ACTIVE_RATE", "INV", "DIV", "RR", "ACTIVE_RATE_EXOTIC", "INV_EXOTIC", "DIV_EXOTIC", "RR_EXOTIC", "SCORE", "REASON_CODE_(1-4)", "INV(1-83)", "INV_EXOTIC(1-83)"]
     };
     var html = "";
     for (var i = 0; i < data_type_desc[data_type].length; i++) {
@@ -104,6 +105,7 @@ function datafile_import(file) {
     msg += "<p><select id='select2_data_type' class='form-control select2'>";
     msg += "<option value='model_1'>Model 1</option>";
     msg += "<option value='model_2'>Model 2</option>";
+    msg += "<option value='model_4'>Model 4</option>";
     msg += "</select></p>";
     msg += "<div id='data_type_desc'></div>";
     bootbox.dialog({
