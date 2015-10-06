@@ -30,6 +30,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.6</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> growth of segment 70 & 75 table for model 1</li>
+                        <li><span class='font-yellow'>Modified</span> model 4 data</li>
+                        <li><span class='font-red'>Removed</span> figure of dist. of avg. active rate of new custs. of model 2</li>
+                        <li><span class='font-yellow'>Modified</span> x axis labels of several figures of model 1 and model 2</li>
+                        <li><span class='font-red'>Removed</span> figure of dist. of new custs.' active rate of model 2</li>
+                        <li><span class='font-green'>Added</span> figure of dist. of new custs.' active rate (prev. 83 mtgs) of model 2</li>
+                        <li><span class='font-green'>Added</span> active rate (prev. 83) filter for model 2 predictions</li>
+                    </ul>
                     <span class="font-blue">v0.10.2</span>
                     <ul>
                         <li><span class='font-green'>Added</span> model 4 support pages</li>
