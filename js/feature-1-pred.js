@@ -23,7 +23,7 @@ $(document).ready(function () {
     // Draw table
     $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         oConf.jokerSource = active.value;
-        oConf.ajax = API_SERVER + "joker/model/1/get_all/?source=" + active.value;
+        oConf.ajax = API_SERVER + "joker/model/1/get_all/?source=" + active.value + "&_r=" + Math.random();
         oConf.columns.splice(2, 0, {
             data: "grow_prop",
             name: "grow_prop",

@@ -23,7 +23,7 @@ $(document).ready(function () {
     // Draw table
     $.get(API_SERVER + "joker/tool/env/get/?key=model_4_active_" + Cookies.get('joker_id'), function (active) {
         oConf.jokerSource = active.value;
-        oConf.ajax = API_SERVER + "joker/model/4/get_all/?source=" + active.value;
+        oConf.ajax = API_SERVER + "joker/model/4/get_all/?source=" + active.value + "&_r=" + Math.random();
         oConf.columns.splice(2, 0, {
             data: "score",
             name: "score",

@@ -7,7 +7,7 @@ var DT_CONF = {
     serverSide: true,
     deferRender: true,
     lengthMenu: [10, 50, 100, 500],
-    ajax: API_SERVER + "joker/model/0/get_all/?source=",
+    ajax: null,
     columns: [
         {
             data: "id",
@@ -78,6 +78,7 @@ function load_data(div_id, conf, model) {
     });
     add_dataset_badge(table, model);
     add_segment_filter(table, model);
+    if (model == 2) add_active_rate_prev_83_filter(table, model);
     add_column_filter(table, model);
     add_export_btn(table, model);
     $('#customer_table_wrapper').find('.dataTables_length select').select2({
@@ -92,7 +93,7 @@ function add_dataset_badge(table, model) {
 }
 
 function add_segment_filter(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='segment_filter'><span>Segment Filter</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='segment_filter'><i class='fa fa-group'></i> <span>All</span></a>");
     $("#segment_filter").click(function () {
         var segment_filter_label = $("#segment_filter>span");
         bootbox.dialog({
@@ -106,41 +107,77 @@ function add_segment_filter(table, model) {
                         for (var i = 0; i < selected.length; i++) {
                             segment_set.push(selected[i].id);
                         }
-                        segment_filter_label.html("<i class='fa fa-group'></i> " + segment_set.join(" & "));
-                        table.ajax.url(API_SERVER + "joker/model/" + model + "/get_all/?source=" + DT_CONF.jokerSource + "&segment=" + segment_set.join(",")).load();
+                        segment_filter_label.html(segment_set.join(" & "));
+                        table.ajax.url(table.ajax.url().replace(/segment=.*?&/, "").replace("&_r=", "&segment=" + segment_set.join(",") + "&_r=")).load();
                     } else {
-                        segment_filter_label.html("<span>Segment Filter</span>");
-                        table.ajax.url(API_SERVER + "joker/model/" + model + "/get_all/?source=" + DT_CONF.jokerSource).load();
+                        segment_filter_label.html("All");
+                        table.ajax.url(table.ajax.url().replace(/segment=.*?&/, "")).load();
                     }
                 }
             }
-        });
-        $.get(API_SERVER + "joker/model/" + model + "/dist/?source=" + DT_CONF.jokerSource + "&field=segment", function (data) {
-            var segment_tags = [];
-            for (var i = 0; i < data.length; i++) {
-                segment_tags.push({
-                    id: data[i].segment,
-                    text: "#" + data[i].segment + "(" + data[i].total + ")"
+        }).on("shown.bs.modal", function () {
+            $.get(API_SERVER + "joker/model/" + model + "/dist/?source=" + DT_CONF.jokerSource + "&field=segment", function (data) {
+                var segment_tags = [];
+                for (var i = 0; i < data.length; i++) {
+                    segment_tags.push({
+                        id: data[i].segment,
+                        text: "#" + data[i].segment + "(" + data[i].total + ")"
+                    });
+                }
+                $("#select2_segment").select2({
+                    tags: segment_tags
                 });
-            }
-            $("#select2_segment").select2({
-                tags: segment_tags
+                if (!segment_filter_label.html().includes("All")) $("#select2_segment").select2("val", segment_filter_label.html().replace(/<(.*)>/g, "").replace(/ /g, "").split("&amp;"));
             });
-            if (!segment_filter_label.html().includes("Filter")) $("#select2_segment").select2("val", segment_filter_label.html().replace(/<(.*)>/g, "").replace(/ /g, "").split("&amp;"));
+        });
+    });
+}
+
+function add_active_rate_prev_83_filter(table, model) {
+    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='active_rate_prev_83_filter'><i class='fa fa-magic'></i> <span>All</span></a>");
+    $("#active_rate_prev_83_filter").click(function () {
+        var active_rate_prev_83_filter_label = $("#active_rate_prev_83_filter>span");
+        var html = "<select id='select2_active_rate_prev_83' class='form-control'>";
+        html += "<option value=''>All</option>";
+        html += "<option value='0.0,0.2'>0 - 20 %</option>";
+        html += "<option value='0.2,0.4'>20 - 40 %</option>";
+        html += "<option value='0.4,0.6'>40 - 60 %</option>";
+        html += "<option value='0.6,0.8'>60 - 80 %</option>";
+        html += "<option value='0.8,1.0'>80 - 100 %</option>";
+        html += "</select>";
+        bootbox.dialog({
+            title: "Filter by Active Rate (Prev. 83):",
+            message: html,
+            buttons: {
+                OK: function () {
+                    active_rate_prev_83_filter_label.html($("#select2_active_rate_prev_83 option:selected").text());
+                    table.ajax.url(table.ajax.url().replace(/active_rate_prev_83=.*?&/, "").replace("&_r=", "&active_rate_prev_83=" + $("#select2_active_rate_prev_83").val() + "&_r=")).load();
+                }
+            }
+        }).on("shown.bs.modal", function () {
+            if (!active_rate_prev_83_filter_label.html().includes("All")) {
+                $('#select2_active_rate_prev_83 option').filter(function () {
+                    return $(this).html() == active_rate_prev_83_filter_label.html();
+                }).attr("selected", true);
+            }
+            $("#select2_active_rate_prev_83").select2({
+                dropdownAutoWidth: 'true',
+                minimumResultsForSearch: Infinity
+            });
         });
     });
 }
 
 function add_export_btn(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_csv'><span>Export</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_csv'><i class='fa fa-file-text-o'></i> Export</a>");
     $("#cust_export_csv").click(function () {
-        var url = table.ajax.url() + (table.ajax.url().includes("?") ? "&" : "?") + "csv=true&" + $.param(table.ajax.params());
+        var url = table.ajax.url() + "&csv=true&" + $.param(table.ajax.params());
         window.open(url);
     });
 }
 
 function add_column_filter(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm blue' id='column_filter'><span>Column Filter</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn btn-sm blue' id='column_filter'><i class='fa fa-columns'></i> Columns</a>");
     $("#column_filter").click(function () {
         var msg = "";
         var flag = 0;
@@ -153,7 +190,7 @@ function add_column_filter(table, model) {
             if (flag % 3 == 0) msg += "</div>";
         }
         bootbox.dialog({
-            title: "Filter by Column:",
+            title: "Display of Columns:",
             message: msg,
             buttons: {
                 OK: function () {

@@ -140,7 +140,7 @@ function stat_figure_bar_chart(src, title, xLabel, yLabel) {
     var height = 300 - margin.top - margin.bottom;
     var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
     var y = d3.scale.linear().range([height, 0]);
-    var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.format(".2%"));
+    var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.format(".0%"));
     var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10, "%");
     var svg = d3.select("#figure-div-" + fig_id).append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -241,7 +241,7 @@ function stat_figure_pie_chart(src, title, xLabel, yLabel) {
         });
 }
 
-function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model, data_source) {
+function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model, data_source, data_digits) {
     // Prepare figure container
     var fig_id = guid();
     var container_html = "<div style='display:inline-block;text-align:center;'>";
@@ -257,7 +257,7 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
         for (var i = 0; i < data.hist.length; i++) {
             src.push({
                 "hist": data.hist[i],
-                "bin_edges": Number(data.bin_edges[i]) === data.bin_edges[i] ? data.bin_edges[i].toFixed(2) : data.bin_edges[i]
+                "bin_edges": Number(data.bin_edges[i]) === data.bin_edges[i] ? data.bin_edges[i].toFixed(data_digits) : data.bin_edges[i]
             });
         }
         var margin = {top: 20, right: 10, bottom: 50, left: 50};
