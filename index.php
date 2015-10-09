@@ -30,6 +30,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.9</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> breakdown under the first row of the table in model 1</li>
+                        <li><span class='font-green'>Added</span> segment selection for the table in model 1</li>
+                        <li><span class='font-yellow'>Modified</span> PYTD to YTD for all figures in model 1 and model 2</li>
+                        <li><span class='font-yellow'>Modified</span> the title of the table in model 1 to year-on-year growth analysis (ytd vs. pytd)</li>
+                        <li><span class='font-yellow'>Modified</span> the title of figures for model 1 and model 2</li>
+                        <li><span class='font-green'>Added</span> color change when hover the pie charts of model 1 and model 2</li>
+                        <li><span class='font-green'>Added</span> hover hint for bar charts of model 1 and model 2</li>
+                        <li><span class='font-yellow'>Modified</span> the width of y axis of the figure in customer details</li>
+                    </ul>
                     <span class="font-blue">v0.10.6</span>
                     <ul>
                         <li><span class='font-green'>Added</span> growth of segment 70 & 75 table for model 1</li>
