@@ -19,9 +19,9 @@ function draw_figures() {
                 this_season: ACTIVE_CUSTOMERS_THIS_SEASON[i]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Avg. Active Rate (PYTD)", {x: "Meeting ID", y: "Avg. Active Rate (%)", last_season: "# of Active Custs. of Last Season", this_season: "# of Active Custs. of This Season"}, 0.34);
-        stat_figure_histogram("active_rate_previous_83", 0, "Dist. of New Custs.' Active Rate (Prev. 83)", "New Custs.' Active Rate (Prev. 83)", "Probabilistic Distribution Function (%)", 2, active.value, 2);
-        stat_figure_histogram("age", 0, "Dist. of New Custs.' Age", "New Custs.' Age", "Probabilistic Distribution Function (%)", 2, active.value, 0);
+        stat_figure_growth_rate_of_turnover(src, "Avg. Active Rate (YTD)", {x: "Meeting ID", y: "Avg. Active Rate (%)", last_season: "# of Active Customers of Last Season", this_season: "# of Active Customers of This Season"}, 0.34);
+        stat_figure_histogram("active_rate_previous_83", 0, "Distribution of New Customers' Active Rate of the Previous 83 Meetings", "New Customers' Active Rate", "Probabilistic Distribution Function (%)", 2, active.value, 2);
+        stat_figure_histogram("age", 0, "Distribution of New Customers' Age", "New Customers' Age", "Probabilistic Distribution Function (%)", 2, active.value, 0);
         src = [];
         for (i = 0; i < BET_TYPE.length; i++) {
             src.push({
@@ -29,7 +29,7 @@ function draw_figures() {
                 value: PERCENTAGE_NEW_BET_TYPE[i]
             });
         }
-        stat_figure_pie_chart(src, "New Custs.' Turnover of Bet Types (PYTD)", "Bet Type", "New Custs.' Turnover of the Bet Type (%)");
+        stat_figure_pie_chart(src, "New Customers' Turnover of Bet Types (YTD)", "Bet Type", "New Customers' Turnover (%)");
         src = [];
         for (i = 0; i < MAJOR_CHANNEL_LABEL.length; i++) {
             src.push({
@@ -37,8 +37,8 @@ function draw_figures() {
                 value: PERCENTAGE_MAJOR_CHANNEL[i]
             });
         }
-        stat_figure_pie_chart(src, "New Custs.' Turnover of Channels (PYTD)", "Channel", "New Custs.' Turnover of the Channel (%)");
-        stat_figure_histogram("chance_to_be_regular", 0, "Dist. of New Custs.' Regular Score", "New Custs.' Regular Score", "Probabilistic Distribution Function (%)", 2, active.value, 1);
+        stat_figure_pie_chart(src, "New Customers' Turnover of Channels (YTD)", "Channel", "New Customers' Turnover (%)");
+        stat_figure_histogram("chance_to_be_regular", 0, "Distribution of New Customers' Regular Score", "New Customers' Regular Score", "Probabilistic Distribution Function (%)", 2, active.value, 1);
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";

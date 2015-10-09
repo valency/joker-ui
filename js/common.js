@@ -1,4 +1,4 @@
-var API_SERVER = "https://127.0.0.1:8443/";
+var API_SERVER = "https://169.254.100.100:8443/";
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
 var FEATURE_TAGS = [[
     {id: "id", text: "ID", hint: "Customer ID"},
@@ -32,7 +32,7 @@ var FEATURE_TAGS = [[
     {id: "div", text: "Dividend", hint: "Total Dividend of Recent 83 Meetings"},
     {id: "rr", text: "Recovery Rate", hint: "Divide Dividend by Turnover"},
     {id: "active_rate_previous_83", text: "Active Rate (Prev. 83)", hint: "Active Rate of Previous 83 Meetings"}
-],[],[
+], [], [
     {id: "id", text: "ID", hint: "Customer ID"},
     {id: "segment", text: "Segment", hint: "Customer Segment"},
     {id: "age", text: "Age", hint: "Customer Age"},
@@ -158,4 +158,18 @@ function init_widget() {
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity
     });
+}
+
+function count_decimals(v) {
+    var test = v, count = 0;
+    while (test > 10) {
+        test /= 10;
+        count++;
+    }
+    return count;
+}
+
+function to_kilo(d) {
+    if (count_decimals(d) >= 3) return (Math.round(d / 10) / 100) + "k";
+    else return d;
 }

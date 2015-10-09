@@ -1,3 +1,5 @@
+var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
 function add_portlet(target, title, body, fig_id, md) {
     var content = "<div class='col-md-" + md + "' id='figure-portlet-" + fig_id + "'>";
     content += '<div class="portlet purple box">';
@@ -34,7 +36,6 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().scale(x).orient("bottom");
     var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10, "%");
-    var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
     var svg = d3.select("#figure-div-" + fig_id).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -192,6 +193,13 @@ function stat_figure_bar_chart(src, title, xLabel, yLabel) {
         })
         .attr("height", function (d) {
             return height - y(d.y);
+        })
+        .on("mousemove", function (d) {
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html(d.y).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
+        })
+        .on("mouseout", function (d) {
+            tooltip.transition().duration(200).style("opacity", 0);
         });
 }
 
@@ -215,7 +223,6 @@ function stat_figure_pie_chart(src, title, xLabel, yLabel) {
     var pie = d3.layout.pie().sort(null).value(function (d) {
         return d.value;
     });
-    var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
     var svg = d3.select("#figure-div-" + fig_id).append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -231,12 +238,14 @@ function stat_figure_pie_chart(src, title, xLabel, yLabel) {
             return color(d.data.key);
         })
         .on("mousemove", function (d) {
-            d3.select(this).transition().duration(200).attr("r", 10);
+            d3.select(this).style("fill", "grey");
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(d.data.key).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
         })
         .on("mouseout", function (d) {
-            d3.select(this).transition().duration(200).attr("r", 5);
+            d3.select(this).style("fill", function (d) {
+                return color(d.data.key);
+            });
             tooltip.transition().duration(200).style("opacity", 0);
         });
 }
@@ -317,6 +326,13 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
             })
             .attr("height", function (d) {
                 return height - y(d.hist);
+            })
+            .on("mousemove", function (d) {
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.html(d.hist).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
+            })
+            .on("mouseout", function (d) {
+                tooltip.transition().duration(200).style("opacity", 0);
             });
     }).fail(function () {
         $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");

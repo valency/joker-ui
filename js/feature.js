@@ -264,9 +264,14 @@ function generate_cust_data(data, model) {
 
 function generate_cust_turnover_barchart(container, src, axis_label) {
     var data = [];
+    var max_y = null;
     for (var i = 0; i < src.length; i++) {
         data.push({x: src.length - i, y: src[i]});
+        if (max_y == null || src[i] > max_y) max_y = src[i];
     }
     data.reverse();
-    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 50, right: 10, width: $(container).width(), height: 200}, {x: axis_label["x"], y: axis_label["y"]}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
+    $(container).append("<span id='num-length-test' class='axis'>" + max_y.toLocaleString() + "</span>");
+    var margin_left = $("#num-length-test").width();
+    $("#num-length-test").remove();
+    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 10 + margin_left, right: 10, width: $(container).width(), height: 200}, {x: axis_label["x"], y: axis_label["y"]}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
 }

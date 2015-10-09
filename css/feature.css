@@ -2,11 +2,7 @@
     fill: steelblue;
 }
 
-.bar_red {
-    fill: crimson;
-}
-
-.bar:hover, .bar_red:hover {
+.bar:hover {
     fill: orange;
 }
 
@@ -43,7 +39,7 @@ path {
 }
 
 .arc path {
-    stroke: #fff;
+    stroke: white;
 }
 
 .tick line {
