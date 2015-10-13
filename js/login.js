@@ -1,6 +1,7 @@
 $(document).ready(function () {
     handle_login();
     handle_register();
+    $("#trust_link").attr("href", API_SERVER + "joker/auth/trust/");
 });
 
 function handle_login() {
