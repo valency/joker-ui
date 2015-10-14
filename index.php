@@ -30,6 +30,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.14</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> new data for model 1 and model 2</li>
+                        <li><span class='font-yellow'>Modified</span> option 70 & 75 to 70 & 75 (MV >= 45 YO) for model 1 growth analysis table</li>
+                        <li><span class='font-green'>Added</span> hint for headers of growth analysis table</li>
+                        <li><span class='font-yellow'>Modified</span> design of growth analysis table to make it clear to read</li>
+                        <li><span class='font-green'>Added</span> values to tooltips when hovering to pie charts</li>
+                        <li><span class='font-yellow'>Modified</span> values of tooltips to two digits when hovering to charts</li>
+                        <li><span class='font-red'>Removed</span> normal races and key races for model 1 growth analysis table</li>
+                        <li><span class='font-red'>Removed</span> pie charts for model 2</li>
+                        <li><span class='font-yellow'>Modified</span> y axis label and figure title of figure 1 of model 2</li>
+                        <li><span class='font-purple'>Fixed</span> height bug of figure 1 for model 1 and model 2</li>
+                        <li><span class='font-yellow'>Modified</span> static figure data of model 1 and model 2</li>
+                        <li><span class='font-purple'>Fixed</span> figure 1 x axis label bug for model 1 and model 2</li>
+                    </ul>
                     <span class="font-blue">v0.10.9</span>
                     <ul>
                         <li><span class='font-green'>Added</span> breakdown under the first row of the table in model 1</li>
