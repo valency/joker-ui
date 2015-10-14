@@ -29,9 +29,9 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
     container_html += "</div>";
     add_portlet("#figure-container", title, container_html, fig_id, 8);
     // Render figure
-    var margin = {top: 20, right: 10, bottom: 50, left: 50};
+    var margin = {top: 20, right: 10, bottom: 30, left: 50};
     var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - 10 - margin.left - margin.right;
-    var height = 300 - margin.top - margin.bottom;
+    var height = 318 - margin.top - margin.bottom;
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -196,7 +196,7 @@ function stat_figure_bar_chart(src, title, xLabel, yLabel) {
         })
         .on("mousemove", function (d) {
             tooltip.transition().duration(200).style("opacity", .9);
-            tooltip.html(d.y).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
+            tooltip.html((100.0 * d.y).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
         })
         .on("mouseout", function (d) {
             tooltip.transition().duration(200).style("opacity", 0);
@@ -240,7 +240,7 @@ function stat_figure_pie_chart(src, title, xLabel, yLabel) {
         .on("mousemove", function (d) {
             d3.select(this).style("fill", "grey");
             tooltip.transition().duration(200).style("opacity", .9);
-            tooltip.html(d.data.key).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
+            tooltip.html(d.data.key + ": " + (100.0 * d.data.value).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
         })
         .on("mouseout", function (d) {
             d3.select(this).style("fill", function (d) {
@@ -329,7 +329,7 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
             })
             .on("mousemove", function (d) {
                 tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html(d.hist).style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
+                tooltip.html((100.0 * d.hist).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
             })
             .on("mouseout", function (d) {
                 tooltip.transition().duration(200).style("opacity", 0);

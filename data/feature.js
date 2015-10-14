@@ -45,9 +45,6 @@ var GROWTH_SEG_70_75 = [{
     "Normal Bet Types": [3.3, -1.3, 3.7, 0.9],
     "Exotic Bet Types": [10.5, -1.0, 5.4, 5.8]
 }, {
-    "Normal Races": [null, null, null, null],
-    "Key Races": [null, null, null, null]
-}, {
     "Bet Lines per Meeting": [null, null, null, null],
     "Avg. Bet Size": [null, null, null, null]
 }, {

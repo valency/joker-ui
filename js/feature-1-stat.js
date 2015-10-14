@@ -52,18 +52,24 @@ function draw_figures() {
         html += "<div class='input-group'>";
         html += "<span class='input-group-addon'>Segment</span>";
         html += "<select id='growth_table_segment' class='form-control'>";
-        html += "<option value='70_75'>70 & 75</option>";
+        // -- Options --
+        html += "<option value='70_75'>70 & 75 (MV &ge; 45 YO)</option>";
+        // -- End of Options --
         html += "</select>";
         html += "</div><div style='margin-top:10px;'>";
-        html += "<table class='table table-bordered table-advance table-hover table-condensed'>";
+        html += "<table class='table table-bordered table-advance table-hover table-condensed table-striped'>";
         html += "<tbody class='text-center'>";
-        html += "<tr><td class='bold bg-grey'></td><td class='bold bg-grey'>Racing Turnover Growth</td><td class='bold bg-grey'>Active Customers</td><td class='bold bg-grey'>Avg. Active Rate of Customers</td><td class='bold bg-grey'>Turnover per Meeting</td></tr>";
+        html += "<tr><td class='bold bg-grey'></td>";
+        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Racing Turnover Growth</td>";
+        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Active Customers</td>";
+        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Avg. Active Rate of Customers</td>";
+        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Turnover per Meeting</td></tr>";
         for (var group = 0; group < GROWTH_SEG_70_75.length; group++) {
             if (group == 1) html += "<tr><td class='' colspan='5'><hr style='margin:0;'/></td></tr>";
             for (var key in GROWTH_SEG_70_75[group]) {
                 if (GROWTH_SEG_70_75[group].hasOwnProperty(key)) {
                     var color = COLOR_PALETTE[group];
-                    html += "<tr style='color:" + color + ";'><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
+                    html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
                     for (i = 0; i < 4; i++) {
                         var value = "-";
                         if (GROWTH_SEG_70_75[group][key][i]) value = GROWTH_SEG_70_75[group][key][i] + " %";
