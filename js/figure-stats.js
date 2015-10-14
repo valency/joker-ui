@@ -34,7 +34,7 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
     var height = 318 - margin.top - margin.bottom;
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
-    var xAxis = d3.svg.axis().scale(x).orient("bottom");
+    var xAxis = d3.svg.axis().tickFormat(d3.format("d")).scale(x).orient("bottom");
     var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10, "%");
     var svg = d3.select("#figure-div-" + fig_id).append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -108,7 +108,7 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
         .on("mouseover", function (d) {
             var html = "";
             html += "<span class='bold'>" + label.x + ":</span> " + d.x + "<br/>";
-            html += "<span class='bold'>" + label.y + ":</span> " + d.y * 100 + " %<br/>";
+            html += "<span class='bold'>" + label.y + ":</span> " + (100.0 * d.y).toFixed(2) + "%<br/>";
             html += "<span class='bold'>" + label.last_season + ":</span> " + d.last_season + "<br/>";
             html += "<span class='bold'>" + label.this_season + ":</span> " + d.this_season;
             tooltip.transition()

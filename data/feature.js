@@ -1,54 +1,47 @@
-var GROWTH_RATE_TURNOVER = [0.0486, 0.0493, 0.0501, 0.0503, 0.0497, 0.0495, 0.0502, 0.0504];
-var GROWTH_RATE_TURNOVER_COUNT = [12, 13, 14, 15, 16, 17, 18, 19];
-var TURNOVER_LAST_SEASON = [1020.192938, 908.261628, 1174.287382, 1020.192938, 908.261628, 1174.287382, 1084.628432, 1204.928393];
-var TURNOVER_THIS_SEASON = [1020.192938, 908.261628, 1174.287382, 1025.293903, 913.711198, 1181.333106, 1090.593888, 1206.133321];
+var GROWTH_RATE_TURNOVER = [-0.024, -0.001, 0.002, 0.014, 0.023, -0.002, 0.004];
+var GROWTH_RATE_TURNOVER_COUNT = [1, 2, 3, 4, 5, 6, 7];
+var TURNOVER_LAST_SEASON = [574777142.9, 1019735485, 1620146436, 2079660347, 2611569235, 3179919310, 3791251373];
+var TURNOVER_THIS_SEASON = [560932011.2, 1018897081, 1624035292, 2108984959, 2670684882, 3173358994, 3804822186];
 var PDF_GROWTH_RATE_TURNOVER = [0.00001, 0.0003, 0.004, 0.054, 0.24, 0.4, 0.24, 0.054, 0.004, 0.0003, 0.00001];
 var PDF_GROWTH_RATE_TURNOVER_COUNT = [-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
-var BET_TYPE = ['QIN', 'QPL', 'PLA', 'WIN', 'TCE', 'TRI', 'F-F', 'DBL', 'QTT', 'D-T', '6UP', 'T-T', 'TBL'];
-var PERCENTAGE_BET_TYPE = [0.254, 0.189, 0.186, 0.18, 0.063, 0.028, 0.028, 0.024, 0.016, 0.014, 0.008, 0.006, 0.004];
-var PERCENTAGE_MAJOR_CHANNEL = [0.023235469083528713, 0.22665080309339677, 0.37894110648423557, 0.0013997270532246212, 0.14588655212233614, 0.0811141827343668, 0.05231479861427022, 0.09045736081464115];
-var MAJOR_CHANNEL_LABEL = ["MULTI", "AOSBS", "TEL", "MISSING", "EWIN", "ESC", "OTHERS", "IOSBS"];
-var ACCUMULATIVE_AVERAGE_ACTIVE_RATE = [0.32, 0.34, 0.36, 0.37, 0.38, 0.386, 0.39, 0.394];
-var ACTIVE_CUSTOMERS_LAST_SEASON = [63827, 83629, 59435, 68392, 60834];
-var ACTIVE_CUSTOMERS_THIS_SEASON = [70209, 79448, 60281, 67283, 62938];
+var BET_TYPE = ['ALUP', 'QQP', 'PLA', 'QIN', 'WIN', 'QPL', 'W-P', 'TCE', 'QTT', 'DBL', 'F-F', 'TRI', 'D-T', '6UP', 'T-T', 'TBL'];
+var PERCENTAGE_BET_TYPE = [0.175, 0.158, 0.116, 0.116, 0.104, 0.075, 0.073, 0.051, 0.046, 0.024, 0.020, 0.017, 0.008, 0.006, 0.006, 0.004];
+var PERCENTAGE_MAJOR_CHANNEL = [0.65, 0.293, 0.057];
+var MAJOR_CHANNEL_LABEL = ["IS", "TEL", "ESC"];
+var ACCUMULATIVE_AVERAGE_ACTIVE_RATE = [0.042, 0.084, 0.089, 0.093, 0.097, 0.108, 0.104];
+var ACTIVE_CUSTOMERS_LAST_SEASON = [0.096, 0.09, 0.088, 0.087, 0.085, 0.084, 0.084];
+var ACTIVE_CUSTOMERS_THIS_SEASON = [0.1, 0.097, 0.096, 0.095, 0.094, 0.093, 0.093];
 var PDF_ACTIVE_RATE_COUNT = [0.0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1.0];
 var PDF_ACTIVE_RATE = [0.5, 0.2, 0.12, 0.08, 0.04, 0.03, 0.02, 0.01];
 var PDF_GROWTH_RATE_ACTIVE_RATE_COUNT = [-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
 var PDF_GROWTH_RATE_ACTIVE_RATE = [0.00001, 0.0003, 0.004, 0.054, 0.24, 0.4, 0.24, 0.054, 0.004, 0.0003, 0.00001];
 var PERCENTAGE_NEW_BET_TYPE = [0.304, 0.189, 0.186, 0.18, 0.053, 0.018, 0.018, 0.014, 0.014, 0.012, 0.006, 0.004, 0.002];
 var GROWTH_SEG_70_75 = [{
-    "Total Growth": [4.4, -1.4, 3.3, 1.9]
+    "Total Growth": [1.40, -1.80, 0.40, 2.90]
 }, {
-    "Top Quintile": [8.3, 0.4, 3.5, 3.7],
-    "2nd Quintile": [7.1, 0.4, 3.5, 2.4],
-    "3rd Quintile": [4.7, 0.4, 3.6, 0.2],
-    "4th Quintile": [-4.8, 0.4, 2.1, -7.4],
-    "5th Quintile": [-55.9, -10.1, -7.5, -47.7]
+    "Top Quintile": [51.50, 2.30, 6.30, 39.20],
+    "2nd Quintile": [-1.80, 1.40, 2.70, -5.60],
+    "3rd Quintile": [-25.00, 1.80, 0.20, -26.40],
+    "4th Quintile": [-51.40, 4.90, -6.80, -50.30],
+    "5th Quintile": [-96.10, -34.40, -34.90, -90.90]
 }, {
-    "September": [8.1, 2.9, 1.0, 4.0],
-    "October": [5.2, 1.8, 0.2, 3.1],
-    "November": [7.9, 1.8, 0.2, 5.8],
-    "December": [-19.4, 0.4, 0.2, -19.9],
-    "January": [10.4, 1.7, 0.1, 8.5],
-    "February": [-8.9, 0.1, 0.1, -9.1],
-    "March": [8.5, 0.8, 0.1, 7.6],
-    "April": [5.2, 0.6, 0.1, 4.5],
-    "May": [17.1, 0.5, 0.2, 16.3],
-    "June": [-1.5, -1.6, 12.8, -11.3]
+    "September": [1.40, -1.80, 0.40, 2.90]
 }, {
-    "ST Races": [9.5, -0.4, 7.4, 2.0],
-    "HV Races": [-4.2, 1.9, -7.1, 1.8]
+    "ST Races": [-37.60, -3.80, -41.50, 11.00],
+    "HV Races": [null, null, null, null]
 }, {
-    "Day Races": [10.6, 0.6, 8.5, 2.2],
-    "Night Races": [-4.0, 0.7, -6.4, 1.6]
+    "Day Races": [-17.90, -2.70, -20.50, 6.10],
+    "Night Races": [62.60, 2.50, 49.40, 6.20]
 }, {
-    "Normal Bet Types": [3.3, -1.3, 3.7, 0.9],
-    "Exotic Bet Types": [10.5, -1.0, 5.4, 5.8]
+    "Normal Bet Types": [1.50, -2.30, 0.40, 3.50],
+    "Exotic Bet Types": [2.00, -2.80, 0.50, 4.40]
 }, {
-    "Bet Lines per Meeting": [null, null, null, null],
-    "Avg. Bet Size": [null, null, null, null]
+    "Bet Lines per Meeting": [-0.80, null, null, null],
+    "Avg. Bet Size": [2.50, null, null, null]
 }, {
-    "3 Days Since Last Race": [null, null, null, null],
-    "4 Days Since Last Race": [null, null, null, null],
-    "5+ Days Since Last Race": [null, null, null, null]
+    "3 Days Since Last Race": [6.00, -1.20, 0.80, 6.30],
+    "4 Days Since Last Race": [-38.80, -4.00, -31.60, -6.70],
+    "5+ Days Since Last Race": [111.50, 6.60, 79.90, 10.30]
 }];
+
+

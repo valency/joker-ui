@@ -19,7 +19,7 @@ function draw_figures() {
                 this_season: TURNOVER_THIS_SEASON[i]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD)", {x: "Meeting ID", y: "Cumulative Growth Rate (%)", last_season: "Total Turnover of Last Season", this_season: "Total Turnover of This Season"}, 0.05);
+        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD)", {x: "Meeting ID", y: "Cumulative Growth Rate of Total Turnover (%)", last_season: "Total Turnover (PYTD)", this_season: "Total Turnover (YTD)"}, 0.05);
         src = [];
         for (i = 0; i < PDF_GROWTH_RATE_TURNOVER_COUNT.length; i++) {
             src.push({
