@@ -175,7 +175,9 @@ function count_decimals(v) {
     return count;
 }
 
-function to_kilo(d) {
-    if (count_decimals(d) >= 3) return (Math.round(d / 10) / 100) + "k";
-    else return d;
+function n_formatter(num) {
+    if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + ' billion';
+    if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + ' million';
+    if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + ' k';
+    return num;
 }

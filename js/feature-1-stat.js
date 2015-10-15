@@ -15,19 +15,15 @@ function draw_figures() {
             src.push({
                 x: GROWTH_RATE_TURNOVER_COUNT[i],
                 y: GROWTH_RATE_TURNOVER[i],
-                last_season: TURNOVER_LAST_SEASON[i],
-                this_season: TURNOVER_THIS_SEASON[i]
+                values: [TURNOVER_PREV_SEASON[i], TURNOVER_THIS_SEASON[i], TOTAL_TURNOVER_PYTD[i], TOTAL_TURNOVER_YTD[i]]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD)", {x: "Meeting ID", y: "Cumulative Growth Rate of Total Turnover (%)", last_season: "Total Turnover (PYTD)", this_season: "Total Turnover (YTD)"}, 0.05);
-        src = [];
-        for (i = 0; i < PDF_GROWTH_RATE_TURNOVER_COUNT.length; i++) {
-            src.push({
-                x: PDF_GROWTH_RATE_TURNOVER_COUNT[i],
-                y: PDF_GROWTH_RATE_TURNOVER[i]
-            });
-        }
-        stat_figure_bar_chart(src, "Distribution of Customers' Growth Rate of Turnover of the Last 14 Meetings", "Customers' Growth Rate of Turnover (%)", "Probabilistic Distribution Function (%)");
+        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD)", {
+            x: "Meeting ID",
+            y: "Cumulative Growth Rate of Total Turnover (%)",
+            keys: ["Turnover (Previous Season)", "Turnover (This Season)", "Total Turnover (PYTD)", "Total Turnover (YTD)"]
+        }, 0.05);
+        stat_figure_histogram("recent_growth_rate", 0, "Distribution of Customers' Growth Rate of Turnover of the Last 14 Meetings", "Customers' Growth Rate of Turnover (%)", "Probabilistic Distribution Function (%)", 1, active.value, 0);
         stat_figure_histogram("age", 0, "Distribution of Customers' Age", "Customers' Age", "Probabilistic Distribution Function (%)", 1, active.value, 0);
         src = [];
         for (i = 0; i < BET_TYPE.length; i++) {

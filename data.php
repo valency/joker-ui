@@ -27,14 +27,11 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=2&sub=1'); ?>
             <!-- BEGIN PAGE -->
-            <div>
-                <button class="btn red" type="button" onclick="$('#file_upload').click();"><i class="fa fa-plus"></i> Upload</button>
-                <input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=." multiple>
-            </div>
-            <div class="table-scrollable">
+            <div><input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=." multiple></div>
+            <div id="file_list_table_wrapper">
                 <table class="table table-striped table-bordered table-advance table-hover">
                     <thead>
-                    <tr>
+                    <tr class="heading">
                         <th><i class="fa fa-briefcase"></i> File Name</th>
                         <th><i class="fa fa-database"></i> Size</th>
                         <th><i class="fa fa-clock-o"></i> Upload Time</th>
@@ -48,14 +45,14 @@
                                 echo "<tr>";
                                 echo "<td><a class='file-entry' href='data/" . $entry . "' target='_blank'><i class='fa fa-file-text-o'></i> " . $entry . "</a></td>";
                                 echo "<td>" . number_format(filesize('./data/' . $entry)) . "</td>";
-                                echo "<td>" . date("F d Y, H:i:s", filemtime('./data/' . $entry)) . "</td>";
-                                echo "<td>";
+                                echo "<td>" . date("Y-m-d H:i:s", filemtime('./data/' . $entry)) . "</td>";
+                                echo "<td style='white-space:nowrap;'>";
                                 if (pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
                                     echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue'><i class='fa fa-edit'></i> Import</button>";
                                 } elseif (pathinfo($entry, PATHINFO_EXTENSION) == "gz") {
                                     echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple'><i class='fa fa-download'></i> Extract</button>";
                                 }
-                                echo "<button onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Delete</button>";
+                                echo "<button id='delete_btn' onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";
                             }

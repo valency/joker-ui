@@ -15,11 +15,14 @@ function draw_figures() {
             src.push({
                 x: GROWTH_RATE_TURNOVER_COUNT[i],
                 y: ACCUMULATIVE_AVERAGE_ACTIVE_RATE[i],
-                last_season: ACTIVE_CUSTOMERS_LAST_SEASON[i],
-                this_season: ACTIVE_CUSTOMERS_THIS_SEASON[i]
+                values: [ACTIVE_CUSTOMERS_LAST_SEASON[i], ACTIVE_CUSTOMERS_THIS_SEASON[i]]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Avg. Active Rate of New Customers (YTD)", {x: "Meeting ID", y: "Cumulative Growth Rate of Active Rate (%)", last_season: "Avg. Active Rate (PYTD)", this_season: "Avg. Active Rate (YTD)"}, 0.34);
+        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Avg. Active Rate of New Customers (YTD)", {
+            x: "Meeting ID",
+            y: "Cumulative Growth Rate of Active Rate (%)",
+            keys: ["Avg. Active Rate (PYTD)", "Avg. Active Rate (YTD)"]
+        }, 0.34);
         stat_figure_histogram("active_rate_previous_83", 0, "Distribution of New Customers' Active Rate of the Previous 83 Meetings", "New Customers' Active Rate", "Probabilistic Distribution Function (%)", 2, active.value, 2);
         stat_figure_histogram("age", 0, "Distribution of New Customers' Age", "New Customers' Age", "Probabilistic Distribution Function (%)", 2, active.value, 0);
         stat_figure_histogram("chance_to_be_regular", 0, "Distribution of New Customers' Regular Score", "New Customers' Regular Score", "Probabilistic Distribution Function (%)", 2, active.value, 1);

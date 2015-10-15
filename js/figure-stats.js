@@ -31,7 +31,7 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
     // Render figure
     var margin = {top: 20, right: 10, bottom: 30, left: 50};
     var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - 10 - margin.left - margin.right;
-    var height = 318 - margin.top - margin.bottom;
+    var height = 300 - margin.top - margin.bottom;
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().tickFormat(d3.format("d")).scale(x).orient("bottom");
@@ -109,14 +109,15 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
             var html = "";
             html += "<span class='bold'>" + label.x + ":</span> " + d.x + "<br/>";
             html += "<span class='bold'>" + label.y + ":</span> " + (100.0 * d.y).toFixed(2) + "%<br/>";
-            html += "<span class='bold'>" + label.last_season + ":</span> " + d.last_season + "<br/>";
-            html += "<span class='bold'>" + label.this_season + ":</span> " + d.this_season;
+            for (var i = 0; i < label.keys.length; i++) {
+                html += "<span class='bold'>" + label.keys[i] + ":</span> " + n_formatter(d.values[i]) + "<br/>";
+            }
             tooltip.transition()
                 .duration(200)
                 .style("opacity", .9);
             tooltip.html(html)
-                .style("left", (d3.event.pageX + 5) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
+                .style("left", (d3.event.pageX + 20) + "px")
+                .style("top", (d3.event.pageY - 20) + "px");
         })
         .on("mouseout", function (d) {
             tooltip.transition()
@@ -254,12 +255,13 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
     // Prepare figure container
     var fig_id = guid();
     var container_html = "<div style='display:inline-block;text-align:center;'>";
-    container_html += "<div class='font-purple bold'>" + title + "</div>";
+    container_html += "<div id='figure-title-" + fig_id + "' class='font-purple bold' style='width:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + title + "</div>";
     container_html += "<div><span class='bold'>X Axis:</span> " + xLabel + "</div>";
     container_html += "<div><span class='bold'>Y Axis:</span> " + yLabel + "</div>";
     container_html += "<div id='figure-div-" + fig_id + "'></div>";
     container_html += "</div>";
     add_portlet("#figure-container", title, container_html, fig_id, 4);
+    $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().width() + "px");
     // Render figure
     $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical, function (data) {
         var src = [];

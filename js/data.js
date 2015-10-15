@@ -3,10 +3,15 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    init_widget();
-    add_deco_badge(1);
-    add_deco_badge(2);
-    add_deco_badge(4);
+    add_deco_badge(1, function () {
+        add_deco_badge(2, function () {
+            add_deco_badge(4, function () {
+                $("#file_list_table_wrapper table").dataTable({searching: false});
+                $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn red pull-right' onclick=\"$('#file_upload').click();\"><i class='fa fa-plus'></i> Upload</button>");
+                init_widget();
+            });
+        });
+    });
     $('#file_upload').fileupload({
         dataType: 'json',
         acceptFileTypes: '/(\.|\/)(csv|gz)$/i',
@@ -16,39 +21,37 @@ $(document).ready(function () {
     });
 });
 
-function add_deco_badge(model) {
+function add_deco_badge(model, callback) {
     $.get(API_SERVER + "joker/tool/env/get/?key=model_" + model + "_active_" + Cookies.get('joker_id')).always(function (active) {
-        var active_badge = "<span class='pull-right badge badge-danger'> active </span>";
         $.get(API_SERVER + "joker/model/" + model + "/source/", function (r) {
             for (var i = 0; i < r.length; i++) {
                 var found = false;
-                var clear_db = "<button onclick=\"clear_db(" + model + ",'" + r[i] + "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Clear DB</button>";
-                var model_badge = "<span class='pull-right badge badge-success'> model " + model + " </span>";
-                var active_btn = "<button onclick=\"set_active(" + model + ",'" + r[i] + "')\" class='btn default btn-xs red'><i class='fa fa-trash-o'></i> Activate</button>";
+                var clear_db_btn = "<button onclick=\"clear_db(" + model + ",'" + r[i] + "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Clear DB</button>";
+                var active_btn = "<button onclick=\"set_active(" + model + ",'" + r[i] + "')\" class='btn default btn-xs red'><i class='fa fa-star'></i> Activate</button>";
                 $(".file-entry").each(function () {
                     if (r[i] == $(this).attr("href").replace("data/", "")) {
                         found = true;
-                        $(this).append(model_badge);
-                        $(this).parent().next().next().next().append(clear_db);
-                        if ($(this).attr("href").replace("data/", "") == active.value) {
-                            $(this).append(active_badge);
-                        } else {
-                            $(this).parent().next().next().next().prepend(active_btn);
-                        }
+                        var badge_color = "grey";
+                        if ($(this).attr("href").replace("data/", "") == active.value) badge_color = "red";
+                        else $(this).parent().next().next().next().prepend(active_btn);
+                        $(this).parent().append("<span class='pull-right badge bg-" + badge_color + "'> M" + model + " </span>");
+                        $(this).parent().next().next().next().append(clear_db_btn);
                     }
                 });
                 if (!found) {
                     var html = "<tr><td>";
                     html += "<span class='file-entry' href='data/" + r[i] + "'><i class='fa fa-file-text-o'></i> " + r[i] + "</span>";
-                    html += model_badge;
-                    if (r[i] == active.value) html += active_badge;
-                    html += "</td><td>-</td><td>-</td><td>";
+                    var badge_color = "grey";
+                    if (r[i] == active.value) badge_color = "red";
+                    html += "<span class='pull-right badge bg-" + badge_color + "'> M" + model + " </span>";
+                    html += "</td><td>-</td><td>-</td><td style='white-space:nowrap;'>";
                     if (r[i] != active.value) html += active_btn;
-                    html += clear_db + "</td>";
+                    html += clear_db_btn + "</td>";
                     html += "</tr>";
-                    $(".table-scrollable>table>tbody").append(html);
+                    $("#file_list_table_wrapper table tbody").append(html);
                 }
             }
+            callback();
         });
     });
 }
@@ -77,7 +80,7 @@ function clear_db(model, source) {
 
 function interpret_data_type_desc(data_type) {
     var data_type_desc = {
-        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_(1-4)", "DECLINE_REASON_CODE_(1-4)", "INV(1-83)"],
+        model_1: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "END_BAL", "RECHARGE_TIMES", "RECHARGE_AMOUNT", "WITHDRAW_TIMES", "WITHDRAW_AMOUNT", "GROW_PROPENSITY", "DECLINE_PROPENSITY", "GROW_REASON_CODE_(1-4)", "DECLINE_REASON_CODE_(1-4)", "INV(1-83)", "RECENT_GROWTH_RATE"],
         model_2: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "MTG_NUM", "INV", "DIV", "RR", "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)", "ACTIVE_RATE_PREVIOUS_83"],
         model_4: ["CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL", "ACTIVE_RATE", "INV", "DIV", "RR", "ACTIVE_RATE_EXOTIC", "INV_EXOTIC", "DIV_EXOTIC", "RR_EXOTIC", "SCORE", "REASON_CODE_(1-4)", "INV(1-83)", "INV_EXOTIC(1-83)"]
     };

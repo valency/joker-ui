@@ -89,11 +89,11 @@ function load_data(div_id, conf, model) {
 }
 
 function add_dataset_badge(table, model) {
-    $(".tabletools-btn-group").append("<a href='data.php' class='btn btn-sm red'><span><i class='fa fa-briefcase'></i> " + DT_CONF.jokerSource.replace(".csv", "") + "</span></a>");
+    $(".tabletools-btn-group").append("<a title='" + DT_CONF.jokerSource.replace(".csv", "") + "' href='data.php' class='btn red' style='width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'><span><i class='fa fa-briefcase'></i> " + DT_CONF.jokerSource.replace(".csv", "") + "</span></a>");
 }
 
 function add_segment_filter(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='segment_filter'><i class='fa fa-group'></i> <span>All</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn purple' id='segment_filter'><i class='fa fa-group'></i> <span>All</span></a>");
     $("#segment_filter").click(function () {
         var segment_filter_label = $("#segment_filter>span");
         bootbox.dialog({
@@ -134,7 +134,7 @@ function add_segment_filter(table, model) {
 }
 
 function add_active_rate_prev_83_filter(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm purple' id='active_rate_prev_83_filter'><i class='fa fa-magic'></i> <span>All</span></a>");
+    $(".tabletools-btn-group").append("<a class='btn purple' id='active_rate_prev_83_filter'><i class='fa fa-magic'></i> <span>All</span></a>");
     $("#active_rate_prev_83_filter").click(function () {
         var active_rate_prev_83_filter_label = $("#active_rate_prev_83_filter>span");
         var html = "<select id='select2_active_rate_prev_83' class='form-control'>";
@@ -169,7 +169,7 @@ function add_active_rate_prev_83_filter(table, model) {
 }
 
 function add_export_btn(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm green' id='cust_export_csv'><i class='fa fa-file-text-o'></i> Export</a>");
+    $(".tabletools-btn-group").append("<a class='btn green' id='cust_export_csv'><i class='fa fa-file-text-o'></i> Export</a>");
     $("#cust_export_csv").click(function () {
         var url = table.ajax.url() + "&csv=true&" + $.param(table.ajax.params());
         window.open(url);
@@ -177,7 +177,7 @@ function add_export_btn(table, model) {
 }
 
 function add_column_filter(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn btn-sm blue' id='column_filter'><i class='fa fa-columns'></i> Columns</a>");
+    $(".tabletools-btn-group").append("<a class='btn blue' id='column_filter'><i class='fa fa-columns'></i> Columns</a>");
     $("#column_filter").click(function () {
         var msg = "";
         var flag = 0;
