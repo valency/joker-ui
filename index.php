@@ -30,6 +30,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.15</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> data management page design</li>
+                        <li><span class='font-purple'>Fixed</span> prediction table tools display bug</li>
+                        <li><span class='font-green'>Added</span> recent growth rate feature for model 1</li>
+                        <li><span class='font-purple'>Fixed</span> the bug when importing files with missing features</li>
+                        <li><span class='font-yellow'>Modified</span> figure 2 of model 1 to real data</li>
+                        <li><span class='font-green'>Added</span> billion / million / k support for number in figure 1 of model 1 and model 2</li>
+                        <li><span class='font-green'>Added</span> additional data for figure 1 of model 1</li>
+                    </ul>
                     <span class="font-blue">v0.10.14</span>
                     <ul>
                         <li><span class='font-green'>Added</span> new data for model 1 and model 2</li>
