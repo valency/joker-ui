@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Hong_Kong');
 $DOMAIN = $_SERVER['HTTP_HOST'];
 $PROTOCOL = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
 ini_set('display_errors', 'On');
