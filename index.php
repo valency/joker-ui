@@ -40,6 +40,7 @@
                         <li><span class='font-yellow'>Modified</span> the scale of figure 2 of model 1</li>
                         <li><span class='font-yellow'>Modified</span> title and y axis label of figure 1 of model 1</li>
                         <li><span class='font-green'>Added</span> figure of distribution of active rate (YTD) of all customers for model 2</li>
+                    </ul>
                     <span class="font-blue">v0.10.15</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> data management page design</li>
