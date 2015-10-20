@@ -30,6 +30,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.20</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> four columns of figure 1 for model 2</li> 
+                        <li><span class='font-yellow'>Modified</span> x axis ticks of figures of statistics to make them easy to read</li> 
+                        <li><span class='font-green'>Added</span> two tables for model 2</li> 
+                        <li><span class='font-purple'>Fixed</span> figure title width bug</li>
+                        <li><span class='font-red'>Removed</span> all axis labels of figures of statistics</li> 
+                        <li><span class='font-yellow'>Modified</span> the scale of figure 2 of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> title and y axis label of figure 1 of model 1</li>
+                        <li><span class='font-green'>Added</span> figure of distribution of active rate (YTD) of all customers for model 2</li>
                     <span class="font-blue">v0.10.15</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> data management page design</li>
