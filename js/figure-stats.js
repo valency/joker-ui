@@ -171,8 +171,12 @@ function stat_figure_bar_chart(src, title, xLabel, yLabel) {
     add_portlet("#figure-container", title, container_html, fig_id, 4);
     $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().parent().width() + "px");
     // Render figure
+    render_bar_chart(src, fig_id);
+}
+
+function render_bar_chart(src, fig_id) {
     var margin = {top: 20, right: 10, bottom: 50, left: 50};
-    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - 5 - margin.left - margin.right;
+    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - margin.left - margin.right;
     var height = 300 - margin.top - margin.bottom;
     var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
     var y = d3.scale.linear().range([height, 0]);
@@ -186,13 +190,11 @@ function stat_figure_bar_chart(src, title, xLabel, yLabel) {
     x.domain(src.map(function (d) {
         return d.x;
     }));
-    var y_max = d3.max(src, function (d) {
-        return d.y
-    });
-    var y_min = d3.min(src, function (d) {
+    y.domain([d3.min(src, function (d) {
         return d.y;
-    });
-    y.domain([y_min - (y_max - y_min) / 9, y_max]);
+    }), d3.max(src, function (d) {
+        return d.y;
+    })]);
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
@@ -206,7 +208,9 @@ function stat_figure_bar_chart(src, title, xLabel, yLabel) {
         });
     svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis);
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)");
     svg.selectAll(".bar")
         .data(src)
         .enter().append("rect")
@@ -246,67 +250,11 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
         var src = [];
         for (var i = 0; i < data.hist.length; i++) {
             src.push({
-                "hist": data.hist[i],
-                "bin_edges": Number(data.bin_edges[i + 1]) === data.bin_edges[i + 1] ? data.bin_edges[i].toFixed(data_digits) + "-" + data.bin_edges[i + 1].toFixed(data_digits) : data.bin_edges[i + 1]
+                y: data.hist[i],
+                x: Number(data.bin_edges[i + 1]) === data.bin_edges[i + 1] ? data.bin_edges[i].toFixed(data_digits) + "-" + data.bin_edges[i + 1].toFixed(data_digits) : data.bin_edges[i + 1]
             });
         }
-        var margin = {top: 20, right: 10, bottom: 50, left: 50};
-        var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - margin.left - margin.right;
-        var height = 300 - margin.top - margin.bottom;
-        var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-        var y = d3.scale.linear().range([height, 0]);
-        var xAxis = d3.svg.axis().scale(x).orient("bottom");
-        var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10, "%");
-        var svg = d3.select("#figure-div-" + fig_id).append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        x.domain(src.map(function (d) {
-            return d.bin_edges;
-        }));
-        y.domain([d3.min(src, function (d) {
-            return d.hist;
-        }), d3.max(src, function (d) {
-            return d.hist;
-        })]);
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis)
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", "-.3em")
-            .attr("transform", function (d) {
-                return "rotate(-65)";
-            });
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)");
-        svg.selectAll(".bar")
-            .data(src)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function (d) {
-                return x(d.bin_edges);
-            })
-            .attr("width", x.rangeBand())
-            .attr("y", function (d) {
-                return y(d.hist);
-            })
-            .attr("height", function (d) {
-                return height - y(d.hist);
-            })
-            .on("mousemove", function (d) {
-                tooltip.transition().duration(200).style("opacity", .9);
-                tooltip.html((100.0 * d.hist).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
-            })
-            .on("mouseout", function (d) {
-                tooltip.transition().duration(200).style("opacity", 0);
-            });
+        render_bar_chart(src, fig_id);
     }).fail(function () {
         $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
     });
