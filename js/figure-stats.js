@@ -64,23 +64,9 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-    svg.append("text")
-        .attr("class", "axis-label")
-        .attr("x", width)
-        .attr("y", height - 6)
-        .style("text-anchor", "end")
-        .text(label.x);
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
-    svg.append("text")
-        .attr("class", "axis-label")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("x", 0)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text(label.y);
     svg.append("path")
         .attr("class", "dashed")
         .attr("d", v([{
@@ -123,84 +109,6 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
-        });
-}
-
-function stat_figure_bar_chart(src, title, xLabel, yLabel) {
-    // Prepare figure container
-    var fig_id = guid();
-    var container_html = "<div style='display:inline-block;text-align:center;'>";
-    container_html += "<div class='font-purple bold'>" + title + "</div>";
-    container_html += "<div><span class='bold'>X Axis:</span> " + xLabel + "</div>";
-    container_html += "<div><span class='bold'>Y Axis:</span> " + yLabel + "</div>";
-    container_html += "<div id='figure-div-" + fig_id + "'></div>";
-    container_html += "</div>";
-    add_portlet("#figure-container", title, container_html, fig_id, 4);
-    // Render figure
-    var margin = {top: 20, right: 10, bottom: 50, left: 50};
-    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - 5 - margin.left - margin.right;
-    var height = 300 - margin.top - margin.bottom;
-    var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-    var y = d3.scale.linear().range([height, 0]);
-    var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.format(".0%"));
-    var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10, "%");
-    var svg = d3.select("#figure-div-" + fig_id).append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    x.domain(src.map(function (d) {
-        return d.x;
-    }));
-    var y_max = d3.max(src, function (d) {
-        return d.y
-    });
-    var y_min = d3.min(src, function (d) {
-        return d.y;
-    });
-    y.domain([y_min - (y_max - y_min) / 9, y_max]);
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-        .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", "-.3em")
-        .attr("transform", function (d) {
-            return "rotate(-65)";
-        });
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-    svg.append("text")
-        .attr("class", "axis-label")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("x", 0)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text(yLabel);
-    svg.selectAll(".bar")
-        .data(src)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function (d) {
-            return x(d.x);
-        })
-        .attr("width", x.rangeBand())
-        .attr("y", function (d) {
-            return y(d.y);
-        })
-        .attr("height", function (d) {
-            return height - y(d.y);
-        })
-        .on("mousemove", function (d) {
-            tooltip.transition().duration(200).style("opacity", .9);
-            tooltip.html((100.0 * d.y).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
-        })
-        .on("mouseout", function (d) {
-            tooltip.transition().duration(200).style("opacity", 0);
         });
 }
 
@@ -251,7 +159,7 @@ function stat_figure_pie_chart(src, title, xLabel, yLabel) {
         });
 }
 
-function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model, data_source, data_digits) {
+function stat_figure_bar_chart(src, title, xLabel, yLabel) {
     // Prepare figure container
     var fig_id = guid();
     var container_html = "<div style='display:inline-block;text-align:center;'>";
@@ -261,14 +169,85 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
     container_html += "<div id='figure-div-" + fig_id + "'></div>";
     container_html += "</div>";
     add_portlet("#figure-container", title, container_html, fig_id, 4);
-    $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().width() + "px");
+    $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().parent().width() + "px");
     // Render figure
-    $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical, function (data) {
+    var margin = {top: 20, right: 10, bottom: 50, left: 50};
+    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - 5 - margin.left - margin.right;
+    var height = 300 - margin.top - margin.bottom;
+    var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+    var y = d3.scale.linear().range([height, 0]);
+    var xAxis = d3.svg.axis().scale(x).orient("bottom");
+    var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10, "%");
+    var svg = d3.select("#figure-div-" + fig_id).append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    x.domain(src.map(function (d) {
+        return d.x;
+    }));
+    var y_max = d3.max(src, function (d) {
+        return d.y
+    });
+    var y_min = d3.min(src, function (d) {
+        return d.y;
+    });
+    y.domain([y_min - (y_max - y_min) / 9, y_max]);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", "-.3em")
+        .attr("transform", function (d) {
+            return "rotate(-65)";
+        });
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+    svg.selectAll(".bar")
+        .data(src)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) {
+            return x(d.x);
+        })
+        .attr("width", x.rangeBand())
+        .attr("y", function (d) {
+            return y(d.y);
+        })
+        .attr("height", function (d) {
+            return height - y(d.y);
+        })
+        .on("mousemove", function (d) {
+            tooltip.transition().duration(200).style("opacity", .9);
+            tooltip.html((100.0 * d.y).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
+        })
+        .on("mouseout", function (d) {
+            tooltip.transition().duration(200).style("opacity", 0);
+        });
+}
+
+function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model, data_source, data_digits, bins) {
+    // Prepare figure container
+    var fig_id = guid();
+    var container_html = "<div style='display:inline-block;text-align:center;'>";
+    container_html += "<div id='figure-title-" + fig_id + "' class='font-purple bold' style='width:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + title + "</div>";
+    container_html += "<div><span class='bold'>X Axis:</span> " + xLabel + "</div>";
+    container_html += "<div><span class='bold'>Y Axis:</span> " + yLabel + "</div>";
+    container_html += "<div id='figure-div-" + fig_id + "'></div>";
+    container_html += "</div>";
+    add_portlet("#figure-container", title, container_html, fig_id, 4);
+    $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().parent().width() + "px");
+    // Render figure
+    $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins : ""), function (data) {
         var src = [];
         for (var i = 0; i < data.hist.length; i++) {
             src.push({
                 "hist": data.hist[i],
-                "bin_edges": Number(data.bin_edges[i]) === data.bin_edges[i] ? data.bin_edges[i].toFixed(data_digits) : data.bin_edges[i]
+                "bin_edges": Number(data.bin_edges[i + 1]) === data.bin_edges[i + 1] ? data.bin_edges[i].toFixed(data_digits) + "-" + data.bin_edges[i + 1].toFixed(data_digits) : data.bin_edges[i + 1]
             });
         }
         var margin = {top: 20, right: 10, bottom: 50, left: 50};
@@ -307,14 +286,6 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
             .call(yAxis)
             .append("text")
             .attr("transform", "rotate(-90)");
-        svg.append("text")
-            .attr("class", "axis-label")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("x", 0)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text(yLabel);
         svg.selectAll(".bar")
             .data(src)
             .enter().append("rect")
@@ -339,4 +310,50 @@ function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model
     }).fail(function () {
         $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
     });
+}
+
+function stat_color_table(id, title, src, header, prefix_content) {
+    var html = prefix_content;
+    html += "<table class='table table-bordered table-advance table-hover table-condensed table-striped'>";
+    html += "<tbody class='text-center'>";
+    html += "<tr><td class='bold bg-grey'></td>";
+    for (var i = 0; i < header.length; i++) {
+        html += "<td class='bold bg-grey' title='" + header[i]["hint"] + "'>" + header[i]["text"] + "</td>";
+    }
+    for (var group = 0; group < src.length; group++) {
+        if (group == 1) html += "<tr><td class='' colspan='5'><hr style='margin:0;'/></td></tr>";
+        for (var key in src[group]) {
+            if (src[group].hasOwnProperty(key)) {
+                var color = COLOR_PALETTE[group];
+                html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
+                for (i = 0; i < header.length; i++) {
+                    var value = "-";
+                    if (src[group][key][i]) value = src[group][key][i] + " %";
+                    html += "<td>" + value + "</td>";
+                }
+                html += "</tr>";
+            }
+        }
+    }
+    html += "</tbody></table></div>";
+    add_portlet("#figure-container", title, html, id, 12);
+}
+
+function stat_table(id, title, src, header, prefix_content) {
+    var html = prefix_content;
+    html += "<table class='table table-bordered table-advance table-hover table-condensed table-striped'>";
+    html += "<tbody class='text-center'>";
+    html += "<tr>";
+    for (var i = 0; i < header.length; i++) {
+        html += "<td class='bold bg-grey' title='" + header[i]["hint"] + "'>" + header[i]["text"] + "</td>";
+    }
+    for (i = 0; i < src.length; i++) {
+        html += "<tr>";
+        for (var j = 0; j < src[i].length; j++) {
+            html += "<td>" + (src[i][j] ? src[i][j] : "-") + "</td>";
+        }
+        html += "</tr>";
+    }
+    html += "</tbody></table></div>";
+    add_portlet("#figure-container", title, html, id, 12);
 }

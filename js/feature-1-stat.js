@@ -18,13 +18,13 @@ function draw_figures() {
                 values: [TURNOVER_PREV_SEASON[i], TURNOVER_THIS_SEASON[i], TOTAL_TURNOVER_PYTD[i], TOTAL_TURNOVER_YTD[i]]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD)", {
+        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD vs. PYTD)", {
             x: "Meeting ID",
-            y: "Cumulative Growth Rate of Total Turnover (%)",
+            y: "Cumulative Growth Rate of Total Turnover (YTD vs. PYTD)",
             keys: ["Turnover (Previous Season)", "Turnover (This Season)", "Total Turnover (PYTD)", "Total Turnover (YTD)"]
         }, 0.05);
-        stat_figure_histogram("recent_growth_rate", 0, "Distribution of Customers' Growth Rate of Turnover of the Last 14 Meetings", "Customers' Growth Rate of Turnover (%)", "Probabilistic Distribution Function (%)", 1, active.value, 0);
-        stat_figure_histogram("age", 0, "Distribution of Customers' Age", "Customers' Age", "Probabilistic Distribution Function (%)", 1, active.value, 0);
+        stat_figure_histogram("recent_growth_rate", 0, "Distribution of Customers' Growth Rate of Turnover of the Last 14 Meetings", "Customers' Growth Rate of Turnover", "Probabilistic Distribution Function", 1, active.value, 1, "-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1");
+        stat_figure_histogram("age", 0, "Distribution of Customers' Age", "Customers' Age", "Probabilistic Distribution Function", 1, active.value, 0, null);
         src = [];
         for (i = 0; i < BET_TYPE.length; i++) {
             src.push({
@@ -32,7 +32,7 @@ function draw_figures() {
                 value: PERCENTAGE_BET_TYPE[i]
             });
         }
-        stat_figure_pie_chart(src, "Turnover of Bet Types (YTD)", "Bet Type", "Turnover of the Bet Type (%)");
+        stat_figure_pie_chart(src, "Turnover of Bet Types (YTD)", "Bet Type", "Turnover of the Bet Type");
         src = [];
         for (i = 0; i < MAJOR_CHANNEL_LABEL.length; i++) {
             src.push({
@@ -40,43 +40,25 @@ function draw_figures() {
                 value: PERCENTAGE_MAJOR_CHANNEL[i]
             });
         }
-        stat_figure_pie_chart(src, "Turnover of Channels (YTD)", "Channel", "Turnover of the Channel (%)");
-        stat_figure_histogram("grow_prop", 0, "Distribution of Customer's Grow Score", "Customer's Grow Score", "Probabilistic Distribution Function (%)", 1, active.value, 1);
-        stat_figure_histogram("decline_prop", 0, "Distribution of Customers' Decline Score", "Customers' Decline Score", "Probabilistic Distribution Function (%)", 1, active.value, 1);
+        stat_figure_pie_chart(src, "Turnover of Channels (YTD)", "Channel", "Turnover of the Channel");
+        stat_figure_histogram("grow_prop", 0, "Distribution of Customer's Grow Score", "Customer's Grow Score", "Probabilistic Distribution Function", 1, active.value, 0, "0,10,20,30,40,50,60,70,80,90,100");
+        stat_figure_histogram("decline_prop", 0, "Distribution of Customers' Decline Score", "Customers' Decline Score", "Probabilistic Distribution Function", 1, active.value, 0, "0,10,20,30,40,50,60,70,80,90,100");
         // Table
-        var html = "";
-        html += "<div class='input-group'>";
-        html += "<span class='input-group-addon'>Segment</span>";
-        html += "<select id='growth_table_segment' class='form-control'>";
+        var prefix_content = "<div class='input-group'>";
+        prefix_content += "<span class='input-group-addon'>Segment</span>";
+        prefix_content += "<select id='growth_table_segment' class='form-control'>";
         // -- Options --
-        html += "<option value='70_75'>70 & 75 (MV &ge; 45 YO)</option>";
+        prefix_content += "<option value='70_75'>70 & 75 (MV &ge; 45 YO)</option>";
         // -- End of Options --
-        html += "</select>";
-        html += "</div><div style='margin-top:10px;'>";
-        html += "<table class='table table-bordered table-advance table-hover table-condensed table-striped'>";
-        html += "<tbody class='text-center'>";
-        html += "<tr><td class='bold bg-grey'></td>";
-        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Racing Turnover Growth</td>";
-        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Active Customers</td>";
-        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Avg. Active Rate of Customers</td>";
-        html += "<td class='bold bg-grey' title='Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting'>Turnover per Meeting</td></tr>";
-        for (var group = 0; group < GROWTH_SEG_70_75.length; group++) {
-            if (group == 1) html += "<tr><td class='' colspan='5'><hr style='margin:0;'/></td></tr>";
-            for (var key in GROWTH_SEG_70_75[group]) {
-                if (GROWTH_SEG_70_75[group].hasOwnProperty(key)) {
-                    var color = COLOR_PALETTE[group];
-                    html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
-                    for (i = 0; i < 4; i++) {
-                        var value = "-";
-                        if (GROWTH_SEG_70_75[group][key][i]) value = GROWTH_SEG_70_75[group][key][i] + " %";
-                        html += "<td>" + value + "</td>";
-                    }
-                    html += "</tr>";
-                }
-            }
-        }
-        html += "</tbody></table></div>";
-        add_portlet("#figure-container", "Year-on-Year Growth Analysis (YTD vs. PYTD)", html, "growth-table", 12);
+        prefix_content += "</select>";
+        prefix_content += "</div><div style='margin-top:10px;'>";
+        var header = [
+            {text: "Racing Turnover Growth", hint: "Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting"},
+            {text: "Active Customers", hint: "Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting"},
+            {text: "Avg. Active Rate of Customers", hint: "Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting"},
+            {text: "Turnover per Meeting", hint: "Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting"}
+        ];
+        stat_color_table("growth-table", "Year-on-Year Growth Analysis (YTD vs. PYTD)", GROWTH_SEG_70_75, header, prefix_content);
         $("#growth_table_segment").select2({
             dropdownAutoWidth: 'true',
             minimumResultsForSearch: Infinity
