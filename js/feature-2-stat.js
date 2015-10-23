@@ -25,9 +25,9 @@ function draw_figures() {
                 ]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Avg. Active Rate of New Customers (YTD)", {
+        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Avg. Active Rate of New Customers (PYTD vs. YTD)", {
             x: "Meeting ID",
-            y: "Cumulative Growth Rate of Active Rate",
+            y: "Cumulative Growth Rate of Active Rate (PYTD vs. YTD)",
             keys: ["Avg. Active Rate (PYTD)", "Avg. Active Rate (YTD)", "# of Active Customers (Prev. Season)", "# of Active Customers (This Season)", "# of New Customers by Prev. Season (in 5 Years)", "# of New Customers by This Season (in 5 Years)"]
         }, 0.34);
         stat_figure_histogram("active_rate_previous_83", 0, "Distribution of New Customers' Active Rate of the Previous 83 Meetings", "New Customers' Active Rate", "Probabilistic Distribution Function", 2, active.value, 1, "0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1");
