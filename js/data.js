@@ -16,7 +16,19 @@ $(document).ready(function () {
         dataType: 'json',
         acceptFileTypes: '/(\.|\/)(csv|gz)$/i',
         done: function (e, data) {
-            window.location.reload();
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
+        },
+        submit: function (e, data) {
+            bootbox.dialog({
+                message: "<div class='progress' style='margin-bottom:0;'><div class='progress-bar' style='width:0;'></div></div>",
+                closeButton: false
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $(".progress-bar").css('width', progress + '%');
         }
     });
 });

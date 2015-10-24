@@ -60,23 +60,39 @@ function login() {
     if ($('.login-form').validate().form()) {
         var username = $("input[name='username']", $('.login-form')).val();
         var password = CryptoJS.MD5($("input[name='password']", $('.login-form')).val()).toString();
-        $.post(API_SERVER + "joker/auth/sign-in/", {
-            username: username,
-            password: password
-        }, function (data) {
-            if ($("input[name='remember']").prop('checked')) {
-                Cookies.set('joker_id', data.id, {expires: 7});
-                Cookies.set('joker_username', username, {expires: 7});
-                Cookies.set('joker_ticket', data.ticket, {expires: 7});
-            } else {
-                Cookies.set('joker_id', data.id);
-                Cookies.set('joker_username', username);
-                Cookies.set('joker_ticket', data.ticket);
-            }
-            window.location.href = "index.php";
-        }, "json").fail(function () {
-            $('.alert-danger>span', $('.login-form')).html("Username or password not correct.");
-            $('.alert-danger', $('.login-form')).show();
+        $.ajax({
+            type: "POST",
+            url: API_SERVER + "joker/auth/sign-in/",
+            data: {
+                username: username,
+                password: password
+            },
+            success: function (data) {
+                if ($("input[name='remember']").prop('checked')) {
+                    Cookies.set('joker_id', data.id, {expires: 7});
+                    Cookies.set('joker_username', username, {expires: 7});
+                    Cookies.set('joker_ticket', data.ticket, {expires: 7});
+                } else {
+                    Cookies.set('joker_id', data.id);
+                    Cookies.set('joker_username', username);
+                    Cookies.set('joker_ticket', data.ticket);
+                }
+                window.location.href = "index.php";
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                var error_msg = "Authentication server is not responding.";
+                switch (xhr.status) {
+                    case 404:
+                        error_msg = "The provided user does not exist.";
+                        break;
+                    case 401:
+                        error_msg = "The provided password is not correct.";
+                        break;
+                }
+                $('.alert-danger>span', $('.login-form')).html(error_msg);
+                $('.alert-danger', $('.login-form')).show();
+            },
+            dataType: "json"
         });
     }
 }

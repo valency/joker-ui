@@ -269,10 +269,9 @@ function stat_color_table(id, title, src, header, prefix_content) {
         html += "<td class='bold bg-grey' title='" + header[i]["hint"] + "'>" + header[i]["text"] + "</td>";
     }
     for (var group = 0; group < src.length; group++) {
-        if (group == 1) html += "<tr><td class='' colspan='5'><hr style='margin:0;'/></td></tr>";
-        for (var key in src[group]) {
+        if (src[group]) for (var key in src[group]) {
             if (src[group].hasOwnProperty(key)) {
-                var color = COLOR_PALETTE[group];
+                var color = COLOR_PALETTE[group % COLOR_PALETTE.length];
                 html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
                 for (i = 0; i < header.length; i++) {
                     var value = "-";
@@ -281,7 +280,7 @@ function stat_color_table(id, title, src, header, prefix_content) {
                 }
                 html += "</tr>";
             }
-        }
+        } else html += "<tr><td class='' colspan='5'><hr style='margin:0;'/></td></tr>";
     }
     html += "</tbody></table></div>";
     add_portlet("#figure-container", title, html, id, 12);

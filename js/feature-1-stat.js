@@ -24,7 +24,7 @@ function draw_figures() {
             keys: ["Turnover (Previous Season)", "Turnover (This Season)", "Total Turnover (PYTD)", "Total Turnover (YTD)"]
         }, 0.05);
         stat_figure_histogram("recent_growth_rate", 0, "Distribution of Customers' Growth Rate of Turnover of the Last 14 Meetings", "Customers' Growth Rate of Turnover", "Probabilistic Distribution Function", 1, active.value, 1, "-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1");
-        stat_figure_histogram("age", 0, "Distribution of Customers' Age", "Customers' Age", "Probabilistic Distribution Function", 1, active.value, 0, null);
+        stat_figure_histogram("age", 0, "Distribution of Customers' Age", "Customers' Age", "Probabilistic Distribution Function", 1, active.value, 0, "15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100");
         src = [];
         for (i = 0; i < BET_TYPE.length; i++) {
             src.push({

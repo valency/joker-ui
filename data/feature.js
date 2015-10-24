@@ -19,7 +19,10 @@ var ACTIVE_RATE_YTD_ALL_CUST = ["0.00-0.05", "0.05-0.10", "0.10-0.15", "0.15-0.2
 var ACTIVE_RATE_YTD_ALL_CUST_PDF = [0.8445, 0, 0.0322, 0.0001, 0, 0.0186, 0, 0, 0.0148, 0, 0, 0.0138, 0, 0, 0.0147, 0, 0, 0.0195, 0, 0.0418];
 var GROWTH_SEG_70_75 = [{
     "Total Growth": [1.40, -1.80, 0.40, 2.90]
-}, {
+}, null, {
+    "Bet Lines per Meeting": [null, null, null, -0.80],
+    "Avg. Bet Size": [null, null, null, 2.50]
+}, null, {
     "Top Quintile": [51.50, 2.30, 6.30, 39.20],
     "2nd Quintile": [-1.80, 1.40, 2.70, -5.60],
     "3rd Quintile": [-25.00, 1.80, 0.20, -26.40],
@@ -36,9 +39,6 @@ var GROWTH_SEG_70_75 = [{
 }, {
     "Normal Bet Types": [1.50, -2.30, 0.40, 3.50],
     "Exotic Bet Types": [2.00, -2.80, 0.50, 4.40]
-}, {
-    "Bet Lines per Meeting": [-0.80, null, null, null],
-    "Avg. Bet Size": [2.50, null, null, null]
 }, {
     "3 Days Since Last Race": [6.00, -1.20, 0.80, 6.30],
     "4 Days Since Last Race": [-38.80, -4.00, -31.60, -6.70],
