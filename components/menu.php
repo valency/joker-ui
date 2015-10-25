@@ -1,6 +1,110 @@
 <?php
-$menu_words = ["Dashboard", "Models", "Maintenance"];
-$menu_icons = ["icon-home", "icon-rocket", "icon-settings"];
-$sub_words = [[], ["Model 1: Statistics", "Model 1: Predictions", "Model 1: Validation", "Model 2: Statistics", "Model 2: Predictions", "Model 2: Validation", "Model 3: Create Sets", "Model 3: Clustering", "Model 3: Review Sets", "Model 4: Statistics", "Model 4: Predictions", "Model 4: Validation"], ["Customer Management", "Data Management"]];
-$sub_urls = [[], ["feature-1-stat.php", "feature-1-pred.php", "validation.php?mode=1", "feature-2-stat.php", "feature-2-pred.php", "validation.php?mode=2", "set-create.php", "set-show.php", "set-review.php", "feature-4-stat.php", "feature-4-pred.php", "validation.php?mode=4"], ["customer.php", "data.php"]];
-$sub_icons = [[], ["icon-bar-chart", "icon-list", "icon-vector", "icon-bar-chart", "icon-list", "icon-vector", "icon-list", "icon-pie-chart", "icon-book-open", "icon-bar-chart", "icon-list", "icon-vector"], ["icon-users", "icon-briefcase"]];
+$menu = [[
+    "title" => "Dashboard",
+    "icon" => "icon-home",
+    "url" => "index.php",
+], [
+    "title" => "Models",
+    "icon" => "icon-rocket",
+    "url" => "javascript:void(0)",
+    "submenu" => [[
+        "title" => "Growth / Decline Analysis",
+        "icon" => "icon-rocket",
+        "url" => "javascript:void(0)",
+        "submenu" => [[
+            "title" => "Statistics",
+            "icon" => "icon-bar-chart",
+            "url" => "feature-1-stat.php"
+        ], [
+            "title" => "Predictions",
+            "icon" => "icon-list",
+            "url" => "feature-1-pred.php"
+        ], [
+            "title" => "Validation",
+            "icon" => "icon-vector",
+            "url" => "validation.php?mode=1"
+        ]]], [
+        "title" => "New Customers Analysis",
+        "icon" => "icon-rocket",
+        "url" => "javascript:void(0)",
+        "submenu" => [[
+            "title" => "Statistics",
+            "icon" => "icon-bar-chart",
+            "url" => "feature-2-stat.php"
+        ], [
+            "title" => "Predictions",
+            "icon" => "icon-list",
+            "url" => "feature-2-pred.php"
+        ], [
+            "title" => "Validation",
+            "icon" => "icon-vector",
+            "url" => "validation.php?mode=2"
+        ]]], [
+        "title" => "Bet Type Analysis",
+        "icon" => "icon-rocket",
+        "url" => "javascript:void(0)",
+        "submenu" => [[
+            "title" => "Statistics",
+            "icon" => "icon-bar-chart",
+            "url" => "feature-4-stat.php"
+        ], [
+            "title" => "Predictions",
+            "icon" => "icon-list",
+            "url" => "feature-4-pred.php"
+        ], [
+            "title" => "Validation",
+            "icon" => "icon-vector",
+            "url" => "validation.php?mode=4"
+        ]]], [
+        "title" => "Clustering",
+        "icon" => "icon-pie-chart",
+        "url" => "javascript:void(0)",
+        "submenu" => [[
+            "title" => "Select",
+            "icon" => "icon-list",
+            "url" => "set-create.php"
+        ], [
+            "title" => "Perform",
+            "icon" => "icon-pie-chart",
+            "url" => "set-show.php"
+        ], [
+            "title" => "View Results",
+            "icon" => "icon-book-open",
+            "url" => "set-review.php"
+        ]]]
+    ]
+], [
+    "title" => "Maintenance",
+    "icon" => "icon-settings",
+    "url" => "javascript:void(0)",
+    "submenu" => [[
+        "title" => "Customer Management",
+        "icon" => "icon-users",
+        "url" => "customer.php"
+    ], [
+        "title" => "Data Management",
+        "icon" => "icon-briefcase",
+        "url" => "data.php"
+    ]]
+]];
+
+function find_title_by_url($m, $url) {
+    if ($m["url"] == $url) return $m["title"];
+    if (array_key_exists("submenu", $m)) {
+        for ($i = 0; $i < count($m["submenu"]); $i++) {
+            $title = find_title_by_url($m["submenu"][$i], $url);
+            if ($title != null) return $m["title"] . " : " . $title;
+        }
+    }
+    return null;
+}
+
+function find_title_by_url_from_array($m, $url) {
+    for ($i = 0; $i < count($m); $i++) {
+        $title = find_title_by_url($m[$i], $url);
+        if ($title != null) {
+            return $title;
+        }
+    }
+    return null;
+}

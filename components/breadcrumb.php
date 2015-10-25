@@ -1,22 +1,27 @@
 <?php
-$menu = $_GET["menu"];
-$sub = $_GET["sub"];
 require_once "menu.php";
+function generate_breadcrumb($m) {
+    $page = $_GET["page"];
+    for ($i = 0; $i < count($m); $i++) {
+        $active_menu = find_title_by_url($m[$i], $page) != null;
+        if ($active_menu) {
+            echo "<li>";
+            echo "<i class='" . $m[$i]["icon"] . "'></i> ";
+            echo "<a href='" . $m[$i]["url"] . "'>" . $m[$i]["title"] . "</a>";
+            if (array_key_exists("submenu", $m[$i])) echo "<i class='fa fa-angle-right'></i>";
+            echo "</li>";
+            if (array_key_exists("submenu", $m[$i])) generate_breadcrumb($m[$i]["submenu"]);
+            break;
+        }
+    }
+}
+
 ?>
 <!-- BEGIN BREADCRUMB -->
-<h3 class="page-title"><?php if ($menu == "0") echo $menu_words[$menu]; else echo $sub_words[$menu][$sub]; ?></h3>
+<h3 class="page-title"><?php echo find_title_by_url_from_array($menu, $_GET["page"]); ?></h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a href="index.php">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a href="<?php if ($menu == "0") echo "index.php"; else echo "javascript:void(0)"; ?>"><?php echo $menu_words[$menu]; ?></a>
-            <?php if ($menu != "0") echo "<i class='fa fa-angle-right'></i>"; ?>
-        </li>
-        <?php if ($menu != "0") echo "<li><a href=" . $sub_urls[$menu][$sub] . ">" . $sub_words[$menu][$sub] . "</a></li>"; ?>
+        <?php generate_breadcrumb($menu); ?>
     </ul>
     <div class="page-toolbar">
         <div class="btn-group pull-right">

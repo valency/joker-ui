@@ -5,11 +5,12 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][0] . "</title>";
+    $page = basename($_SERVER["SCRIPT_FILENAME"]);
+    echo "<title>SmartCube | " . find_title_by_url_from_array($menu, $page) . "</title>";
     ?>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
+<body class="page-header-fixed page-quick-sidebar-over-content">
 <div class="page-header -i navbar navbar-fixed-top">
     <div class="page-header-inner">
         <?php require_once "components/logo.php"; ?>
@@ -22,11 +23,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=0'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?page=' . $page); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=0'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
             <div id="figure-container"></div>
             <!-- END PAGE -->

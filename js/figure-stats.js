@@ -1,6 +1,6 @@
-var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+var tooltip = d3.select(".page-container").append("div").attr("class", "tooltip").style("opacity", 0);
 
-function add_portlet(target, title, body, fig_id, md) {
+function add_portlet(target, title, body, fig_id, md, redraw_callback) {
     var content = "<div class='col-md-" + md + "' id='figure-portlet-" + fig_id + "'>";
     content += '<div class="portlet purple box">';
     content += '<div class="portlet-title">';
@@ -16,22 +16,46 @@ function add_portlet(target, title, body, fig_id, md) {
     content += '</div>';
     if ($(target + ">.row").length <= 0) $(target).append('<div class="row"></div>');
     $(target + ">.row:last").append(content);
+    if (redraw_callback) {
+        $("#figure-portlet-" + fig_id + " .tools .fullscreen").click(redraw_callback);
+        redraw_callback();
+    }
 }
 
-function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
-    // Prepare figure container
+function generate_portlet_meta(fig_id, title, label, label_type) {
+    var html = "<div style='display:inline-block;text-align:center;'>";
+    html += "<div id='figure-meta-" + fig_id + "'>";
+    html += "<div id='figure-title-" + fig_id + "' class='font-purple bold' style='width:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + title + "</div>";
+    html += "<div><span class='bold'>" + label_type["x"] + ":</span> " + label["x"] + "</div>";
+    html += "<div><span class='bold'>" + label_type["y"] + ":</span> " + label["y"] + "</div>";
+    html += "<hr style='margin-bottom:0;'/></div>";
+    html += "<div id='figure-div-" + fig_id + "'></div>";
+    html += "</div>";
+    return html;
+}
+
+function stat_figure_growth_rate_of_turnover(src, title, fig_title, label, kpi) {
     var fig_id = guid();
-    var container_html = "<div style='display:inline-block;text-align:center;'>";
-    container_html += "<div class='font-purple bold'>" + title + "</div>";
-    container_html += "<div><span class='bold'>X Axis:</span> " + label.x + "</div>";
-    container_html += "<div><span class='bold'>Y Axis:</span> " + label.y + "</div>";
-    container_html += "<div id='figure-div-" + fig_id + "'></div>";
-    container_html += "</div>";
-    add_portlet("#figure-container", title, container_html, fig_id, 8);
-    // Render figure
-    var margin = {top: 20, right: 10, bottom: 30, left: 50};
-    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - 10 - margin.left - margin.right;
-    var height = 300 - margin.top - margin.bottom;
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "X Axis",
+        y: "Y Axis"
+    }), fig_id, 8, function () {
+        setTimeout(function () {
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_growth_rate_of_turnover_draw(fig_id, src, title, label, kpi);
+        }, 100);
+    });
+}
+
+function stat_figure_growth_rate_of_turnover_draw(fig_id, src, title, label, kpi) {
+    var fig_title_container = $("#figure-title-" + fig_id);
+    var fig_portlet_body_container = $("#figure-portlet-" + fig_id + ">div>.portlet-body");
+    var fig_portlet_meta_container = $("#figure-meta-" + fig_id);
+    fig_title_container.css("width", fig_portlet_body_container.width() + "px");
+    $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
+    var margin = {top: 20, right: 10, bottom: 50, left: 50};
+    var width = fig_portlet_body_container.width() - 10 - margin.left - margin.right;
+    var height = (fig_portlet_body_container.height() < 300 ? 300 : fig_portlet_body_container.height() - fig_portlet_meta_container.height()) - margin.top - margin.bottom;
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().tickFormat(d3.format("d")).scale(x).orient("bottom");
@@ -93,8 +117,8 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
         .style("fill", "#ff9900")
         .on("mouseover", function (d) {
             var html = "";
-            html += "<span class='bold'>" + label.x + ":</span> " + d.x + "<br/>";
-            html += "<span class='bold'>" + label.y + ":</span> " + (100.0 * d.y).toFixed(2) + "%<br/>";
+            html += "<span class='bold'>" + label["x"] + ":</span> " + d.x + "<br/>";
+            html += "<span class='bold'>" + label["y"] + ":</span> " + (100.0 * d.y).toFixed(2) + "%<br/>";
             for (var i = 0; i < label.keys.length; i++) {
                 html += "<span class='bold'>" + label.keys[i] + ":</span> " + n_formatter(d.values[i]) + "<br/>";
             }
@@ -112,21 +136,29 @@ function stat_figure_growth_rate_of_turnover(src, title, label, kpi) {
         });
 }
 
-function stat_figure_pie_chart(src, title, xLabel, yLabel) {
-    // Prepare figure container
+function stat_figure_pie_chart(src, title, fig_title, label) {
     var fig_id = guid();
-    var container_html = "<div style='display:inline-block;text-align:center;'>";
-    container_html += "<div class='font-purple bold'>" + title + "</div>";
-    container_html += "<div><span class='bold'>Key:</span> " + xLabel + "</div>";
-    container_html += "<div><span class='bold'>Value:</span> " + yLabel + "</div>";
-    container_html += "<div id='figure-div-" + fig_id + "'></div>";
-    container_html += "</div>";
-    add_portlet("#figure-container", title, container_html, fig_id, 4);
-    // Render figure
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "Key",
+        y: "Value"
+    }), fig_id, 4, function () {
+        setTimeout(function () {
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_pie_chart_draw(fig_id, src, title, label);
+        }, 100);
+    });
+
+}
+function stat_figure_pie_chart_draw(fig_id, src, title, label) {
+    var fig_title_container = $("#figure-title-" + fig_id);
+    var fig_portlet_body_container = $("#figure-portlet-" + fig_id + ">div>.portlet-body");
+    var fig_portlet_meta_container = $("#figure-meta-" + fig_id);
+    fig_title_container.css("width", fig_portlet_body_container.width() + "px");
+    $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
     var margin = {top: 20, right: 10, bottom: 50, left: 50};
-    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width(),
-        height = 300,
-        radius = Math.min(width, height) / 2;
+    var width = fig_portlet_body_container.width();
+    var height = fig_portlet_body_container.height() < 300 ? 300 : fig_portlet_body_container.height() - fig_portlet_meta_container.height();
+    var radius = Math.min(width, height) / 2;
     var color = d3.scale.ordinal().range(COLOR_PALETTE);
     var arc = d3.svg.arc().outerRadius(radius - 10).innerRadius(0);
     var pie = d3.layout.pie().sort(null).value(function (d) {
@@ -159,25 +191,28 @@ function stat_figure_pie_chart(src, title, xLabel, yLabel) {
         });
 }
 
-function stat_figure_bar_chart(src, title, xLabel, yLabel) {
-    // Prepare figure container
+function stat_figure_bar_chart(src, title, fig_title, label) {
     var fig_id = guid();
-    var container_html = "<div style='display:inline-block;text-align:center;'>";
-    container_html += "<div id='figure-title-" + fig_id + "' class='font-purple bold' style='width:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + title + "</div>";
-    container_html += "<div><span class='bold'>X Axis:</span> " + xLabel + "</div>";
-    container_html += "<div><span class='bold'>Y Axis:</span> " + yLabel + "</div>";
-    container_html += "<div id='figure-div-" + fig_id + "'></div>";
-    container_html += "</div>";
-    add_portlet("#figure-container", title, container_html, fig_id, 4);
-    $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().parent().width() + "px");
-    // Render figure
-    render_bar_chart(src, fig_id);
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "X Axis",
+        y: "Y Axis"
+    }), fig_id, 4, function () {
+        setTimeout(function () {
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_bar_chart_draw(fig_id, src, title, label);
+        }, 100);
+    });
 }
 
-function render_bar_chart(src, fig_id) {
+function stat_figure_bar_chart_draw(fig_id, src, title, label) {
+    var fig_title_container = $("#figure-title-" + fig_id);
+    var fig_portlet_body_container = $("#figure-portlet-" + fig_id + ">div>.portlet-body");
+    var fig_portlet_meta_container = $("#figure-meta-" + fig_id);
+    fig_title_container.css("width", fig_portlet_body_container.width() + "px");
+    $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
     var margin = {top: 20, right: 10, bottom: 50, left: 50};
-    var width = $("#figure-portlet-" + fig_id + ">div>.portlet-body").width() - margin.left - margin.right;
-    var height = 300 - margin.top - margin.bottom;
+    var width = fig_portlet_body_container.width() - 10 - margin.left - margin.right;
+    var height = (fig_portlet_body_container.height() < 300 ? 300 : fig_portlet_body_container.height() - fig_portlet_meta_container.height()) - margin.top - margin.bottom;
     var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -234,29 +269,25 @@ function render_bar_chart(src, fig_id) {
         });
 }
 
-function stat_figure_histogram(column, categorical, title, xLabel, yLabel, model, data_source, data_digits, bins) {
-    // Prepare figure container
+function stat_figure_histogram(column, categorical, title, fig_title, label, model, data_source, data_digits, bins) {
     var fig_id = guid();
-    var container_html = "<div style='display:inline-block;text-align:center;'>";
-    container_html += "<div id='figure-title-" + fig_id + "' class='font-purple bold' style='width:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + title + "</div>";
-    container_html += "<div><span class='bold'>X Axis:</span> " + xLabel + "</div>";
-    container_html += "<div><span class='bold'>Y Axis:</span> " + yLabel + "</div>";
-    container_html += "<div id='figure-div-" + fig_id + "'></div>";
-    container_html += "</div>";
-    add_portlet("#figure-container", title, container_html, fig_id, 4);
-    $("#figure-title-" + fig_id).css("width", $("#figure-title-" + fig_id).parent().parent().width() + "px");
-    // Render figure
-    $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins : ""), function (data) {
-        var src = [];
-        for (var i = 0; i < data.hist.length; i++) {
-            src.push({
-                y: data.hist[i],
-                x: Number(data.bin_edges[i + 1]) === data.bin_edges[i + 1] ? data.bin_edges[i].toFixed(data_digits) + "-" + data.bin_edges[i + 1].toFixed(data_digits) : data.bin_edges[i + 1]
-            });
-        }
-        render_bar_chart(src, fig_id);
-    }).fail(function () {
-        $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "X Axis",
+        y: "Y Axis"
+    }), fig_id, 4, function () {
+        $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins.join() : ""), function (data) {
+            var src = [];
+            for (var i = 0; i < data["hist"].length; i++) {
+                src.push({
+                    y: data["hist"][i],
+                    x: Number(data["bin_edges"][i + 1]) === data["bin_edges"][i + 1] ? data["bin_edges"][i].toFixed(data_digits) + "-" + data["bin_edges"][i + 1].toFixed(data_digits) : data["bin_edges"][i + 1]
+                });
+            }
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_bar_chart_draw(fig_id, src, title, label);
+        }).fail(function () {
+            $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
+        });
     });
 }
 

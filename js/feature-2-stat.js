@@ -25,14 +25,23 @@ function draw_figures() {
                 ]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Avg. Active Rate of New Customers (PYTD vs. YTD)", {
+        stat_figure_growth_rate_of_turnover(src, "Avg. Active Rate of New Customers", "Growth Rate of Avg. Active Rate of New Customers (PYTD vs. YTD)", {
             x: "Meeting ID",
             y: "Cumulative Growth Rate of Active Rate (PYTD vs. YTD)",
             keys: ["Avg. Active Rate (PYTD)", "Avg. Active Rate (YTD)", "# of Active Customers (Prev. Season)", "# of Active Customers (This Season)", "# of New Customers by Prev. Season (in 5 Years)", "# of New Customers by This Season (in 5 Years)"]
         }, 0.34);
-        stat_figure_histogram("active_rate_previous_83", 0, "Distribution of New Customers' Active Rate of the Previous 83 Meetings", "New Customers' Active Rate", "Probabilistic Distribution Function", 2, active.value, 1, "0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1");
-        stat_figure_histogram("age", 0, "Distribution of New Customers' Age", "New Customers' Age", "Probabilistic Distribution Function", 2, active.value, 0, "15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100");
-        stat_figure_histogram("chance_to_be_regular", 0, "Distribution of New Customers' Regular Score", "New Customers' Regular Score", "Probabilistic Distribution Function", 2, active.value, 0, "0,10,20,30,40,50,60,70,80,90,100");
+        stat_figure_histogram("active_rate_previous_83", false, "Previous 83 Meetings", "Active Rate of New Customers (Prev. 83)", {
+            x: "New Customers' Active Rate",
+            y: "Probabilistic Distribution Function"
+        }, 2, active.value, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
+        stat_figure_histogram("age", false, "Age", "Distribution of New Customers' Age", {
+            x: "New Customers' Age",
+            y: "Probabilistic Distribution Function"
+        }, 2, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
+        stat_figure_histogram("chance_to_be_regular", false, "Regular Score", "Distribution of New Customers' Regular Score", {
+            x: "New Customers' Regular Score",
+            y: "Probabilistic Distribution Function"
+        }, 2, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
         src = [];
         for (i = 0; i < ACTIVE_RATE_YTD_ALL_CUST.length; i++) {
             src.push({
@@ -40,7 +49,10 @@ function draw_figures() {
                 y: ACTIVE_RATE_YTD_ALL_CUST_PDF[i]
             });
         }
-        stat_figure_bar_chart(src, "Distribution of Active Rate (YTD) of All Customers", "Active Rate", "Probabilistic Distribution Function");
+        stat_figure_bar_chart(src, "Active Rate (YTD)", "Active Rate (YTD) of All Customers", {
+            x: "Active Rate",
+            y: "Probabilistic Distribution Function"
+        });
         var header = [
             {text: "Racing Season", hint: ""},
             {text: "# of New Customers", hint: ""},

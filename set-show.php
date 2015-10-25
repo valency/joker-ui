@@ -5,13 +5,14 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[1][7] . "</title>";
+    $page = basename($_SERVER["SCRIPT_FILENAME"]);
+    echo "<title>SmartCube | " . find_title_by_url_from_array($menu, $page) . "</title>";
     ?>
     <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
     <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.Metronic.css" rel="stylesheet" type="text/css"/>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
+<body class="page-header-fixed page-quick-sidebar-over-content">
 <div class="page-header -i navbar navbar-fixed-top">
     <div class="page-header-inner">
         <?php require_once "components/logo.php"; ?>
@@ -24,11 +25,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=1&sub=7'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?page=' . $page); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=1&sub=7'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
             <div class="row form-group">
                 <div class="col-md-12">

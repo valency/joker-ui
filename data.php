@@ -5,10 +5,11 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $sub_words[2][1] . "</title>";
+    $page = basename($_SERVER["SCRIPT_FILENAME"]);
+    echo "<title>SmartCube | " . find_title_by_url_from_array($menu, $page) . "</title>";
     ?>
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
+<body class="page-header-fixed page-quick-sidebar-over-content">
 <div class="page-header -i navbar navbar-fixed-top">
     <div class="page-header-inner">
         <?php require_once "components/logo.php"; ?>
@@ -21,11 +22,11 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=2&sub=1'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?page=' . $page); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=2&sub=1'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
             <div><input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=." multiple></div>
             <div id="file_list_table_wrapper">

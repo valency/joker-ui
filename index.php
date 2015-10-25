@@ -5,11 +5,12 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    echo "<title>SmartCube | " . $menu_words[0] . "</title>";
+    $page = basename($_SERVER["SCRIPT_FILENAME"]);
+    echo "<title>SmartCube | " . find_title_by_url_from_array($menu, $page) . "</title>";
     ?>
 </head>
-<body class="page-header-<span class='font-purple'>Fixed</span> page-quick-sidebar-over-content page-sidebar-closed-hide-logo">
-<div class="page-header -i navbar navbar-<span class='font-purple'>Fixed</span>-top">
+<body class="page-header-fixed page-quick-sidebar-over-content">
+<div class="page-header -i navbar navbar-fixed-top">
     <div class="page-header-inner">
         <?php require_once "components/logo.php"; ?>
         <div class="top-menu">
@@ -21,22 +22,43 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?menu=0&sub=0'); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?page=' . $page); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?menu=0&sub=0'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.25</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> YTD to PYTD vs. YTD for figure 1 of model 2</li>
+                        <li><span class='font-green'>Added</span> new data for model 1</li>
+                        <li><span class='font-yellow'>Modified</span> table 1 of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> x axis label of age figures of model 1 and model 2</li>
+                        <li><span class='font-green'>Added</span> user does not exist hint for login</li>
+                        <li><span class='font-green'>Added</span> progress bar for data uploading</li>
+                        <li><span class='font-yellow'>Modified</span> x axis range of figure 2 for model 1</li>
+                        <li><span class='font-green'>Added</span> responsive support for figures of statistics</li>
+                        <li><span class='font-red'>Removed</span> figure of turnover of bet types from model 1</li>
+                        <li><span class='font-green'>Added</span> figure of turnover of bet types for model 4</li>
+                        <li><span class='font-yellow'>Modified</span> SmartCube logo</li>
+                        <li><span class='font-yellow'>Modified</span> sidebar layout</li>
+                        <li><span class='font-yellow'>Modified</span> breadcrumb layout</li>
+                        <li><span class='font-purple'>Fixed</span> tooltip exceeding page height bug</li>
+                        <li><span class='font-green'>Added</span> hint for new customer for model 2 statistics</li>
+                        <li><span class='font-yellow'>Modified</span> titles of figures of statistics for model 1, 2, and 4</li>
+                        <li><span class='font-purple'>Fixed</span> logo disappear bug when minimizing sidebar</li>
+                        <li><span class='font-purple'>Fixed</span> sidebar icon height bug when minimizing sidebar</li>
+                    </ul>
                     <span class="font-blue">v0.10.20</span>
                     <ul>
-                        <li><span class='font-green'>Added</span> four columns of figure 1 for model 2</li> 
-                        <li><span class='font-yellow'>Modified</span> x axis ticks of figures of statistics to make them easy to read</li> 
-                        <li><span class='font-green'>Added</span> two tables for model 2</li> 
+                        <li><span class='font-green'>Added</span> four columns of figure 1 for model 2</li>
+                        <li><span class='font-yellow'>Modified</span> x axis ticks of figures of statistics to make them easy to read</li>
+                        <li><span class='font-green'>Added</span> two tables for model 2</li>
                         <li><span class='font-purple'>Fixed</span> figure title width bug</li>
-                        <li><span class='font-red'>Removed</span> all axis labels of figures of statistics</li> 
+                        <li><span class='font-red'>Removed</span> all axis labels of figures of statistics</li>
                         <li><span class='font-yellow'>Modified</span> the scale of figure 2 of model 1</li>
                         <li><span class='font-yellow'>Modified</span> title and y axis label of figure 1 of model 1</li>
                         <li><span class='font-green'>Added</span> figure of distribution of active rate (YTD) of all customers for model 2</li>
