@@ -306,7 +306,7 @@ function stat_color_table(id, title, src, header, prefix_content) {
                 html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
                 for (i = 0; i < header.length; i++) {
                     var value = "-";
-                    if (src[group][key][i]) value = src[group][key][i] + " %";
+                    if (src[group][key][i]) value = src[group][key][i];
                     html += "<td>" + value + "</td>";
                 }
                 html += "</tr>";

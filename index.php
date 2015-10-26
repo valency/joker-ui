@@ -31,6 +31,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.26</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> statistics of inactive customers by joining season figure for model 2</li>
+                        <li><span class='font-yellow'>Modified</span> data of table 1 of model 2</li>
+                        <li><span class='font-yellow'>Modified</span> data of table 1 of model 1</li>
+                    </ul>
                     <span class="font-blue">v0.10.25</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> YTD to PYTD vs. YTD for figure 1 of model 2</li>

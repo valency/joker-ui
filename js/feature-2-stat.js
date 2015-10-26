@@ -69,6 +69,7 @@ function draw_figures() {
         ];
         stat_table("stat-avg-active-rate-table", "Statistics of Avg. Active Rate by Joining Season", STAT_AVG_ACTIVE_RATE, header, "");
         stat_table("stat-avg-turnover-table", "Statistics of Avg. Turnover by Joining Season", STAT_AVG_TURNOVER, header, "");
+        stat_table("stat-inactive-cust-table", "Statistics of Inactive Customers by Joining Season", STAT_INACTIVE_CUST, header, "");
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";
