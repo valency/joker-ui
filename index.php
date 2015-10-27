@@ -31,6 +31,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.27</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> arrows and colors for table 1 of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> vertical align of table cells to middle</li>
+                    </ul>
                     <span class="font-blue">v0.10.26</span>
                     <ul>
                         <li><span class='font-green'>Added</span> statistics of inactive customers by joining season figure for model 2</li>

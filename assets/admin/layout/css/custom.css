@@ -6,3 +6,7 @@
     border: 0 !important;
 
 }
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}

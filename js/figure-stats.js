@@ -306,8 +306,21 @@ function stat_color_table(id, title, src, header, prefix_content) {
                 html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
                 for (i = 0; i < header.length; i++) {
                     var value = "-";
-                    if (src[group][key][i]) value = src[group][key][i];
-                    html += "<td>" + value + "</td>";
+                    var value_color = "";
+                    if (src[group][key][i] != null) {
+                        value = src[group][key][i][0] + "% (";
+                        if (src[group][key][i][1] > 0) value += "+";
+                        value += src[group][key][i][1] + "%)";
+                        if (src[group][key][i][1] > 0) {
+                            value_color = "font-green-jungle";
+                            value += "<i class='fa fa-arrow-up pull-right'></i>";
+                        }
+                        if (src[group][key][i][1] < 0) {
+                            value_color = "font-red-flamingo";
+                            value += "<i class='fa fa-arrow-down pull-right'></i>";
+                        }
+                    }
+                    html += "<td class='" + value_color + "'>" + value + "</td>";
                 }
                 html += "</tr>";
             }
