@@ -35,6 +35,7 @@
                     <ul>
                         <li><span class='font-green'>Added</span> new data for model 1</li>
                         <li><span class='font-yellow'>Modified</span> data structure of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> growth table data of model 1</li>
                         <li><span class='font-green'>Added</span> new features in both the clustering features and create set filter lists</li>
                         <li><span class='font-purple'>Fixed</span> axis selection width bug</li>
                         <li><span class='font-green'>Added</span> new options for create set / order by</li>
