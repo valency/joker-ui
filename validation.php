@@ -5,7 +5,7 @@
     require_once "components/lib.php";
     require_once "components/css.php";
     require_once "components/menu.php";
-    $page = basename($_SERVER["SCRIPT_FILENAME"])."?mode=".$_GET["mode"];
+    $page = basename($_SERVER["SCRIPT_FILENAME"]) . "?mode=" . $_GET["mode"];
     echo "<title>SmartCube | " . find_title_by_url_from_array($menu, $page) . "</title>";
     ?>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
@@ -29,6 +29,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=' . $_GET["mode"]); ?>
             <div id="form" style="display:none;">
                 <div class="row">
                     <div class="col-md-12">

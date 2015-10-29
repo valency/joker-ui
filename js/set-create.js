@@ -18,23 +18,9 @@ $(document).ready(function () {
 
 function add_filter() {
     var msg = '<div><select class="form-control" id="filter_feature">';
-    msg += '<option value="id" filter_type="range">ID</option>';
-    msg += '<option value="segment" filter_type="in">Segment</option>';
-    msg += '<option value="age" filter_type="range">Age</option>';
-    msg += '<option value="gender" filter_type="in">Gender</option>';
-    msg += '<option value="yrs_w_club" filter_type="range">Club Years</option>';
-    msg += '<option value="is_member" filter_type="in">Member</option>';
-    msg += '<option value="is_hrs_owner" filter_type="in">Horse Owner</option>';
-    msg += '<option value="major_channel" filter_type="in">Major Channel</option>';
-    msg += '<option value="mtg_num" filter_type="range">Meetings Attended</option>';
-    msg += '<option value="inv" filter_type="range">Investment</option>';
-    msg += '<option value="div" filter_type="range">Dividend</option>';
-    msg += '<option value="rr" filter_type="range">Recovery Rate</option>';
-    msg += '<option value="end_bal" filter_type="range">Balance</option>';
-    msg += '<option value="recharge_times" filter_type="range">Recharge Times</option>';
-    msg += '<option value="recharge_amount" filter_type="range">Recharge Amount</option>';
-    msg += '<option value="withdraw_times" filter_type="range">Withdraw Times</option>';
-    msg += '<option value="withdraw_amount" filter_type="range">Withdraw Amount</option>';
+    for (var i = 0; i < FEATURE_TAGS[0].length; i++) {
+        msg += "<option value='" + FEATURE_TAGS[0][i]["id"] + "' filter_type='" + FEATURE_TAGS[0][i]["type"] + "'>" + FEATURE_TAGS[0][i]["text"] + "</option>";
+    }
     msg += '</select></div>';
     msg += '<div style="text-align:center;margin:10px;"><span id="filter_comparator" class="font-red">Loading...</span></div>';
     msg += "<div id='filter_detail'></div>";

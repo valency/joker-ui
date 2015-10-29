@@ -31,6 +31,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3'); ?>
             <div class="row form-group form-horizontal">
                 <label class="col-md-2 control-label">Choose Data From:</label>
 
@@ -43,6 +44,12 @@
                         <span class="input-group-addon">Order By</span>
                         <select id="select_pred_order" class="form-control">
                             <option value="random">Random</option>
+                            <option value="-inv">Highest Racing Turnover</option>
+                            <option value="inv">Lowest Racing Turnover</option>
+                            <option value="-to_per_mtg">Highest TO per Meeting</option>
+                            <option value="to_per_mtg">Lowest TO per Meeting</option>
+                            <option value="-mtg_num">Highest Active Meetings</option>
+                            <option value="mtg_num">Lowest Active Meetings</option>
                             <option value="-grow_prop">Grow Propensity</option>
                             <option value="-decline_prop">Decline Propensity</option>
                         </select>

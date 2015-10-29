@@ -29,8 +29,8 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=2'); ?>
             <div id="figure-container"></div>
-            <p><span class="font-red">*</span> <span class="bold">New customer:</span> account opened within 5 seasons and with 30 meetings since account opening date.</p>
             <!-- END PAGE -->
         </div>
     </div>

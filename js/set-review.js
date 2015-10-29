@@ -76,11 +76,11 @@ function cust_set_search() {
             }
         }
         x_btn.select2({
-            dropdownAutoWidth: 'true',
+            width: x_btn.parent().parent().width() - x_btn.prev().prev().outerWidth(),
             minimumResultsForSearch: Infinity
         });
         y_btn.select2({
-            dropdownAutoWidth: 'true',
+            width: y_btn.parent().parent().width() - y_btn.prev().prev().outerWidth(),
             minimumResultsForSearch: Infinity
         });
         if (CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][0]) < 0) x_btn.select2("val", data["cluster_features"][0]);

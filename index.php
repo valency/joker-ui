@@ -31,6 +31,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.29</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> new data for model 1</li>
+                        <li><span class='font-yellow'>Modified</span> data structure of model 1</li>
+                        <li><span class='font-green'>Added</span> new features in both the clustering features and create set filter lists</li>
+                        <li><span class='font-purple'>Fixed</span> axis selection width bug</li>
+                        <li><span class='font-green'>Added</span> new options for create set / order by</li>
+                        <li><span class='font-green'>Added</span> page descriptions for all pages of all models</li>
+                    </ul>
                     <span class="font-blue">v0.10.27</span>
                     <ul>
                         <li><span class='font-green'>Added</span> arrows and colors for table 1 of model 1</li>

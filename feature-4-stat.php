@@ -29,6 +29,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=4'); ?>
             <div id="figure-container"></div>
             <!-- END PAGE -->
         </div>

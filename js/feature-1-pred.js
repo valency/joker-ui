@@ -9,9 +9,11 @@ $(document).ready(function () {
     oConf = DT_CONF;
     // Configure table header
     var table_header_div = $("#customer_table>thead>tr");
-    for (var i = 2; i < FEATURE_TAGS[0].length - 4; i++) {
-        table_header_div.append("<th>" + FEATURE_TAGS[0][i]["text"].splitMiddle().join("<br/>") + "</th>");
-        oConf.columns.push({data: FEATURE_TAGS[0][i]["id"], name: FEATURE_TAGS[0][i]["id"]});
+    for (var i = 2; i < FEATURE_TAGS[0].length; i++) {
+        if (FEATURE_TAGS[0][i]["show_in_pred_table"]) {
+            table_header_div.append("<th>" + FEATURE_TAGS[0][i]["text"].splitMiddle().join("<br/>") + "</th>");
+            oConf.columns.push({data: FEATURE_TAGS[0][i]["id"], name: FEATURE_TAGS[0][i]["id"]});
+        }
     }
     // Add hint for table header
     $("#customer_table>thead>tr>th").each(function () {

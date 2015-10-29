@@ -31,6 +31,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3'); ?>
             <div class="row form-group">
                 <div class="col-md-12">
                     <div class="input-group">

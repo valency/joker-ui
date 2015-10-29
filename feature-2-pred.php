@@ -29,6 +29,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=2'); ?>
             <div class="row">
                 <div class="col-md-12">
                     <div id="customer_table_wrapper" class="dataTables_wrapper no-footer">
