@@ -21,10 +21,10 @@ $(document).ready(function () {
                     var hit_msg = "<span class='badge badge-danger pull-right'>Hit!</span>";
                     var truth = [];
                     for (i = 0; i < data_csv.content.length; i++) {
-                        truth.push(parseInt(data_csv.content[i]["TRUTH"]));
+                        truth.push(parseInt(data_csv.content[i]["RESULTS"]));
                     }
                     for (var i = 0; i < data_csv.header.length; i++) {
-                        if (data_csv.header[i] == "TRUTH") continue;
+                        if (data_csv.header[i] == "RESULTS") continue;
                         $("#canvas_table_header").append("<th><i class='fa fa-empire'></i> " + data_csv.header[i] + "</th>");
                     }
                     var hit_count_ours = 0;
@@ -33,12 +33,12 @@ $(document).ready(function () {
                         hit_count_csv.push(0);
                     }
                     for (i = 0; i < data_csv.content.length; i++) {
-                        var row = "<tr><td><a href='javascript:void(0);' onclick=\"show_detail('" + data_csv.content[i]["TRUTH"] + "'," + mode + ",'" + active.value + "');\">" + data_csv.content[i]["TRUTH"] + "</a></td>";
+                        var row = "<tr><td><a href='javascript:void(0);' onclick=\"show_detail('" + data_csv.content[i]["RESULTS"] + "'," + mode + ",'" + active.value + "');\">" + data_csv.content[i]["RESULTS"] + "</a></td>";
                         var v = data_ours.data[i].id;
                         if (truth.indexOf(v) > -1) hit_count_ours++;
                         row += "<td><a href='javascript:void(0);' class='font-" + (truth.indexOf(v) > -1 ? "red" : "grey-gallery") + "' onclick=\"show_detail('" + v + "'," + mode + ",'" + active.value + "');\">" + v + (truth.indexOf(v) > -1 ? hit_msg : "") + "</a></td>";
                         for (var j = 0; j < data_csv.header.length; j++) {
-                            if (data_csv.header[j] == "TRUTH") continue;
+                            if (data_csv.header[j] == "RESULTS") continue;
                             v = parseInt(data_csv.content[i][data_csv.header[j]]);
                             if (truth.indexOf(v) > -1) hit_count_csv[j]++;
                             row += "<td><a href='javascript:void(0);' class='font-" + (truth.indexOf(v) > -1 ? "red" : "grey-gallery") + "' onclick=\"show_detail('" + v + "'," + mode + ",'" + active.value + "');\">" + v + (truth.indexOf(v) > -1 ? hit_msg : "") + "</a></td>";
@@ -49,7 +49,7 @@ $(document).ready(function () {
                     var foot = "<tr><td class='pull-right'>Hit Rate:</td>";
                     foot += "<td>" + (100.0 * hit_count_ours / data_csv.content.length) + " %</td>";
                     for (i = 0; i < data_csv.header.length; i++) {
-                        if (data_csv.header[i] == "TRUTH") continue;
+                        if (data_csv.header[i] == "RESULTS") continue;
                         foot += "<td>" + (100.0 * hit_count_csv[i] / data_csv.content.length) + " %</td>";
                     }
                     foot += "</tr>";

@@ -31,6 +31,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.10.30</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> truth to results for validation required headers</li>
+                        <li><span class='font-red'>Removed</span> arrows from growth table of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> data structure of growth table of model 1</li>
+                        <li><span class='font-green'>Added</span> loading modal for data management page</li>
+                        <li><span class='font-yellow'>Modified</span> leading hints for all models</li>
+                        <li><span class='font-purple'>Fixed</span> multiple filters stacking bug for clustering: select</li>
+                        <li><span class='font-yellow'>Modified</span> filter operator color from blue to purple in clustering: select</li>
+                    </ul>
                     <span class="font-blue">v0.10.29</span>
                     <ul>
                         <li><span class='font-green'>Added</span> new data for model 1</li>

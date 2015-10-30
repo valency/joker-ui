@@ -308,16 +308,14 @@ function stat_color_table(id, title, src, header, prefix_content) {
                     var value = "-";
                     var value_color = "";
                     if (src[group][key][i] != null) {
-                        value = src[group][key][i][0] + "% (";
-                        if (src[group][key][i][1] > 0) value += "+";
-                        value += src[group][key][i][1] + "%)";
-                        if (src[group][key][i][1] > 0) {
-                            value_color = "font-green-jungle";
-                            value += "<i class='fa fa-arrow-up pull-right'></i>";
-                        }
-                        if (src[group][key][i][1] < 0) {
-                            value_color = "font-red-flamingo";
-                            value += "<i class='fa fa-arrow-down pull-right'></i>";
+                        if (Array.isArray(src[group][key][i])) {
+                            value = src[group][key][i][0] + "% (";
+                            if (src[group][key][i][1] > 0) value += "+";
+                            value += src[group][key][i][1] + "%)";
+                            if (src[group][key][i][1] > 0) value_color = "font-green-jungle";
+                            if (src[group][key][i][1] < 0) value_color = "font-red-flamingo";
+                        } else {
+                            value = src[group][key][i] + "%";
                         }
                     }
                     html += "<td class='" + value_color + "'>" + value + "</td>";

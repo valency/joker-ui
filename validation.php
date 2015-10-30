@@ -33,7 +33,7 @@
             <div id="form" style="display:none;">
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="label bg-red">TRUTH</span>
+                        <span class="label bg-red">RESULTS</span>
                         <span class="label bg-grey">MODEL_1</span>
                         <span class="label bg-grey">MODEL_2</span>
                         <span class="label bg-grey">...</span>

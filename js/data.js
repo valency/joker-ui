@@ -3,12 +3,14 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
+    Metronic.blockUI();
     add_deco_badge(1, function () {
         add_deco_badge(2, function () {
             add_deco_badge(4, function () {
                 $("#file_list_table_wrapper table").dataTable({searching: false});
                 $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn red pull-right' onclick=\"$('#file_upload').click();\"><i class='fa fa-plus'></i> Upload</button>");
                 init_widget();
+                Metronic.unblockUI();
             });
         });
     });
