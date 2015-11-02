@@ -31,6 +31,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.3</span>
+                    <ul>
+                        <li>Fixed column width bug of validation page</li>
+                    </ul>
                     <span class="font-blue">v0.10.30</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> truth to results for validation required headers</li>
