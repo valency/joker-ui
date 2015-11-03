@@ -244,10 +244,10 @@ function generate_cust_data(data, model) {
     html += "<span class='label bg-" + (data.is_member ? "yellow" : "grey") + "' title='" + FEATURE_TAGS[model - 1].findKeyValue("id", "is_member", "hint") + "'>" + (data.is_member ? "Member" : "Non-Member") + "</span> ";
     html += "<span class='label bg-" + (data.is_hrs_owner ? "yellow" : "grey") + "' title='" + FEATURE_TAGS[model - 1].findKeyValue("id", "is_hrs_owner", "hint") + "'>" + (data.is_hrs_owner ? "Horse Owner" : "Not Horse Owner") + "</span> ";
     html += "</div><hr/><div class='row'>";
-    for (var i = 2; i < FEATURE_TAGS[model - 1].length; i++) {
-        var tag_id = FEATURE_TAGS[model - 1][i]["id"];
-        if (tag_id != "gender" && tag_id != "is_hrs_owner" && tag_id != "is_member") {
-            html += "<div class='col-md-6'><span class='font-green' title='" + FEATURE_TAGS[model - 1][i]["hint"] + "'>" + FEATURE_TAGS[model - 1][i]["text"] + ": </span><span>" + data[tag_id] + "</span></div>";
+    for (var i = 0; i < FEATURE_TAGS[model - 1].length; i++) {
+        var show_in_detail_table = FEATURE_TAGS[model - 1][i]["show_in_detail_table"];
+        if (show_in_detail_table == null || show_in_detail_table == true) {
+            html += "<div class='col-md-6'><span class='font-green' title='" + FEATURE_TAGS[model - 1][i]["hint"] + "'>" + FEATURE_TAGS[model - 1][i]["text"] + ": </span><span>" + data[FEATURE_TAGS[model - 1][i]["id"]] + "</span></div>";
         }
     }
     html += "</div><hr/><div class='row'>";

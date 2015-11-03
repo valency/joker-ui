@@ -33,7 +33,11 @@
                     <h3>Updates</h3>
                     <span class="font-blue">v0.11.3</span>
                     <ul>
-                        <li>Fixed column width bug of validation page</li>
+                        <li><span class='font-purple'>Fixed</span> column width bug of validation page</li>
+                        <li><span class='font-purple'>Fixed</span> customer details too long bug</li>
+                        <li><span class='font-green'>Added</span> admin control for data management</li>
+                        <li><span class='font-yellow'>Modified</span> user api system to another dedicated database</li>
+                        <li><span class='font-yellow'>Modified</span> database system to support lower versions</li>
                     </ul>
                     <span class="font-blue">v0.10.30</span>
                     <ul>

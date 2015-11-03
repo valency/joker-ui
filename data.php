@@ -49,11 +49,11 @@
                                 echo "<td>" . date("Y-m-d H:i:s", filemtime('./data/' . $entry)) . "</td>";
                                 echo "<td style='white-space:nowrap;'>";
                                 if (pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
-                                    echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue'><i class='fa fa-edit'></i> Import</button>";
+                                    echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue btn-admin'><i class='fa fa-edit'></i> Import</button>";
                                 } elseif (pathinfo($entry, PATHINFO_EXTENSION) == "gz") {
-                                    echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple'><i class='fa fa-download'></i> Extract</button>";
+                                    echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple btn-admin'><i class='fa fa-download'></i> Extract</button>";
                                 }
-                                echo "<button id='delete_btn' onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Delete</button>";
+                                echo "<button onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black btn-admin'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";
                             }

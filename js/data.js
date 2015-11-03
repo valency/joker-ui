@@ -10,6 +10,7 @@ $(document).ready(function () {
                 $("#file_list_table_wrapper table").dataTable({searching: false});
                 $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn red pull-right' onclick=\"$('#file_upload').click();\"><i class='fa fa-plus'></i> Upload</button>");
                 init_widget();
+                auth_check();
                 Metronic.unblockUI();
             });
         });
@@ -35,12 +36,18 @@ $(document).ready(function () {
     });
 });
 
+function auth_check() {
+    if (Cookies.get('joker_username') != "admin") {
+        $(".btn-admin").remove();
+    }
+}
+
 function add_deco_badge(model, callback) {
     $.get(API_SERVER + "joker/tool/env/get/?key=model_" + model + "_active_" + Cookies.get('joker_id')).always(function (active) {
         $.get(API_SERVER + "joker/model/" + model + "/source/", function (r) {
             for (var i = 0; i < r.length; i++) {
                 var found = false;
-                var clear_db_btn = "<button onclick=\"clear_db(" + model + ",'" + r[i] + "')\" class='btn default btn-xs black'><i class='fa fa-trash-o'></i> Clear DB</button>";
+                var clear_db_btn = "<button onclick=\"clear_db(" + model + ",'" + r[i] + "')\" class='btn default btn-xs black btn-admin'><i class='fa fa-trash-o'></i> Clear DB</button>";
                 var active_btn = "<button onclick=\"set_active(" + model + ",'" + r[i] + "')\" class='btn default btn-xs red'><i class='fa fa-star'></i> Activate</button>";
                 $(".file-entry").each(function () {
                     if (r[i] == $(this).attr("href").replace("data/", "")) {
