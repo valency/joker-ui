@@ -31,6 +31,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.5</span>
+                    <ul>
+                        <li><span class='font-purple'>Fixed</span> login checking bug</li>
+                        <li><span class='font-yellow'>Modified</span> static statistics data</li>
+                        <li><span class='font-green'>Added</span> statistics of customers over 0.6 active rate by joining season table for model 2</li>
+                        <li><span class='font-green'>Added</span> active rate growth features for model 1</li>
+                        <li><span class='font-green'>Added</span> new data for model 1</li>
+                        <li><span class='font-yellow'>Modified</span> introduction of model 3</li>
+                        <li><span class='font-green'>Added</span> hints for growth table of model 1</li>
+                        <li><span class='font-green'>Added</span> prev. 83 & becoming over 0.6 table for model 2</li>
+                        <li><span class='font-yellow'>Modified</span> data model structure of model 4</li>
+                        <li><span class='font-purple'>Fixed</span> reason code too wide bug</li>
+                        <li><span class='font-green'>Added</span> new features for model 4</li>
+                        <li><span class='font-green'>Added</span> new figure for customer details of model 4</li>
+                    </ul>
                     <span class="font-blue">v0.11.3</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> column width bug of validation page</li>
