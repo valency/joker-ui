@@ -64,8 +64,12 @@ function load_data(div_id, conf, model) {
             message: html,
             title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
         }).on('shown.bs.modal', function (e) {
-            if (model == 4) generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_exotic_part, {x: "", y: "Turnover (Exotic)"});
-            else generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
+            if (model == 4) {
+                generate_cust_turnover_barchart("#cust_detail_betline_standard_barchart", data.betline_standard_part, {x: "", y: "Betline (Standard)"});
+                generate_cust_turnover_barchart("#cust_detail_betline_exotic_barchart", data.betline_exotic_part, {x: "", y: "Betline (Exotic)"});
+            } else {
+                generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
+            }
         });
         if (model == 1) {
             update_cust_rank(data.id, model, "grow_prop", conf.jokerSource);
@@ -73,7 +77,8 @@ function load_data(div_id, conf, model) {
         } else if (model == 2) {
             update_cust_rank(data.id, model, "chance_to_be_regular", conf.jokerSource);
         } else if (model == 4) {
-            update_cust_rank(data.id, model, "score", conf.jokerSource);
+            update_cust_rank(data.id, model, "score_hp_preference", conf.jokerSource);
+            update_cust_rank(data.id, model, "score_hp_participation", conf.jokerSource);
         }
     });
     add_dataset_badge(table, model);
@@ -216,15 +221,16 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
     html += "</div>";
     html += "</div>";
     html += "<div class='thumbnail no-border' style='height:100px;width:auto;display:inline-block;'>";
-    html += "<p class='' style='line-height:16px;'>";
-    html += "<span class='bold font-" + color + "' id='cust_rank_" + prop_attr_name + "'>Loading...</span><br/>";
-    var reason_code_prefix = prop_attr_name.replace("prop", "");
-    if (data[reason_code_prefix + "reason_code_1"] == null) reason_code_prefix = "";
-    html += data[reason_code_prefix + "reason_code_1"] + "<br/>";
-    html += data[reason_code_prefix + "reason_code_2"] + "<br/>";
-    html += data[reason_code_prefix + "reason_code_3"] + "<br/>";
-    html += data[reason_code_prefix + "reason_code_4"];
-    html += "</p>";
+    //html += "<p class='' style='line-height:16px;'>";
+    html += "<p class='bold font-" + color + "' id='cust_rank_" + prop_attr_name + "'>Loading...</p>";
+    var reason_code_prefix = "";
+    if (model == 1)reason_code_prefix = prop_attr_name.replace("prop", "");
+    if (model == 4)reason_code_prefix = prop_attr_name.replace("score_", "") + "_";
+    html += "<p>- " + data[reason_code_prefix + "reason_code_1"] + "</p>";
+    html += "<p>- " + data[reason_code_prefix + "reason_code_2"] + "</p>";
+    html += "<p>- " + data[reason_code_prefix + "reason_code_3"] + "</p>";
+    html += "<p>- " + data[reason_code_prefix + "reason_code_4"] + "</p>";
+    //html += "</p>";
     html += "</div>";
     html += "</div>";
     html += "</div></div>";
@@ -250,14 +256,18 @@ function generate_cust_data(data, model) {
             html += "<div class='col-md-6'><span class='font-green' title='" + FEATURE_TAGS[model - 1][i]["hint"] + "'>" + FEATURE_TAGS[model - 1][i]["text"] + ": </span><span>" + data[FEATURE_TAGS[model - 1][i]["id"]] + "</span></div>";
         }
     }
-    html += "</div><hr/><div class='row'>";
-    html += "<div class='col-md-12'><div id='cust_detail_turnover_barchart'>";
-    html += "</div></div>";
     html += "</div><hr/>";
+    if (model == 4) {
+        html += "<div class='row'><div class='col-md-12'><div id='cust_detail_betline_standard_barchart'></div></div></div><hr/>";
+        html += "<div class='row'><div class='col-md-12'><div id='cust_detail_betline_exotic_barchart'></div></div></div><hr/>";
+    } else {
+        html += "<div class='row'><div class='col-md-12'><div id='cust_detail_turnover_barchart'></div></div></div><hr/>";
+    }
     if (data.grow_prop != null) html += generate_cust_prop(data, model, "grow_prop", ["GROW", "PROPENSITY"], "red");
     if (data.decline_prop != null) html += generate_cust_prop(data, model, "decline_prop", ["DECLINE", "PROPENSITY"], "green");
     if (data.chance_to_be_regular != null) html += generate_cust_prop(data, model, "chance_to_be_regular", ["CHANCE", "TO BE REGULAR"], "yellow");
-    if (data.score != null) html += generate_cust_prop(data, model, "score", ["SCORE", "&nbsp;"], "blue");
+    if (data.score_hp_preference != null) html += generate_cust_prop(data, model, "score_hp_preference", ["PREFERENCE", "POTENTIAL"], "red");
+    if (data.score_hp_participation != null) html += generate_cust_prop(data, model, "score_hp_participation", ["PARTICIPATION", "POTENTIAL"], "green");
     html += "</div>";
     return html;
 }
@@ -273,5 +283,5 @@ function generate_cust_turnover_barchart(container, src, axis_label) {
     $(container).append("<span id='num-length-test' class='axis'>" + max_y.toLocaleString() + "</span>");
     var margin_left = $("#num-length-test").width();
     $("#num-length-test").remove();
-    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 10 + margin_left, right: 10, width: $(container).width(), height: 200}, {x: axis_label["x"], y: axis_label["y"]}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
+    figure_bar_chart(data, container, {top: 10, bottom: 20, left: 15 + margin_left, right: 10, width: $(container).width(), height: 200}, {x: axis_label["x"], y: axis_label["y"]}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
 }

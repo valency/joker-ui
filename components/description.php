@@ -23,7 +23,18 @@ $details = [
     "<li>Customers with active rate over 60% over 83 meetings are regarded as regular customer.</li>" .
     "<li>The model gives each new customer a score indicating his chance becoming regular customer in next 83 meetings.</li>",
 
-    null,
+    [
+        "<li>Select a group of customers for analysis. For example, \"Order By: Random\", \"Size: 500\" and \"Filter Data By: Segment = 70, 75\" will select 500 random accounts from Segment code 70 and 75.</li>" .
+        "<li>Name this group of customer. Suggestion: \"Random-500-Seg-70,75\".</li>" .
+        "<li>Click \"Create\" to create this group.</li>",
+
+        "<li>Features - Add the attributes you would like to compare. (Suggested range: 2 to 3)</li>" .
+        "<li># of Clusters - Determine the number of groupings in the outcome. (Suggested range: 2 to 4)</li>" .
+        "<li>Metric - Determine the clustering technique to be used. (Common suggestions: Euclidean and Cosine)</li>" .
+        "<li>Customer Set - Select a customer group created from \"Clustering: Select\".",
+
+        "<li>Click on \"Download\" to get the clustering results in a csv format.</li>"
+    ],
 
     "<li>The model will score customers base on their probability on meeting the following criteria.</li>" .
     "<ul><li>high exotic potential (changing preference) = # of exotic bet lines increase by at least 10% AND  # of exotic to total bet lines increase by at least 10%.</li>" .
@@ -43,11 +54,12 @@ $details = [
             echo $description[$_GET["model"] - 1];
             if (!is_null($details[$_GET["model"] - 1])) echo " <a href='javascript:void(0)' onclick=\"$(this).parent().next().collapse('toggle');\">View Details &raquo;</a>";
             echo "</p>";
-            if (!is_null($details[$_GET["model"] - 1])) {
-                echo "<ul class='collapse'>";
-                echo $details[$_GET["model"] - 1];
-                echo "</ul>";
-            } ?>
+            if (isset($_GET['ol'])) echo "<ol class='collapse'>";
+            else echo "<ul class='collapse'>";
+            if (isset($_GET['page'])) echo $details[$_GET["model"] - 1][$_GET["page"]];
+            else echo $details[$_GET["model"] - 1];
+            echo "</ul>";
+            ?>
         </div>
     </div>
 </div>

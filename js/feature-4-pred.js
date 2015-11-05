@@ -25,15 +25,23 @@ $(document).ready(function () {
         oConf.jokerSource = active.value;
         oConf.ajax = API_SERVER + "joker/model/4/get_all/?source=" + active.value + "&_r=" + Math.random();
         oConf.columns.splice(2, 0, {
-            data: "score",
-            name: "score",
+            data: "score_hp_preference",
+            name: "score_hp_preference",
             render: function (data, type, full, meta) {
                 var prefix = "<span class='label bg-red'>";
-                var postfix = "</span>";
-                return prefix + data.toFixed(4) + postfix;
+                var postfix = " %</span>";
+                return prefix + data.toFixed(1) + postfix;
             }
         });
-        oConf.order = [[2, "desc"]];
+        oConf.columns.splice(3, 0, {
+            data: "score_hp_participation",
+            name: "score_hp_participation",
+            render: function (data, type, full, meta) {
+                var prefix = "<span class='label bg-green'>";
+                var postfix = " %</span>";
+                return prefix + data.toFixed(1) + postfix;
+            }
+        });
         oTable = load_data("customer_table", oConf, 4);
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {

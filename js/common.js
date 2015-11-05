@@ -35,7 +35,9 @@ var FEATURE_TAGS = [[
     {id: "betline_per_mtg_ytd_growth", type: "range", text: "Betlines per Meeting Growth (YTD vs. PYTD)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "betline_per_mtg_recent_growth", type: "range", text: "Betlines per Meeting Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "avg_bet_size_ytd_growth", type: "range", text: "Average Bet Size Growth (YTD vs. PYTD)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
-    {id: "avg_bet_size_recent_growth", type: "range", text: "Average Bet Size Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false}
+    {id: "avg_bet_size_recent_growth", type: "range", text: "Average Bet Size Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "active_rate_ytd_growth", type: "range", text: "Active Rate Growth (YTD vs. PYTD)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "active_rate_recent_growth", type: "range", text: "Active Rate Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false}
 ], [
     {id: "id", text: "ID", hint: "Customer ID"},
     {id: "segment", text: "Segment", hint: "Customer Segment"},
@@ -59,21 +61,24 @@ var FEATURE_TAGS = [[
     {id: "is_member", text: "Member", hint: "Whether the Customer Is a Member"},
     {id: "is_hrs_owner", text: "Horse Owner", hint: "Whether the Customer Is a Horse Owner"},
     {id: "major_channel", text: "Major Channel", hint: "Major Racing Betting Channel"},
-    {id: "active_rate", text: "Active Rate", hint: ""},
-    {id: "active_rate_exotic", text: "Active Rate (Exotic)", hint: ""},
-    {id: "inv", text: "Turnover", hint: "Total Turnover of Recent 83 Meetings"},
-    {id: "inv_exotic", text: "Turnover (Exotic)", hint: ""},
-    {id: "div", text: "Dividend", hint: "Total Dividend of Recent 83 Meetings"},
-    {id: "div_exotic", text: "Dividend (Exotic)", hint: ""},
-    {id: "rr", text: "Recovery Rate", hint: "Divide Dividend by Turnover"},
-    {id: "rr_exotic", text: "Recovery Rate (Exotic)", hint: ""}
+    {id: "ar", text: "Active Rate", hint: ""},
+    {id: "ar_exotic", text: "Active Rate (Exotic)", hint: ""},
+    {id: "inv_standard", text: "Turnover (Standard)", hint: "Total Turnover of Standard Betlines for Recent 83 Meetings"},
+    {id: "inv_exotic", text: "Turnover (Exotic)", hint: "Total Turnover of Exotic Betlines for Recent 83 Meetings"},
+    {id: "div_standard", text: "Dividend (Standard)", hint: "Total Dividend of Standard Betlines for Recent 83 Meetings"},
+    {id: "div_exotic", text: "Dividend (Exotic)", hint: "Total Dividend of Exotic Betlines for Recent 83 Meetings"},
+    {id: "rr_standard", text: "Recovery Rate (Standard)", hint: "Divide Dividend by Turnover of Standard Betlines"},
+    {id: "rr_exotic", text: "Recovery Rate (Exotic)", hint: "Divide Dividend by Turnover of Exotic Betlines"},
+    {id: "betline_standard", text: "Betline (Standard)", hint: "# of Standard Betlines for Recent 83 Meetings"},
+    {id: "betline_exotic", text: "Betline (Exotic)", hint: "# of Exotic Betlines for Recent 83 Meetings"}
 ]];
 var CATEGORICAL_COLUMNS = ["id", "segment", "age", "gender", "is_member", "is_hrs_owner", "major_channel"];
 var FEATURE_TAGS_PROP = [
     {id: "grow_prop", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow"},
     {id: "decline_prop", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline"},
     {id: "chance_to_be_regular", text: "Chance to Be Regular", hint: "The Chance of a Customer Becoming a Regular Customer"},
-    {id: "score", text: "Score", hint: ""}
+    {id: "score_hp_preference", text: "Preference Potential", hint: "Score of High Potential due to Preference"},
+    {id: "score_hp_participation", text: "Participation Potential", hint: "Score of High Potential due to Participation"}
 ];
 var CLUSTERING_METRICS = [
     {id: "euclidean", text: "Euclidean"},
@@ -159,8 +164,15 @@ function get_url_parameter(p) {
 }
 
 function check_login() {
-    if (Cookies.get('joker_id') == undefined || Cookies.get('joker_id') == null) window.location.href = "/joker/login.php";
-    else $(".username").html(Cookies.get('joker_username'));
+    if (Cookies.get('joker_id') == undefined || Cookies.get('joker_id') == null) {
+        window.location.href = "/joker/login.php";
+    } else {
+        $.get(API_SERVER + "joker/auth/verify/?id=" + Cookies.get('joker_id') + "&ticket=" + Cookies.get('joker_ticket'), function (r) {
+            $(".username").html(Cookies.get('joker_username'));
+        }).fail(function () {
+            window.location.href = "/joker/login.php";
+        });
+    }
 }
 
 function logout() {

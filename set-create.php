@@ -31,7 +31,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3&page=0&ol=true'); ?>
             <div class="row form-group form-horizontal">
                 <label class="col-md-2 control-label">Choose Data From:</label>
 

@@ -303,19 +303,19 @@ function stat_color_table(id, title, src, header, prefix_content) {
         if (src[group]) for (var key in src[group]) {
             if (src[group].hasOwnProperty(key)) {
                 var color = COLOR_PALETTE[group % COLOR_PALETTE.length];
-                html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;'>" + key + "</td>";
+                html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;' title='" + src[group][key]["hint"] + "'>" + key + "</td>";
                 for (i = 0; i < header.length; i++) {
                     var value = "-";
                     var value_color = "";
-                    if (src[group][key][i] != null) {
-                        if (Array.isArray(src[group][key][i])) {
-                            value = src[group][key][i][0] + "% (";
-                            if (src[group][key][i][1] > 0) value += "+";
-                            value += src[group][key][i][1] + "%)";
-                            if (src[group][key][i][1] > 0) value_color = "font-green-jungle";
-                            if (src[group][key][i][1] < 0) value_color = "font-red-flamingo";
+                    if (src[group][key]["value"][i] != null) {
+                        if (Array.isArray(src[group][key]["value"][i])) {
+                            value = src[group][key]["value"][i][0] + "% (";
+                            if (src[group][key]["value"][i][1] > 0) value += "+";
+                            value += src[group][key]["value"][i][1] + "%)";
+                            if (src[group][key]["value"][i][1] > 0) value_color = "font-green-jungle";
+                            if (src[group][key]["value"][i][1] < 0) value_color = "font-red-flamingo";
                         } else {
-                            value = src[group][key][i] + "%";
+                            value = src[group][key]["value"][i] + "%";
                         }
                     }
                     html += "<td class='" + value_color + "'>" + value + "</td>";

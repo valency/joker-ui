@@ -38,7 +38,8 @@
                             <tr class="heading">
                                 <th class="font-blue">ID</th>
                                 <th class="font-purple">Segment</th>
-                                <th class="font-red">Score</th>
+                                <th class="font-red">Preference<br/>Potential</th>
+                                <th class="font-green">Participation<br/>Potential</th>
                             </tr>
                             </thead>
                             <tbody id="customer_table_body"></tbody>

@@ -53,3 +53,18 @@ path {
     text-overflow: ellipsis;
     width: 100%;
 }
+
+.thumbnail p {
+    margin-bottom: 0;
+    font-size: 0.85em;
+}
+
+.thumbnail p:first-child {
+    font-size: 1em;
+    margin-bottom: 3px;
+}
+
+.thumbnail hr {
+    margin: 0;
+    padding: 0;
+}

@@ -29,7 +29,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
-            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3'); ?>
+            <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3&page=2'); ?>
             <div class="row form-group">
                 <div class="col-md-9">
                     <select id="input_set_id" class="form-control"></select>

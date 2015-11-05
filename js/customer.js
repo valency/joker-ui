@@ -26,15 +26,20 @@ function cust_search() {
         $.get(API_SERVER + "joker/model/" + model + "/get/?source=" + active.value + "&id=" + cust_id, function (data) {
             var html = generate_cust_data(data, model);
             $("#customer_table_wrapper>div").html(html);
-            if (model == 4) generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_exotic_part, {x: "", y: "Turnover (Exotic)"});
-            else generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
+            if (model == 4) {
+                generate_cust_turnover_barchart("#cust_detail_betline_standard_barchart", data.betline_standard_part, {x: "", y: "Betline (Standard)"});
+                generate_cust_turnover_barchart("#cust_detail_betline_exotic_barchart", data.betline_exotic_part, {x: "", y: "Betline (Exotic)"});
+            } else {
+                generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
+            }
             if (model == 1) {
                 update_cust_rank(data.id, model, "grow_prop", active.value);
                 update_cust_rank(data.id, model, "decline_prop", active.value);
             } else if (model == 2) {
                 update_cust_rank(data.id, model, "chance_to_be_regular", active.value);
             } else if (model == 4) {
-                update_cust_rank(data.id, model, "score", active.value);
+                update_cust_rank(data.id, model, "score_hp_preference", active.value);
+                update_cust_rank(data.id, model, "score_hp_participation", active.value);
             }
         }).fail(function () {
             $("#customer_table_wrapper>div").html("<span class='font-red'>Not Found</span>");

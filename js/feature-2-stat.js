@@ -70,6 +70,13 @@ function draw_figures() {
         stat_table("stat-avg-active-rate-table", "Statistics of Avg. Active Rate by Joining Season", STAT_AVG_ACTIVE_RATE, header, "");
         stat_table("stat-avg-turnover-table", "Statistics of Avg. Turnover by Joining Season", STAT_AVG_TURNOVER, header, "");
         stat_table("stat-inactive-cust-table", "Statistics of Inactive Customers by Joining Season", STAT_INACTIVE_CUST, header, "");
+        stat_table("stat-active-over-0.6", "Statistics of Customers over 0.6 Active Rate by Joining Season", STAT_CUST_ACTIVE_OVER_60, header, "");
+        stat_table("prev-83-becoming-over-0.6", "Prev. 83 & Becoming over 0.6", STAT_ACTIVE_BECOMING_OVER_60, [
+            {text: "Active Rate of S1314", hint: ""},
+            {text: "# of Customers", hint: ""},
+            {text: "Active Rate > 0.6 in S1415 (#)", hint: ""},
+            {text: "Active Rate > 0.6 in S1415 (%)", hint: ""}
+        ], "");
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";
