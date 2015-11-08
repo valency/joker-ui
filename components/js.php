@@ -15,6 +15,7 @@
 <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js"></script>
 <script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
+<script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
 <script src="assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js"></script>

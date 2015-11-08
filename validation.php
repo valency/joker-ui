@@ -64,23 +64,18 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <div class="col-md-<?php if ($_GET["mode"] == 1) echo 6; else echo 12; ?>">
+                    <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon">Segment</span>
                             <input type='hidden' id='select2_segment' class='form-control select2' value=''/>
                         </div>
                     </div>
-                    <?php if ($_GET["mode"] == 1) { ?>
-                        <div class="col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-addon">Model</span>
-                                <select id="select2_model" class="form-control">
-                                    <option value="grow_prop">Grow</option>
-                                    <option value="decline_prop">Decline</option>
-                                </select>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Model</span>
+                            <select id="select2_model" class="form-control"></select>
                         </div>
-                    <?php } ?>
+                    </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-md-12">

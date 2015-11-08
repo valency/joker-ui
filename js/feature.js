@@ -48,6 +48,30 @@ function interpret_gender_color(gender) {
     else return "grey";
 }
 
+function show_cust_detail(model, source, data) {
+    var html = generate_cust_data(data, model);
+    bootbox.dialog({
+        message: html,
+        title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
+    }).on('shown.bs.modal', function (e) {
+        if (model == 4) {
+            generate_cust_turnover_barchart("#cust_detail_betline_standard_barchart", data["betline_standard_part"], {x: "", y: "Betline (Standard)"});
+            generate_cust_turnover_barchart("#cust_detail_betline_exotic_barchart", data["betline_exotic_part"], {x: "", y: "Betline (Exotic)"});
+        } else {
+            generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data["inv_part"], {x: "", y: "Turnover"});
+        }
+    });
+    if (model == 1) {
+        update_cust_rank(data.id, model, "grow_prop", source);
+        update_cust_rank(data.id, model, "decline_prop", source);
+    } else if (model == 2) {
+        update_cust_rank(data.id, model, "chance_to_be_regular", source);
+    } else if (model == 4) {
+        update_cust_rank(data.id, model, "score_hp_preference", source);
+        update_cust_rank(data.id, model, "score_hp_participation", source);
+    }
+}
+
 function load_data(div_id, conf, model) {
     $.extend(true, $.fn.DataTable.TableTools.classes, {
         "container": "btn-group tabletools-btn-group pull-right",
@@ -59,33 +83,12 @@ function load_data(div_id, conf, model) {
     var table = $('#' + div_id).DataTable(conf);
     $("#" + div_id + " tbody").on('click', 'tr', function () {
         var data = table.row(this).data();
-        var html = generate_cust_data(data, model);
-        bootbox.dialog({
-            message: html,
-            title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
-        }).on('shown.bs.modal', function (e) {
-            if (model == 4) {
-                generate_cust_turnover_barchart("#cust_detail_betline_standard_barchart", data.betline_standard_part, {x: "", y: "Betline (Standard)"});
-                generate_cust_turnover_barchart("#cust_detail_betline_exotic_barchart", data.betline_exotic_part, {x: "", y: "Betline (Exotic)"});
-            } else {
-                generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
-            }
-        });
-        if (model == 1) {
-            update_cust_rank(data.id, model, "grow_prop", conf.jokerSource);
-            update_cust_rank(data.id, model, "decline_prop", conf.jokerSource);
-        } else if (model == 2) {
-            update_cust_rank(data.id, model, "chance_to_be_regular", conf.jokerSource);
-        } else if (model == 4) {
-            update_cust_rank(data.id, model, "score_hp_preference", conf.jokerSource);
-            update_cust_rank(data.id, model, "score_hp_participation", conf.jokerSource);
-        }
+        show_cust_detail(model, conf.jokerSource, data);
     });
     add_dataset_badge(table, model);
     add_segment_filter(table, model);
     if (model == 2) add_active_rate_prev_83_filter(table, model);
-    add_column_filter(table, model);
-    add_export_btn(table, model);
+    add_column_filter_and_export_btn(table, model);
     $('#customer_table_wrapper').find('.dataTables_length select').select2({
         dropdownAutoWidth: 'true',
         minimumResultsForSearch: Infinity
@@ -102,7 +105,7 @@ function add_segment_filter(table, model) {
     $("#segment_filter").click(function () {
         var segment_filter_label = $("#segment_filter>span");
         bootbox.dialog({
-            title: "Filter by Segment:",
+            title: "Filter by Segment",
             message: "<input type='hidden' id='select2_segment' class='form-control select2' value=''/>",
             buttons: {
                 OK: function () {
@@ -151,7 +154,7 @@ function add_active_rate_prev_83_filter(table, model) {
         html += "<option value='0.8,1.0'>80 - 100 %</option>";
         html += "</select>";
         bootbox.dialog({
-            title: "Filter by Active Rate (Prev. 83):",
+            title: "Filter by Active Rate (Prev. 83)",
             message: html,
             buttons: {
                 OK: function () {
@@ -173,41 +176,44 @@ function add_active_rate_prev_83_filter(table, model) {
     });
 }
 
-function add_export_btn(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn green' id='cust_export_csv'><i class='fa fa-file-text-o'></i> Export</a>");
-    $("#cust_export_csv").click(function () {
-        var url = table.ajax.url() + "&csv=true&" + $.param(table.ajax.params());
-        window.open(url);
-    });
-}
-
-function add_column_filter(table, model) {
-    $(".tabletools-btn-group").append("<a class='btn blue' id='column_filter'><i class='fa fa-columns'></i> Columns</a>");
+function add_column_filter_and_export_btn(table, model) {
+    var html = "<div class='btn-group' style='margin-right:5px;'>";
+    html += "<button type='button' class='btn blue dropdown-toggle' data-toggle='dropdown'><i class='fa fa-cog'></i> Options <i class='fa fa-angle-down'></i></button>";
+    html += "<ul class='dropdown-menu pull-right' role='menu'>";
+    html += "<li><a href='javascript:void(0)' id='column_filter'><i class='fa fa-columns'></i> Display of Columns</a></li>";
+    html += "<li><a href='javascript:void(0)' id='cust_export_csv'><i class='fa fa-file-text-o'></i> Export to CSV</a></li>";
+    html += "</ul>";
+    html += "</div>";
+    $(".tabletools-btn-group").append(html);
     $("#column_filter").click(function () {
-        var msg = "";
+        var msg = "<div class='row form-group'>";
         var flag = 0;
-        for (var i = 0; i < (model == 1 ? FEATURE_TAGS[model - 1].length - 4 : FEATURE_TAGS[model - 1].length); i++) {
-            var key = FEATURE_TAGS[model - 1][i].id;
-            var column = table.column(key + ":name");
-            flag += 1;
-            if (flag % 3 == 1) msg += "<div class='row'>";
-            msg += "<div class='col-md-4'><input type='checkbox' class='column_filter_checkbox' column='" + key + "' " + (column.visible() ? "checked" : "") + "/> <label>" + FEATURE_TAGS[model - 1][i].text + "</label></div>";
-            if (flag % 3 == 0) msg += "</div>";
+        for (var i = 2; i < FEATURE_TAGS[model - 1].length; i++) {
+            if (FEATURE_TAGS[model - 1][i]["show_in_pred_table"] == null || FEATURE_TAGS[model - 1][i]["show_in_pred_table"] == true) {
+                var key = FEATURE_TAGS[model - 1][i].id;
+                var column = table.column(key + ":name");
+                msg += "<div class='col-md-6'><label><input class='column-filter-checkbox' type='checkbox' value='" + key + "' " + (column.visible() ? "checked" : "") + ">" + FEATURE_TAGS[model - 1][i].text + "</label></div>";
+            }
         }
+        msg += "</div>";
         bootbox.dialog({
-            title: "Display of Columns:",
+            title: "Display of Columns",
             message: msg,
             buttons: {
                 OK: function () {
-                    $(".column_filter_checkbox").each(function () {
-                        var column = table.column($(this).attr("column") + ":name");
+                    $(".column-filter-checkbox").each(function () {
+                        var column = table.column($(this).val() + ":name");
                         if (this.checked) column.visible(true);
                         else column.visible(false);
                     })
                 }
             }
         });
-        $(".make-switch").bootstrapSwitch();
+        Metronic.init();
+    });
+    $("#cust_export_csv").click(function () {
+        var url = table.ajax.url() + "&csv=true&" + $.param(table.ajax.params());
+        window.open(url);
     });
 }
 
@@ -276,12 +282,14 @@ function generate_cust_turnover_barchart(container, src, axis_label) {
     var data = [];
     var max_y = null;
     for (var i = 0; i < src.length; i++) {
-        data.push({x: src.length - i, y: src[i]});
-        if (max_y == null || src[i] > max_y) max_y = src[i];
+        var y = parseFloat(src[i]);
+        data.push({x: src.length - i, y: y});
+        if (max_y == null || y > max_y) max_y = y;
     }
     data.reverse();
     $(container).append("<span id='num-length-test' class='axis'>" + max_y.toLocaleString() + "</span>");
     var margin_left = $("#num-length-test").width();
     $("#num-length-test").remove();
+    console.log(max_y);
     figure_bar_chart(data, container, {top: 10, bottom: 20, left: 15 + margin_left, right: 10, width: $(container).width(), height: 200}, {x: axis_label["x"], y: axis_label["y"]}, {x: [1, 10, 20, 30, 40, 50, 60, 70, 80], y: null});
 }

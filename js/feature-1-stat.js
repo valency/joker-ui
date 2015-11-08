@@ -23,7 +23,7 @@ function draw_figures() {
             y: "Cumulative Growth Rate of Total Turnover (YTD vs. PYTD)",
             keys: ["Turnover (Previous Season)", "Turnover (This Season)", "Total Turnover (PYTD)", "Total Turnover (YTD)"]
         }, 0.05);
-        stat_figure_histogram("recent_growth_rate", false, "Last 14 Meetings", "Turnover Growth Rate of Last 14 Meetings", {
+        stat_figure_histogram("to_recent_growth", false, "Last 14 Meetings", "Turnover Growth Rate of Last 14 Meetings", {
             x: "Customers' Growth Rate of Turnover",
             y: "Probabilistic Distribution Function"
         }, 1, active.value, 1, [-1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2]);

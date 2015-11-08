@@ -8,7 +8,7 @@ $(document).ready(function () {
     init_widget();
     $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         active_set = active.value;
-        $("#data_source_btn>span").html("<i class='fa fa-briefcase'></i> " + active_set);
+        $("#data_source_btn>span").html("<i class='fa fa-briefcase'></i> " + active_set.replace(".csv", ""));
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";
@@ -103,10 +103,12 @@ function create_set() {
         filter += filter_ranges.replace(/,/g, "~");
         filters.push(filter);
     }
-    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?name=" + $("#set_title").val() + "&source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode, function (data) {
+    var url_options = "name=" + $("#set_title").val() + "&source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode;
+    if ($("#select_shuffle_with_limit").prop('checked'))         url_options += "&shuffle_with_limit=0.2";
+    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?" + url_options, function (data) {
         window.location.href = "set-show.php?id=" + data.id;
     }).fail(function () {
         bootbox.hideAll();
-        bootbox.alert("Failed to create customer set.<br/>Please contact your administrator for support.");
+        bootbox.alert(error_message("Failed to create customer set."));
     });
 }

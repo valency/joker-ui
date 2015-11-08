@@ -114,7 +114,7 @@ function stat_figure_growth_rate_of_turnover_draw(fig_id, src, title, label, kpi
         .attr("cy", function (d) {
             return y(d.y);
         })
-        .style("fill", "#ff9900")
+        .style("fill", "orange")
         .on("mouseover", function (d) {
             var html = "";
             html += "<span class='bold'>" + label["x"] + ":</span> " + d.x + "<br/>";
@@ -179,7 +179,7 @@ function stat_figure_pie_chart_draw(fig_id, src, title, label) {
             return color(d.data.key);
         })
         .on("mousemove", function (d) {
-            d3.select(this).style("fill", "grey");
+            d3.select(this).style("fill", "orange");
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(d.data.key + ": " + (100.0 * d.data.value).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
         })

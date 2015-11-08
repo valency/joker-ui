@@ -2,7 +2,7 @@ var API_DOMAIN = location.hostname;
 var API_PORT = 9002;
 var API_PROTOCOL = "http";
 var API_SERVER = API_PROTOCOL + "://" + API_DOMAIN + ":" + API_PORT + "/";
-var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#FAA43A", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
+var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
 var FEATURE_TAGS = [[
     {id: "id", text: "ID", type: "range", hint: "Customer ID", show_in_pred_table: false, show_in_detail_table: false},
     {id: "segment", text: "Segment", type: "in", hint: "Customer Segment", show_in_pred_table: false, show_in_detail_table: false},
@@ -21,9 +21,6 @@ var FEATURE_TAGS = [[
     {id: "recharge_amount", type: "range", text: "Recharge Amount", hint: "", show_in_pred_table: false, show_in_detail_table: true},
     {id: "withdraw_times", type: "range", text: "Withdraw Times", hint: "", show_in_pred_table: false, show_in_detail_table: true},
     {id: "withdraw_amount", type: "range", text: "Withdraw Amount", hint: "", show_in_pred_table: false, show_in_detail_table: true},
-    {id: "grow_prop", type: "range", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow", show_in_pred_table: false, show_in_detail_table: false},
-    {id: "decline_prop", type: "range", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline", show_in_pred_table: false, show_in_detail_table: false},
-    {id: "recent_growth_rate", type: "range", text: "Racing Turnover Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "active_rate_previous_83", type: "range", text: "Active Rate (Prev. 83)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "to_per_mtg", type: "range", text: "Turnover per Meeting", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "betline_per_mtg", type: "range", text: "Betlines per Meeting", hint: "", show_in_pred_table: false, show_in_detail_table: false},
@@ -37,7 +34,9 @@ var FEATURE_TAGS = [[
     {id: "avg_bet_size_ytd_growth", type: "range", text: "Average Bet Size Growth (YTD vs. PYTD)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "avg_bet_size_recent_growth", type: "range", text: "Average Bet Size Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "active_rate_ytd_growth", type: "range", text: "Active Rate Growth (YTD vs. PYTD)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
-    {id: "active_rate_recent_growth", type: "range", text: "Active Rate Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false}
+    {id: "active_rate_recent_growth", type: "range", text: "Active Rate Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "grow_prop", type: "range", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "decline_prop", type: "range", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline", show_in_pred_table: false, show_in_detail_table: false}
 ], [
     {id: "id", text: "ID", hint: "Customer ID"},
     {id: "segment", text: "Segment", hint: "Customer Segment"},
@@ -139,6 +138,15 @@ Array.prototype.findKeyValue = function (key_desc, key, value_desc) {
         if (this[i][key_desc] == key) return this[i][value_desc];
     }
 };
+
+
+function error_message(msg) {
+    return "<span class='text-danger'><i class='fa fa-times-circle'></i> " + msg + "</span>";
+}
+
+function warning_message(msg) {
+    return "<span class='text-warning'><i class='fa fa-warning'></i> " + msg + "</span>";
+}
 
 function guid() {
     function s4() {

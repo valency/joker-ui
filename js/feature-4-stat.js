@@ -10,10 +10,16 @@ $(document).ready(function () {
 function draw_figures() {
     $("#figure_container").html("");
     $.get(API_SERVER + "joker/tool/env/get/?key=model_4_active_" + Cookies.get('joker_id'), function (active) {
-        stat_figure_histogram("score", 0, "Distribution of Score", "Distribution of Score", {
-            x: "Score",
+        var score_hp_preference = FEATURE_TAGS_PROP.findKeyValue("id", "score_hp_preference", "text");
+        stat_figure_histogram("score_hp_preference", 0, "Distribution of " + score_hp_preference, "Distribution of " + score_hp_preference, {
+            x: score_hp_preference,
             y: "Probabilistic Distribution Function (%)"
-        }, 4, active.value);
+        }, 4, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+        var score_hp_participation = FEATURE_TAGS_PROP.findKeyValue("id", "score_hp_participation", "text");
+        stat_figure_histogram("score_hp_participation", 0, "Distribution of " + score_hp_participation, "Distribution of " + score_hp_participation, {
+            x: score_hp_participation,
+            y: "Probabilistic Distribution Function (%)"
+        }, 4, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
         var src = [];
         for (var i = 0; i < BET_TYPE.length; i++) {
             src.push({

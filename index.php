@@ -31,6 +31,25 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.8</span>
+                    <ul>
+                        <li><span class='font-red'>Removed</span> the colons of the titles of the filters in predictions</li>
+                        <li><span class='font-purple'>Fixed</span> array object none type bug</li>
+                        <li><span class='font-purple'>Fixed</span> the bugs when reviewing customer set without clustering</li>
+                        <li><span class='font-green'>Added</span> randomly selected from top 20% option for customer set creation</li>
+                        <li><span class='font-red'>Removed</span> recent_growth_rate feature for model 1</li>
+                        <li><span class='font-yellow'>Modified</span> feature of figure 2 from recent_growth_rate to to_recent_growth for model 1</li>
+                        <li><span class='font-green'>Added</span> new order by options for customer set creation</li>
+                        <li><span class='font-purple'>Fixed</span> y axis height bug for bar charts in customer details</li>
+                        <li><span class='font-green'>Added</span> validation support for model 4</li>
+                        <li><span class='font-purple'>Fixed</span> customer details not shown correctly bug for validation</li>
+                        <li><span class='font-red'>Removed</span> figure 1 from statistics of model 4</li>
+                        <li><span class='font-green'>Added</span> new figures for statistics of model 4</li>
+                        <li><span class='font-red'>Removed</span> orange from color palette</li>
+                        <li><span class='font-yellow'>Modified</span> hover color of pie charts to orange</li>
+                        <li><span class='font-yellow'>Modified</span> the layout of some buttons in statistics to avoid button too long bug</li>
+                        <li><span class='font-purple'>Fixed</span> display of columns too ugly and redundant bug</li>
+                    </ul>
                     <span class="font-blue">v0.11.5</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> login checking bug</li>

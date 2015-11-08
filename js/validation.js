@@ -78,6 +78,20 @@ $(document).ready(function () {
                     window.location.reload();
                 }
             });
+            var select_model = $("#select2_model");
+            if (mode == 1) {
+                select_model.append("<option value='grow_prop'>" + FEATURE_TAGS_PROP.findKeyValue("id", "grow_prop", "text") + "</option>");
+                select_model.append("<option value='decline_prop'>" + FEATURE_TAGS_PROP.findKeyValue("id", "decline_prop", "text") + "</option>");
+            } else if (mode == 2) {
+                select_model.append("<option value='chance_to_be_regular'>" + FEATURE_TAGS_PROP.findKeyValue("id", "chance_to_be_regular", "text") + "</option>");
+            } else if (mode == 4) {
+                select_model.append("<option value='score_hp_preference'>" + FEATURE_TAGS_PROP.findKeyValue("id", "score_hp_preference", "text") + "</option>");
+                select_model.append("<option value='score_hp_participation'>" + FEATURE_TAGS_PROP.findKeyValue("id", "score_hp_participation", "text") + "</option>");
+            }
+            select_model.select2({
+                dropdownAutoWidth: 'true',
+                minimumResultsForSearch: Infinity
+            });
         }
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
@@ -89,30 +103,13 @@ $(document).ready(function () {
 function validate() {
     var source = $("#select2_source").val();
     var model = $("#select2_model").val();
-    if (get_url_parameter("mode") == 2) model = "chance_to_be_regular";
-    else if (get_url_parameter("mode") == 4) model = "score";
     var segment = $("#select2_segment").val();
     window.location.href = "validation.php?mode=" + get_url_parameter("mode") + "&src=" + source + "&model=" + model + "&seg=" + segment;
 }
 
 function show_detail(id, model, source) {
     $.get(API_SERVER + "joker/model/" + model + "/get/?source=" + source + "&id=" + id, function (data) {
-        var html = generate_cust_data(data, model);
-        bootbox.dialog({
-            message: html,
-            title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
-        }).on('shown.bs.modal', function (e) {
-            if (model == 4) generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_exotic_part, {x: "", y: "Turnover (Exotic)"});
-            else generate_cust_turnover_barchart("#cust_detail_turnover_barchart", data.inv_part, {x: "", y: "Turnover"});
-        });
-        if (model == 1) {
-            update_cust_rank(data.id, model, "grow_prop", source);
-            update_cust_rank(data.id, model, "decline_prop", source);
-        } else if (model == 2) {
-            update_cust_rank(data.id, model, "chance_to_be_regular", source);
-        } else if (model == 4) {
-            update_cust_rank(data.id, model, "score", source);
-        }
+        show_cust_detail(model, source, data);
     });
 }
 

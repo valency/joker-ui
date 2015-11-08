@@ -44,9 +44,9 @@ function cust_set_search() {
         $("#canvas-control-name").html(data.name);
         $("#canvas-control-create-time").html(data.create_time.substring(0, 19).replace("T", " "));
         $("#canvas-control-cluster-time").html(data.cluster_time == null ? "-" : data.cluster_time.substring(0, 19).replace("T", " "));
-        $("#canvas-control-clusters").html(data.cluster_count);
+        $("#canvas-control-clusters").html(data.cluster_count == null ? "-" : data.cluster_count);
         $("#canvas-control-customers").html(data.cust.length);
-        $("#canvas-control-metric").html(CLUSTERING_METRICS.findKeyValue("id", data["cluster_metric"], "text"));
+        $("#canvas-control-metric").html(data["cluster_metric"] == null ? "-" : CLUSTERING_METRICS.findKeyValue("id", data["cluster_metric"], "text"));
         $("#canvas-control-download-set").attr("href", API_SERVER + "joker/model/1/set/csv/?id=" + $("#input_set_id").val());
         // Control: details of clusters
         $("#canvas-control-cluster-details").html("");
@@ -83,13 +83,13 @@ function cust_set_search() {
             width: y_btn.parent().parent().width() - y_btn.prev().prev().outerWidth(),
             minimumResultsForSearch: Infinity
         });
-        if (CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][0]) < 0) x_btn.select2("val", data["cluster_features"][0]);
-        if (CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][1]) < 0) y_btn.select2("val", data["cluster_features"][1]);
+        if (data["cluster_features"] && CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][0]) < 0) x_btn.select2("val", data["cluster_features"][0]);
+        if (data["cluster_features"] && CATEGORICAL_COLUMNS.indexOf(data["cluster_features"][1]) < 0) y_btn.select2("val", data["cluster_features"][1]);
         // Figure
         cust_list = [];
         for (i = 0; i < data.cust.length; i++) {
             var cust = data["cust"][i]["cust"];
-            cust["cluster"] = data["cust"][i]["cluster"];
+            cust["cluster"] = data["cust"][i]["cluster"] == null ? "0" : data["cust"][i]["cluster"];
             cust_list.push(cust);
         }
         cust_set_draw();

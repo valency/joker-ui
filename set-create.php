@@ -32,26 +32,42 @@
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=3&page=0&ol=true'); ?>
-            <div class="row form-group form-horizontal">
+            <div class="row form-group form-horizontal form-inline">
                 <label class="col-md-2 control-label">Choose Data From:</label>
 
                 <div class="col-md-3">
                     <a href="data.php" id="data_source_btn" class='form-control btn red no-border'><span>Loading...</span></a>
                     <input id="select_pred_model" value="1" hidden/>
                 </div>
-                <div class="col-md-5">
+            </div>
+            <div class="row form-group form-horizontal">
+                <label class="col-md-2 control-label">Sort & Size:</label>
+
+                <div class="col-md-8">
                     <div class="input-group">
-                        <span class="input-group-addon">Order By</span>
+                        <span class="input-group-addon">Sort</span>
                         <select id="select_pred_order" class="form-control">
                             <option value="random">Random</option>
-                            <option value="-inv">Highest Racing Turnover</option>
-                            <option value="inv">Lowest Racing Turnover</option>
-                            <option value="-to_per_mtg">Highest TO per Meeting</option>
-                            <option value="to_per_mtg">Lowest TO per Meeting</option>
-                            <option value="-mtg_num">Highest Active Meetings</option>
-                            <option value="mtg_num">Lowest Active Meetings</option>
                             <option value="-grow_prop">Grow Propensity</option>
                             <option value="-decline_prop">Decline Propensity</option>
+                            <option value="-inv">Highest Turnover</option>
+                            <option value="inv">Lowest Turnover</option>
+                            <option value="-to_per_mtg">Highest Turnover per Meeting</option>
+                            <option value="to_per_mtg">Lowest Turnover per Meeting</option>
+                            <option value="-mtg_num">Highest Active Meetings</option>
+                            <option value="mtg_num">Lowest Active Meetings</option>
+                            <option value="-to_ytd_growth">Highest Racing Turnover Growth (YTD vs. PYTD)</option>
+                            <option value="to_ytd_growth">Lowest Racing Turnover Growth (YTD vs. PYTD)</option>
+                            <option value="-to_per_mtg_ytd_growth">Highest Turnover per Meeting Growth (YTD vs. PYTD)</option>
+                            <option value="to_per_mtg_ytd_growth">Lowest Turnover per Meeting Growth (YTD vs. PYTD)</option>
+                            <option value="-active_rate_ytd_growth">Highest Active Rate Growth (YTD vs. PYTD)</option>
+                            <option value="active_rate_ytd_growth">Lowest Active Rate Growth (YTD vs. PYTD)</option>
+                            <option value="-to_recent_growth">Highest Racing Turnover Growth (Last 14 Meetings vs. Comparable 14 Meetings)</option>
+                            <option value="to_recent_growth">Lowest Racing Turnover Growth (Last 14 Meetings vs. Comparable 14 Meetings)</option>
+                            <option value="-to_per_mtg_recent_growth">Highest Turnover per Meeting Growth (Last 14 Meetings vs. Comparable 14 Meetings)</option>
+                            <option value="to_per_mtg_recent_growth">Lowest Turnover per Meeting Growth (Last 14 Meetings vs. Comparable 14 Meetings)</option>
+                            <option value="-active_rate_recent_growth">Highest Active Rate Growth (Last 14 Meetings vs. Comparable 14 Meetings)</option>
+                            <option value="active_rate_recent_growth">Lowest Active Rate Growth (Last 14 Meetings vs. Comparable 14 Meetings)</option>
                         </select>
                     </div>
                 </div>
@@ -68,6 +84,22 @@
                 </div>
                 <div class="col-md-10" id="filter_list">
                     <a href="javascript:void(0)" class="label bg-blue" onclick="add_filter();"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="row form-group form-horizontal">
+                <div class="col-md-2">
+                    <label class="pull-right">Options:</label>
+                </div>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="select_shuffle_with_limit"> Randomly Select from Top 20% *</label>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row small font-purple">
+                <div class="col-md-12">
+                    <span>* If checked, the size of resulting customer set may be less than the designated size due to a smaller size of the top 20% of data.</span>
                 </div>
             </div>
             <hr/>
