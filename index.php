@@ -31,6 +31,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.10</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> user model to django user model</li>
+                        <li><span class='font-green'>Added</span> support of changing password</li>
+                        <li><span class='font-green'>Added</span> support of preventing re-using or cycling old passwords</li>
+                        <li><span class='font-green'>Added</span> password check for registration and changing password</li>
+                    </ul>
                     <span class="font-blue">v0.11.8</span>
                     <ul>
                         <li><span class='font-red'>Removed</span> the colons of the titles of the filters in predictions</li>
