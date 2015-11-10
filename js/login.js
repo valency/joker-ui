@@ -188,19 +188,23 @@ function register() {
     if ($('.register-form').validate().form()) {
         var username = $("input[name='username']", $('.register-form')).val();
         var password = CryptoJS.MD5($("input[name='password']", $('.register-form')).val()).toString();
-        $.post(API_SERVER + "joker/auth/register/", {
-            username: username,
-            password: password
-        }, function (data) {
-            bootbox.dialog({
-                message: "Successfully registered! Now redirecting...",
-                closeButton: false
+        if (!check_password($("input[name='password']", $('.register-form')).val())) {
+            bootbox.alert(error_message("Password should contain at least one number, one lowercase and one uppercase letter, and has at least six characters."));
+        } else {
+            $.post(API_SERVER + "joker/auth/register/", {
+                username: username,
+                password: password
+            }, function (data) {
+                bootbox.dialog({
+                    message: "Successfully registered! Now redirecting...",
+                    closeButton: false
+                });
+                setTimeout(function () {
+                    window.location.href = "login.php";
+                }, 3000);
+            }, "json").fail(function () {
+                bootbox.alert(error_message("Cannot register. Maybe the username is already registered."));
             });
-            setTimeout(function () {
-                window.location.href = "login.php";
-            }, 3000);
-        }, "json").fail(function () {
-            bootbox.alert("Something is wrong during registration.<br/>Maybe the username is already registered.");
-        });
+        }
     }
 }

@@ -139,13 +139,16 @@ Array.prototype.findKeyValue = function (key_desc, key, value_desc) {
     }
 };
 
+function success_message(msg) {
+    return "<span class='text-success'><i class='fa fa-check-circle'></i> " + msg + "</span>";
+}
 
 function error_message(msg) {
     return "<span class='text-danger'><i class='fa fa-times-circle'></i> " + msg + "</span>";
 }
 
 function warning_message(msg) {
-    return "<span class='text-warning'><i class='fa fa-warning'></i> " + msg + "</span>";
+    return "<span class='text-warning'><i class='fa fa-exclamation-circle'></i> " + msg + "</span>";
 }
 
 function guid() {
@@ -188,6 +191,57 @@ function logout() {
     Cookies.remove("joker_username");
     Cookies.remove("joker_ticket");
     window.location.href = "/joker/login.php";
+}
+
+function change_password() {
+    var html = "<p><input type='password' id='change_password_old' class='form-control select2' placeholder='Current Password'/></p>";
+    html += "<p><input type='password' id='change_password_new' class='form-control select2' placeholder='New Password'/></p>";
+    bootbox.dialog({
+        title: "Change Password",
+        message: html,
+        buttons: {
+            Proceed: function () {
+                if (!check_password($("#change_password_new").val())) {
+                    bootbox.alert(error_message("Failed to change password: password should contain at least one number, one lowercase and one uppercase letter, and has at least six characters."));
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: API_SERVER + "joker/auth/password/",
+                        data: {
+                            id: Cookies.get('joker_id'),
+                            old: CryptoJS.MD5($("#change_password_old").val()).toString(),
+                            new: CryptoJS.MD5($("#change_password_new").val()).toString()
+                        },
+                        success: function (data) {
+                            bootbox.hideAll();
+                            bootbox.alert(success_message("Password has been successfully changed. Please log in again."), function () {
+                                window.location.href = "login.php";
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            var error_msg = "authentication server is not responding.";
+                            switch (xhr.status) {
+                                case 406:
+                                    error_msg = "the new password you provided is same as your previous one.";
+                                    break;
+                                case 401:
+                                    error_msg = "the current password you provided is not correct.";
+                                    break;
+                            }
+                            bootbox.hideAll();
+                            bootbox.alert(error_message("Failed to change password: " + error_msg));
+                        },
+                        dataType: "json"
+                    });
+                }
+            }
+        }
+    });
+}
+
+function check_password(str) {
+    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+    return re.test(str);
 }
 
 function init_widget() {
