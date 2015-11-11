@@ -174,12 +174,13 @@ function get_url_parameter(p) {
     }
 }
 
-function check_login() {
+function check_login(callback) {
     if (Cookies.get('joker_id') == undefined || Cookies.get('joker_id') == null) {
         window.location.href = "/joker/login.php";
     } else {
         $.get(API_SERVER + "joker/auth/verify/?id=" + Cookies.get('joker_id') + "&ticket=" + Cookies.get('joker_ticket'), function (r) {
-            $(".username").html(Cookies.get('joker_username'));
+            if (callback) callback();
+            else $(".username").html(Cookies.get('joker_username'));
         }).fail(function () {
             window.location.href = "/joker/login.php";
         });

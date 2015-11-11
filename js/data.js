@@ -3,7 +3,7 @@ $(document).ready(function () {
     Layout.init();
     QuickSidebar.init();
     check_login();
-    Metronic.blockUI();
+    Metronic.blockUI({boxed: true});
     add_deco_badge(1, function () {
         add_deco_badge(2, function () {
             add_deco_badge(4, function () {

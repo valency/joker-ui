@@ -2,7 +2,7 @@
 $menu = [[
     "title" => "Dashboard",
     "icon" => "icon-home",
-    "url" => "index.php",
+    "url" => "dashboard.php",
 ], [
     "title" => "Models",
     "icon" => "icon-rocket",
