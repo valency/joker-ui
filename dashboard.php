@@ -34,6 +34,7 @@
                     <span class="font-blue">v0.11.11</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> figures bug of customer details for model 4</li>
+                        <li><span class='font-green'>Added</span> loading screen</li>
                     </ul>
                     <span class="font-blue">v0.11.10</span>
                     <ul>
