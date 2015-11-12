@@ -31,6 +31,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.12</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> smartcube logo on login page</li>
+                        <li><span class='font-green'>Added</span> support of password expire every 90 days</li>
+                        <li><span class='font-green'>Added</span> support of enforced password change for new account at first login</li>
+                    </ul>
                     <span class="font-blue">v0.11.11</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> figures bug of customer details for model 4</li>

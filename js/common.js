@@ -180,7 +180,25 @@ function check_login(callback) {
     } else {
         $.get(API_SERVER + "joker/auth/verify/?id=" + Cookies.get('joker_id') + "&ticket=" + Cookies.get('joker_ticket'), function (r) {
             if (callback) callback();
-            else $(".username").html(Cookies.get('joker_username'));
+            else {
+                $(".username").html(Cookies.get('joker_username'));
+                var previous_change_date = new Date(r["last_change_of_password"]);
+                var current_change_date = new Date();
+                var expire_date = 90 * 24 * 3600 * 1000;
+                if (r["last_change_of_password"] == null) {
+                    bootbox.alert(warning_message("This is your first time login, please change your password immediately."), function () {
+                        bootbox.hideAll();
+                        change_password();
+                    });
+                } else if (current_change_date - previous_change_date > expire_date) {
+                    bootbox.alert(warning_message("Your password has not been changed for 90 days, please change your password immediately."), function () {
+                        bootbox.hideAll();
+                        change_password();
+                    });
+                } else {
+                    console.info("Your password will expire in " + (90 - (current_change_date - previous_change_date) / 3600 / 1000 / 24).toFixed(0) + " days.");
+                }
+            }
         }).fail(function () {
             window.location.href = "/joker/login.php";
         });

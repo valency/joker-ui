@@ -12,9 +12,7 @@
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo" style="margin-bottom:0;">
-    <a href="/joker" class="logo-default" style="font-size:2em;text-decoration:none;">
-        <span style="color:#FFFFFF;">Smart</span><span style="color:#FF584F;">Cube</span>
-    </a>
+    <img src="img/logo.png" alt="logo" class="logo-default" style="height:20px;"/>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
