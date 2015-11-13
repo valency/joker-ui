@@ -70,6 +70,15 @@ function draw_figures() {
             dropdownAutoWidth: 'true',
             minimumResultsForSearch: Infinity
         });
+        header = [
+            {text: "", hint: ""},
+            {text: "Racing Turnover Growth", hint: ""},
+            {text: "Active Customers", hint: ""},
+            {text: "Avg. Active Meetings of Customers", hint: ""},
+            {text: "Turnover per Meeting", hint: ""}
+        ];
+        stat_table("stat-quintiles-reactivation", "Statistics of Quintiles and Reactivation (YTD vs. PYTD)", STAT_QUINTILES_REACTIVATION, header, "");
+
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";

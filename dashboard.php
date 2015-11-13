@@ -36,6 +36,7 @@
                         <li><span class='font-yellow'>Modified</span> smartcube logo on login page</li>
                         <li><span class='font-green'>Added</span> support of password expire every 90 days</li>
                         <li><span class='font-green'>Added</span> support of enforced password change for new account at first login</li>
+                        <li><span class='font-green'>Added</span> new figure in statistics for model 1</li>
                     </ul>
                     <span class="font-blue">v0.11.11</span>
                     <ul>
