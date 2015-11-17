@@ -65,7 +65,21 @@ function draw_figures() {
             {text: "Avg. Active Rate of Customers", hint: "Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting"},
             {text: "Turnover per Meeting", hint: "Racing Turnover Growth = Active Customers * Avg. Active Rate of Customers * Turnover per Meeting"}
         ];
-        stat_color_table("growth-table", "Year-on-Year Growth Analysis (YTD vs. PYTD)", GROWTH_SEG_70_75, header, prefix_content);
+        var hints = {
+            "Total Growth": "Total Growth of All Customers Belonging to the Segment",
+            "Bet Lines per Meeting": "Turnover per Meeting = Bet Lines per Meeting * Avg. Bet Size",
+            "Avg. Bet Size": "Turnover per Meeting = Bet Lines per Meeting * Avg. Bet Size",
+            "ST Races": "ST Races YTD vs. ST Races PYTD",
+            "HV Races": "HV Races YTD vs. HV Races PYTD",
+            "Day Races": "Day Races YTD vs. Day Races PYTD",
+            "Night Races": "Night Races YTD vs. Night Races PYTD",
+            "Normal Bet Types": "Turnover of Normal Bet Types Counted",
+            "Exotic Bet Types": "Turnover of Exotic Bet Types Counted",
+            "3 Days Since Last Race": "Meetings of 3 Days Since Last Race Counted",
+            "4 Days Since Last Race": "Meetings of 4 Days Since Last Race Counted",
+            "5+ Days Since Last Race": "Meetings of 5+ Days Since Last Race Counted"
+        };
+        stat_color_table("growth-table", "Year-on-Year Growth Analysis (YTD vs. PYTD)", GROWTH_SEG_70_75, header, prefix_content, hints);
         $("#growth_table_segment").select2({
             dropdownAutoWidth: 'true',
             minimumResultsForSearch: Infinity
@@ -77,8 +91,11 @@ function draw_figures() {
             {text: "Avg. Active Meetings of Customers", hint: ""},
             {text: "Turnover per Meeting", hint: ""}
         ];
-        stat_table("stat-quintiles-reactivation", "Statistics of Quintiles and Reactivation (YTD vs. PYTD)", STAT_QUINTILES_REACTIVATION, header, "");
-
+        stat_table("stat-quintiles-reactivation", "Statistics of Quintiles and Reactivation (YTD vs. PYTD)", STAT_QUINTILE_REACTIVE, header, "", null, function (v) {
+            if (v.constructor === Array) return v[0] + "% (" + v[1] + "%)";
+            else if (is_numeric(v)) return v + "%";
+            else return v;
+        });
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";

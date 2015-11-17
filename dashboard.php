@@ -31,6 +31,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.17</span>
+                    <ul>
+                        <li><span class='font-red'>Removed</span> quintiles data from the growth table of model 1</li>
+                        <li><span class='font-yellow'>Modified</span> format of static data</li>
+                    </ul>
                     <span class="font-blue">v0.11.12</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> smartcube logo on login page</li>

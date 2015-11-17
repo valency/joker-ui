@@ -291,7 +291,7 @@ function stat_figure_histogram(column, categorical, title, fig_title, label, mod
     });
 }
 
-function stat_color_table(id, title, src, header, prefix_content) {
+function stat_color_table(id, title, src, header, prefix_content, hints) {
     var html = prefix_content;
     html += "<table class='table table-bordered table-advance table-hover table-condensed table-striped'>";
     html += "<tbody class='text-center'>";
@@ -303,19 +303,21 @@ function stat_color_table(id, title, src, header, prefix_content) {
         if (src[group]) for (var key in src[group]) {
             if (src[group].hasOwnProperty(key)) {
                 var color = COLOR_PALETTE[group % COLOR_PALETTE.length];
-                html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;' title='" + src[group][key]["hint"] + "'>" + key + "</td>";
+                var hint = "";
+                if (hints.hasOwnProperty(key)) hint = hints[key];
+                html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;' title='" + hint + "'>" + key + "</td>";
                 for (i = 0; i < header.length; i++) {
                     var value = "-";
                     var value_color = "";
-                    if (src[group][key]["value"][i] != null) {
-                        if (Array.isArray(src[group][key]["value"][i])) {
-                            value = src[group][key]["value"][i][0] + "% (";
-                            if (src[group][key]["value"][i][1] > 0) value += "+";
-                            value += src[group][key]["value"][i][1] + "%)";
-                            if (src[group][key]["value"][i][1] > 0) value_color = "font-green-jungle";
-                            if (src[group][key]["value"][i][1] < 0) value_color = "font-red-flamingo";
+                    if (src[group][key][i] != null) {
+                        if (Array.isArray(src[group][key][i])) {
+                            value = src[group][key][i][0] + "% (";
+                            if (src[group][key][i][1] > 0) value += "+";
+                            value += src[group][key][i][1] + "%)";
+                            if (src[group][key][i][1] > 0) value_color = "font-green-jungle";
+                            if (src[group][key][i][1] < 0) value_color = "font-red-flamingo";
                         } else {
-                            value = src[group][key]["value"][i] + "%";
+                            value = src[group][key][i] + "%";
                         }
                     }
                     html += "<td class='" + value_color + "'>" + value + "</td>";
@@ -328,7 +330,7 @@ function stat_color_table(id, title, src, header, prefix_content) {
     add_portlet("#figure-container", title, html, id, 12);
 }
 
-function stat_table(id, title, src, header, prefix_content) {
+function stat_table(id, title, src, header, prefix_content, hints, formatter) {
     var html = prefix_content;
     html += "<table class='table table-bordered table-advance table-hover table-condensed table-striped'>";
     html += "<tbody class='text-center'>";
@@ -339,7 +341,12 @@ function stat_table(id, title, src, header, prefix_content) {
     for (i = 0; i < src.length; i++) {
         html += "<tr>";
         for (var j = 0; j < src[i].length; j++) {
-            html += "<td>" + (src[i][j] ? src[i][j] : "-") + "</td>";
+            var text = "-";
+            if (src[i][j]) {
+                if (formatter) text = formatter(src[i][j]);
+                else text = src[i][j];
+            }
+            html += "<td>" + text + "</td>";
         }
         html += "</tr>";
     }

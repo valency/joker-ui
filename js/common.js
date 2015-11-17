@@ -159,6 +159,10 @@ function guid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+function is_numeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 function random_color() {
     return '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
 }
