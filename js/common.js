@@ -219,13 +219,20 @@ function logout() {
 function change_password() {
     var html = "<p><input type='password' id='change_password_old' class='form-control select2' placeholder='Current Password'/></p>";
     html += "<p><input type='password' id='change_password_new' class='form-control select2' placeholder='New Password'/></p>";
+    html += "<p><input type='password' id='change_password_new_repeat' class='form-control select2' placeholder='Repeat New Password'/></p>";
     bootbox.dialog({
         title: "Change Password",
         message: html,
         buttons: {
             Proceed: function () {
-                if (!check_password($("#change_password_new").val())) {
-                    bootbox.alert(error_message("Failed to change password: password should contain at least one number, one lowercase and one uppercase letter, and has at least six characters."));
+                if ($("#change_password_new").val() != $("#change_password_new_repeat").val()) {
+                    bootbox.alert(error_message("Failed to change password: the new password and the password you repeated are not same."), function () {
+                        change_password();
+                    });
+                } else if (!check_password($("#change_password_new").val())) {
+                    bootbox.alert(error_message("Failed to change password: password should contain at least one number, one lowercase and one uppercase letter, and has at least six characters."), function () {
+                        change_password();
+                    });
                 } else {
                     $.ajax({
                         type: "POST",
@@ -252,7 +259,9 @@ function change_password() {
                                     break;
                             }
                             bootbox.hideAll();
-                            bootbox.alert(error_message("Failed to change password: " + error_msg));
+                            bootbox.alert(error_message("Failed to change password: " + error_msg), function () {
+                                change_password();
+                            });
                         },
                         dataType: "json"
                     });

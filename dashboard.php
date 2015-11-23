@@ -36,6 +36,8 @@
                         <li><span class='font-green'>Added</span> manual input for data filters in customer set creation</li>
                         <li><span class='font-red'>Removed</span> table 2 of model 1</li>
                         <li><span class='font-green'>Added</span> 4 new tables for model 1</li>
+                        <li><span class='font-green'>Added</span> support of removing upload button when user is not admin in data management</li>
+                        <li><span class='font-green'>Added</span> confirming when changing password</li>
                     </ul>
                     <span class="font-blue">v0.11.17</span>
                     <ul>
