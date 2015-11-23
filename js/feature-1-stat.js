@@ -84,18 +84,46 @@ function draw_figures() {
             dropdownAutoWidth: 'true',
             minimumResultsForSearch: Infinity
         });
-        header = [
+        prefix_content = "<p>These are customers who are active both YTD and PYTD.<br/>";
+        prefix_content += "# of Active Customers (PYTD) = STAT_ACTIVE_CUST_PYTD_YTD[0]<br/>";
+        prefix_content += "# of Active Customers (YTD) = STAT_ACTIVE_CUST_PYTD_YTD[1] (STAT_ACTIVE_CUST_PYTD_YTD[2]%)</p>";
+        stat_table("stat-quintile", "Breakdown of Turnover Growth of Active Customers (YTD vs. PYTD) " + generate_help_button(prefix_content), STAT_QUINTILE, [
             {text: "", hint: ""},
             {text: "Racing Turnover Growth", hint: ""},
-            {text: "Active Customers", hint: ""},
             {text: "Avg. Active Meetings of Customers", hint: ""},
             {text: "Turnover per Meeting", hint: ""}
-        ];
-        stat_table("stat-quintiles-reactivation", "Statistics of Quintiles and Reactivation (YTD vs. PYTD)", STAT_QUINTILE_REACTIVE, header, "", null, function (v) {
+        ], "", null, function (v) {
             if (v.constructor === Array) return v[0] + "% (" + v[1] + "%)";
             else if (is_numeric(v)) return v + "%";
             else return v;
         });
+        prefix_content = "<p>These are customers who are active YTD, inactive PYTD, and active in previous season.<br/>";
+        prefix_content += "# of Active Customers (PYTD) = STAT_ACTIVE_CUST_PYTD_YTD[0]<br/>";
+        prefix_content += "# of Active Customers (YTD) = STAT_ACTIVE_CUST_PYTD_YTD[1] (STAT_ACTIVE_CUST_PYTD_YTD[2]%)<br/>";
+        prefix_content += "Total YTD Turnover of Early Wake Up Customers = $ STAT_TURNOVER_SUM_YTD[0]</p>";
+        stat_table("stat-early-wakeup-pytd-ytd", "Early Wake Up Customers (YTD vs. PYTD) " + generate_help_button(prefix_content), STAT_EARLY_WAKEUP_PYTD_YTD, [
+            {text: "# of Early Wake Up Customers (PYTD)", hint: ""},
+            {text: "# of Early Wake Up Customers (YTD)", hint: ""},
+            {text: "Increase (%)", hint: ""}
+        ], "", null);
+        prefix_content = "<p>These are customers who are active YTD, but inactive in previous season.<br/>";
+        prefix_content += "# of Active Customers (PYTD) = STAT_ACTIVE_CUST_PYTD_YTD[0]<br/>";
+        prefix_content += "# of Active Customers (YTD) = STAT_ACTIVE_CUST_PYTD_YTD[1] (STAT_ACTIVE_CUST_PYTD_YTD[2]%)<br/>";
+        prefix_content += "Total YTD Turnover of Reactivated Customers = $ STAT_TURNOVER_SUM_YTD[1]</p>";
+        stat_table("stat-reactive-pytd-ytd", "Reactivated Customers (YTD vs. PYTD) " + generate_help_button(prefix_content), STAT_REACTIVE_PYTD_YTD, [
+            {text: "# of Reactivated Customers (PYTD)", hint: ""},
+            {text: "# of Reactivated Customers (YTD)", hint: ""},
+            {text: "Increase (%)", hint: ""}
+        ], "", null);
+        prefix_content = "<p>These are customers who are inactive YTD, but active in previous season.<br/>";
+        prefix_content += "# of Active Customers (PYTD) = STAT_ACTIVE_CUST_PYTD_YTD[0]<br/>";
+        prefix_content += "# of Active Customers (YTD) = STAT_ACTIVE_CUST_PYTD_YTD[1] (STAT_ACTIVE_CUST_PYTD_YTD[2]%)<br/>";
+        prefix_content += "Total PYTD Turnover of Inactive Customers = $ STAT_TURNOVER_SUM_YTD[2]</p>";
+        stat_table("stat-inactive-pytd-ytd", "Inactive Customers (YTD vs. PYTD) " + generate_help_button(prefix_content), STAT_INACTIVE_PYTD_YTD, [
+            {text: "# of Inactive Customers (PYTD)", hint: ""},
+            {text: "# of Inactive Customers (YTD)", hint: ""},
+            {text: "Increase (%)", hint: ""}
+        ], "", null);
     }).fail(function () {
         bootbox.alert("No active data set detected. Click OK to configure.", function () {
             window.location.href = "data.php";
@@ -103,3 +131,6 @@ function draw_figures() {
     });
 }
 
+function generate_help_button(c) {
+    return "<a href='javascript:void(0)' onclick=\"bootbox.alert({size:'large',message:'" + c + "'});\"><i class='fa fa-question-circle'></i></a>";
+}

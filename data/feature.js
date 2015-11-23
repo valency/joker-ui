@@ -1013,16 +1013,12 @@ var STAT_ACTIVE_BECOMING_OVER_60 = [
         0.873
     ]
 ];
-var STAT_QUINTILE_REACTIVE = [
+var STAT_QUINTILE = [
     [
         "Top Quintile",
         [
             213.4,
             -38.9
-        ],
-        [
-            0.0,
-            0.0
         ],
         [
             26.5,
@@ -1040,10 +1036,6 @@ var STAT_QUINTILE_REACTIVE = [
             -14.8
         ],
         [
-            0.0,
-            0.0
-        ],
-        [
             3.6,
             -1.7
         ],
@@ -1057,10 +1049,6 @@ var STAT_QUINTILE_REACTIVE = [
         [
             2.4,
             -8.6
-        ],
-        [
-            0.0,
-            0.0
         ],
         [
             0.1,
@@ -1078,10 +1066,6 @@ var STAT_QUINTILE_REACTIVE = [
             -6.9
         ],
         [
-            0.0,
-            0.0
-        ],
-        [
             -3.5,
             -0.9
         ],
@@ -1097,10 +1081,6 @@ var STAT_QUINTILE_REACTIVE = [
             -2.7
         ],
         [
-            0.0,
-            0.0
-        ],
-        [
             -22.5,
             -3.4
         ],
@@ -1108,26 +1088,30 @@ var STAT_QUINTILE_REACTIVE = [
             -56.0,
             -1.4
         ]
-    ],
-    [
-        "Reactivation",
-        -52.6,
-        -48.8,
-        -29.0,
-        30.5
-    ],
-    [
-        "Early Wake Up",
-        -53.6,
-        -52.0,
-        -28.0,
-        34.3
-    ],
-    [
-        "Inactive",
-        null,
-        20.3,
-        null,
-        null
     ]
 ];
+var STAT_ACTIVE_CUST_PYTD_YTD = [
+    63025,
+    61788,
+    -2.0
+];
+var STAT_TURNOVER_SUM_YTD = [
+    22844756.4,
+    24658498.4,
+    45376486.5
+];
+var STAT_EARLY_WAKEUP_PYTD_YTD = [[
+    3208,
+    1540,
+    -52.0
+]];
+var STAT_REACTIVE_PYTD_YTD = [[
+    3507,
+    1797,
+    -48.8
+]];
+var STAT_INACTIVE_PYTD_YTD = [[
+    4163,
+    4296,
+    3.2
+]];

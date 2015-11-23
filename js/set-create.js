@@ -22,8 +22,8 @@ function add_filter() {
         msg += "<option value='" + FEATURE_TAGS[0][i]["id"] + "' filter_type='" + FEATURE_TAGS[0][i]["type"] + "'>" + FEATURE_TAGS[0][i]["text"] + "</option>";
     }
     msg += '</select></div>';
-    msg += '<div style="text-align:center;margin:10px;">';
-    msg += '<span id="filter_comparator" class="font-red">Loading...</span>';
+    msg += '<div class="form-group form-md-line-input form-inline text-center">';
+    msg += '<label id="filter_comparator" class="control-label font-red">Loading...</label> ';
     msg += '<span id="filter_input"></span>';
     msg += '</div>';
     msg += "<div id='filter_detail'></div>";
@@ -54,7 +54,7 @@ function add_filter() {
             var filter_comparator = $("#filter_feature option:selected").attr("filter_type");
             if (filter_comparator == "range") {
                 $("#filter_comparator").html("Between Range:");
-		$("#filter_input").html("<input id='filter_input_min'/> - <input id='filter_input_max'/>");
+                $("#filter_input").html("<input class='form-control input-sm text-center' style='width:80px;' id='filter_input_min'/> - <input class='form-control input-sm text-center' style='width:80px;' id='filter_input_max'/>");
                 $("#filter_detail").html("Loading...");
                 $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/range/?source=" + active_set + "&field=" + $("#filter_feature").val(), function (data) {
                     $("#filter_detail").html("<input id='filter_detail_selector'/>");
@@ -63,27 +63,27 @@ function add_filter() {
                         max: data.max,
                         type: 'double',
                         grid: true,
-                        onChange: function (data){
-			    $("#filter_input_min").val(data.from);
-			    $("#filter_input_max").val(data.to);
+                        onChange: function (data) {
+                            $("#filter_input_min").val(data.from);
+                            $("#filter_input_max").val(data.to);
                         }
                     });
-		    $("#filter_input_min").val(data.min);
-		    $("#filter_input_max").val(data.max);
-		    $('#filter_input input').keypress(function(e){
-		        if(e.keyCode==13){
+                    $("#filter_input_min").val(data.min);
+                    $("#filter_input_max").val(data.max);
+                    $('#filter_input input').keypress(function (e) {
+                        if (e.keyCode == 13) {
                             $("#filter_detail_selector").data("ionRangeSlider").update({
                                 from: $("#filter_input_min").val(),
                                 to: $("#filter_input_max").val()
-                            }); 
+                            });
                         }
-		    });
+                    });
                 });
             }
             else {
                 $("#filter_comparator").html("Choose From");
                 $("#filter_input").html("");
-		$("#filter_detail").html("Loading...");
+                $("#filter_detail").html("Loading...");
                 $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/unique/?source=" + active_set + "&field=" + $("#filter_feature").val(), function (data) {
                     $("#filter_detail").html("<input type='hidden' id='filter_detail_selector' class='form-control select2' value=''/>");
                     var filter_tags = [];
