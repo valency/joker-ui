@@ -8,8 +8,8 @@
     $page = basename($_SERVER["SCRIPT_FILENAME"]);
     echo "<title>SmartCube | " . find_title_by_url_from_array($menu, $page) . "</title>";
     ?>
-    <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.Metronic.css" rel="stylesheet" type="text/css"/>
+    <link href="lib/ion-range-slider-2.1.2/css/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
+    <link href="lib/ion-range-slider-2.1.2/css/ion.rangeSlider.skinFlat.css" rel="stylesheet" type="text/css"/>
     <link href="css/feature.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content">
@@ -120,7 +120,7 @@
 <?php require_once "components/footer.php"; ?>
 <?php require_once "components/js.php"; ?>
 <script src="lib/d3.min.js"></script>
-<script src="assets/global/plugins/ion.rangeslider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
+<script src="lib/ion-range-slider-2.1.2/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
 <script src="js/set-create.js" type="text/javascript"></script>
 </body>
 </html>
