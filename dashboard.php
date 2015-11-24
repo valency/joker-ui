@@ -31,6 +31,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.24</span>
+                    <ul>
+                        <li><span class='font-purple'>Fixed</span> statistics table hint bug</li>
+                    </ul>
                     <span class="font-blue">v0.11.23</span>
                     <ul>
                         <li><span class='font-green'>Added</span> manual input for data filters in customer set creation</li>
