@@ -34,6 +34,7 @@
                     <span class="font-blue">v0.11.24</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> statistics table hint bug</li>
+                        <li><span class='font-yellow'>Modified</span> interactive design of the manual input for data filters in customer set creation</li>
                     </ul>
                     <span class="font-blue">v0.11.23</span>
                     <ul>

@@ -70,13 +70,11 @@ function add_filter() {
                     });
                     $("#filter_input_min").val(data.min);
                     $("#filter_input_max").val(data.max);
-                    $('#filter_input input').keypress(function (e) {
-                        if (e.keyCode == 13) {
-                            $("#filter_detail_selector").data("ionRangeSlider").update({
-                                from: $("#filter_input_min").val(),
-                                to: $("#filter_input_max").val()
-                            });
-                        }
+                    $('#filter_input input').change(function (e) {
+                        $("#filter_detail_selector").data("ionRangeSlider").update({
+                            from: $("#filter_input_min").val(),
+                            to: $("#filter_input_max").val()
+                        });
                     });
                 });
             }
