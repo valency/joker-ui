@@ -31,6 +31,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.11.28</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> button style for model validation</li>
+                        <li><span class='font-yellow'>Modified</span> file structure of model validation from single file to ground truth and club model results together</li>
+                        <li><span class='font-yellow'>Modified</span> file deletion process to make it faster</li>
+                        <li><span class='font-green'>Added</span> file description for model validation</li>
+                        <li><span class='font-red'>Removed</span> display of ground truth for model validation</li>
+                        <li><span class='font-green'>Added</span> download file support for model validation</li>
+                    </ul>
                     <span class="font-blue">v0.11.24</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> statistics table hint bug</li>

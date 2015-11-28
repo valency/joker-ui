@@ -31,21 +31,34 @@
             <!-- BEGIN PAGE -->
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=' . $_GET["mode"]); ?>
             <div id="form" style="display:none;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="label bg-red">RESULTS</span>
-                        <span class="label bg-grey">MODEL_1</span>
-                        <span class="label bg-grey">MODEL_2</span>
-                        <span class="label bg-grey">...</span>
-                        <span class="label bg-grey">MODEL_N</span>
-                    </div>
-                </div>
-                <hr/>
                 <div class="row form-group">
                     <div class="col-md-12">
                         <div class="input-group">
-                            <span class="input-group-addon">Source File</span>
-                            <select id="select2_source" class="form-control select2">
+                            <span class="input-group-addon">Ground Truth <sup class="font-purple">1</sup></span>
+                            <select id="select-ground-truth" class="form-control select2">
+                                <?php if ($handle = opendir('./data/validation/ground-truth/')) {
+                                    while (false !== ($entry = readdir($handle))) {
+                                        if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
+                                            echo "<option value='" . $entry . "'>";
+                                            echo $entry;
+                                            echo "</option>";
+                                        }
+                                    }
+                                    closedir($handle);
+                                } ?>
+                            </select>
+                            <span class="input-group-btn"><button class="btn purple" type="button" style="margin-left:10px;" onclick="$('#upload-ground-truth').click();"><i class="fa fa-upload"></i> Upload</button></span>
+                            <span class="input-group-btn"><button class="btn purple" type="button" style="margin-left:10px;" onclick="window.open('data/validation/ground-truth/'+$('#select-ground-truth').val());"><i class="fa fa-download"></i> Download</button></span>
+                            <span class="input-group-btn"><button class="btn red" type="button" style="margin-left:10px;" onclick="delete_data_file('validation/ground-truth/'+$('#select-ground-truth').val());"><i class="fa fa-times"></i> Delete</button></span>
+                            <input id="upload-ground-truth" class="file-upload hidden" type="file" name="files[]" data-url="./data/?dir=validation/ground-truth" multiple/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <span class="input-group-addon">Club Model Results <sup class="font-purple">2</sup></span>
+                            <select id="select-club-model" class="form-control select2">
                                 <?php if ($handle = opendir('./data/validation/')) {
                                     while (false !== ($entry = readdir($handle))) {
                                         if ($entry != "." && $entry != ".." && pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
@@ -57,9 +70,10 @@
                                     closedir($handle);
                                 } ?>
                             </select>
-                            <span class="input-group-btn"><button class="btn purple" type="button" style="margin-left:10px;" onclick="$('#file_upload').click();"><i class="fa fa-upload"></i> Upload New Data</button></span>
-                            <span class="input-group-btn"><button class="btn red" type="button" style="margin-left:10px;" onclick="delete_validation_file();"><i class="fa fa-times"></i> Delete</button></span>
-                            <input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=validation" multiple>
+                            <span class="input-group-btn"><button class="btn purple" type="button" style="margin-left:10px;" onclick="$('#upload-club-model').click();"><i class="fa fa-upload"></i> Upload</button></span>
+                            <span class="input-group-btn"><button class="btn purple" type="button" style="margin-left:10px;" onclick="window.open('data/validation/'+$('#select-club-model').val());"><i class="fa fa-download"></i> Download</button></span>
+                            <span class="input-group-btn"><button class="btn red" type="button" style="margin-left:10px;" onclick="delete_data_file('validation/'+$('#select-club-model').val());"><i class="fa fa-times"></i> Delete</button></span>
+                            <input id="upload-club-model" class="file-upload hidden" type="file" name="files[]" data-url="./data/?dir=validation" multiple/>
                         </div>
                     </div>
                 </div>
@@ -67,19 +81,29 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon">Segment</span>
-                            <input type='hidden' id='select2_segment' class='form-control select2' value=''/>
+                            <input type='hidden' id='select-segment' class='form-control select2' value=''/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon">Model</span>
-                            <select id="select2_model" class="form-control"></select>
+                            <select id="select-model" class="form-control"></select>
                         </div>
                     </div>
                 </div>
+                <hr/>
+                <div class="row small font-purple">
+                    <div class="col-md-12">
+                        <span><sup class="font-red">1</sup> The file of ground truth be a CSV-formatted file which contains a sorted list of CUST_ID. The header of the CSV file should be "TRUTH".</span>
+                    </div>
+                    <div class="col-md-12">
+                        <span><sup class="font-red">2</sup> The file of club model results should be a CSV-formatted file where each column represents a sorted list of CUST_ID of one model. The header of the CSV file should be the names of models.</span>
+                    </div>
+                </div>
+                <hr/>
                 <div class="row form-group">
                     <div class="col-md-12">
-                        <button class="btn green pull-right" type="button" onclick="validate();">Validate</button>
+                        <button class="btn green pull-right" type="button" onclick="validate();"><i class="fa fa-play"></i> Validate</button>
                     </div>
                 </div>
             </div>
@@ -89,13 +113,12 @@
                 <div class="table-scrollable">
                     <table class="table table-striped table-bordered table-advance table-hover">
                         <thead>
-                        <tr id="canvas_table_header" class="heading">
-                            <th><i class="fa fa-briefcase"></i> Ground Truth</th>
+                        <tr id="canvas-table-header" class="heading">
                             <th><i class="fa fa-asterisk"></i> SmartCube Model</th>
                         </tr>
                         </thead>
-                        <tbody id="canvas_table_body"></tbody>
-                        <tfoot id="canvas_table_foot" class="bg-grey-mint"></tfoot>
+                        <tbody id="canvas-table-body"></tbody>
+                        <tfoot id="canvas-table-foot" class="bg-red"></tfoot>
                     </table>
                 </div>
             </div>

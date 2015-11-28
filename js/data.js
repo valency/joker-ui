@@ -192,16 +192,3 @@ function datafile_import(file) {
     $("#select2_data_type").change();
 }
 
-function datafile_delete(file) {
-    bootbox.dialog({
-        title: "Delete Data",
-        message: "<p>The following file(s) will be deleted:</p><p class='font-red'>" + file + "</p>",
-        buttons: {
-            Proceed: function () {
-                $.get("data/delete.php?f=" + file, function (r) {
-                    location.reload();
-                });
-            }
-        }
-    });
-}

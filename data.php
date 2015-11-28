@@ -28,7 +28,7 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
-            <div><input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=." multiple></div>
+            <div><input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=." multiple/></div>
             <div id="file_list_table_wrapper">
                 <table class="table table-striped table-bordered table-advance table-hover">
                     <thead>
@@ -53,7 +53,7 @@
                                 } elseif (pathinfo($entry, PATHINFO_EXTENSION) == "gz") {
                                     echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple btn-admin'><i class='fa fa-download'></i> Extract</button>";
                                 }
-                                echo "<button onclick=\"datafile_delete('" . $entry . "')\" class='btn default btn-xs black btn-admin'><i class='fa fa-trash-o'></i> Delete</button>";
+                                echo "<button onclick=\"delete_data_file('" . $entry . "')\" class='btn default btn-xs black btn-admin'><i class='fa fa-trash-o'></i> Delete</button>";
                                 echo "</td>";
                                 echo "</tr>";
                             }

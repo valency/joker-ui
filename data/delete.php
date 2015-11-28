@@ -1,10 +1,11 @@
 <?php
 if (isset($_GET["f"])) {
     $f = $_GET["f"];
-    if (dirname($f) == "." && pathinfo($f, PATHINFO_EXTENSION) == "csv") {
+    $ext = pathinfo($f, PATHINFO_EXTENSION);
+    if ($ext == "csv" || $ext == "gz") {
         if (unlink($f)) echo "1"; else echo "-1";
     } else {
-        echo "0";
+        echo "-2";
     }
 } else {
     echo "0";
