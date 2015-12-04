@@ -196,7 +196,7 @@ function register() {
                 password: password
             }, function (data) {
                 bootbox.dialog({
-                    message: "Successfully registered! Now redirecting...",
+                    message: success_message("Successfully registered! Now redirecting..."),
                     closeButton: false
                 });
                 setTimeout(function () {
