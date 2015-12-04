@@ -42,8 +42,8 @@ function draw_figures() {
             x: "Channel",
             y: "Turnover of the Channel"
         });
-        stat_figure_histogram("grow_prop", false, "Grow Score", "Distribution of Customer's Grow Score", {
-            x: "Customer's Grow Score",
+        stat_figure_histogram("grow_prop", false, "Growth Score", "Distribution of Customer's Growth Score", {
+            x: "Customer's Growth Score",
             y: "Probabilistic Distribution Function"
         }, 1, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
         stat_figure_histogram("decline_prop", false, "Decline Score", "Distribution of Customers' Decline Score", {

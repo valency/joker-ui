@@ -30,7 +30,7 @@ function draw_figures() {
             y: "Cumulative Growth Rate of Active Rate (PYTD vs. YTD)",
             keys: ["Avg. Active Rate (PYTD)", "Avg. Active Rate (YTD)", "# of Active Customers (Prev. Season)", "# of Active Customers (This Season)", "# of New Customers by Prev. Season (in 5 Years)", "# of New Customers by This Season (in 5 Years)"]
         }, 0.34);
-        stat_figure_histogram("active_rate_previous_83", false, "Previous 83 Meetings", "Active Rate of New Customers (Prev. 83)", {
+        stat_figure_histogram("active_rate_previous_83", false, "Active Rate (Recent 83 Meetings)", "Active Rate of New Customers (Recent 83 Meetings)", {
             x: "New Customers' Active Rate",
             y: "Probabilistic Distribution Function"
         }, 2, active.value, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
@@ -38,8 +38,8 @@ function draw_figures() {
             x: "New Customers' Age",
             y: "Probabilistic Distribution Function"
         }, 2, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
-        stat_figure_histogram("chance_to_be_regular", false, "Regular Score", "Distribution of New Customers' Regular Score", {
-            x: "New Customers' Regular Score",
+        stat_figure_histogram("chance_to_be_regular", false, "Probability of Active Rate > 0.6 (Next 83 Meetings)", "Distribution of Probabilities", {
+            x: "New Customers' Probability of Active Rate > 0.6 (Next 83 Meetings)",
             y: "Probabilistic Distribution Function"
         }, 2, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
         src = [];
@@ -71,7 +71,7 @@ function draw_figures() {
         stat_table("stat-avg-turnover-table", "Statistics of Avg. Turnover by Joining Season", STAT_AVG_TURNOVER, header, "");
         stat_table("stat-inactive-cust-table", "Statistics of Inactive Customers by Joining Season", STAT_INACTIVE_CUST, header, "");
         stat_table("stat-active-over-0.6", "Statistics of Customers over 0.6 Active Rate by Joining Season", STAT_CUST_ACTIVE_OVER_60, header, "");
-        stat_table("prev-83-becoming-over-0.6", "Prev. 83 & Becoming over 0.6", STAT_ACTIVE_BECOMING_OVER_60, [
+        stat_table("prev-83-becoming-over-0.6", "Active Rate Comparison (Previous 83 vs. Next 83)", STAT_ACTIVE_BECOMING_OVER_60, [
             {text: "Active Rate of S1314", hint: ""},
             {text: "# of Customers", hint: ""},
             {text: "Active Rate > 0.6 in S1415 (#)", hint: ""},
