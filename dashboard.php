@@ -34,6 +34,7 @@
                     <span class="font-blue">v0.12.4</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> some chart titles and subtitles for model 1 and model 2</li>
+                        <li><span class='font-purple'>Fixed</span> statistics table title too long bug</li>
                     </ul>
                     <span class="font-blue">v0.11.28</span>
                     <ul>

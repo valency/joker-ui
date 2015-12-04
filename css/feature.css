@@ -68,3 +68,10 @@ path {
     margin: 0;
     padding: 0;
 }
+
+.limit-title {
+    width: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

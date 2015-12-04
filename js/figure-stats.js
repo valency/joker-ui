@@ -25,9 +25,9 @@ function add_portlet(target, title, body, fig_id, md, redraw_callback) {
 function generate_portlet_meta(fig_id, title, label, label_type) {
     var html = "<div style='display:inline-block;text-align:center;'>";
     html += "<div id='figure-meta-" + fig_id + "'>";
-    html += "<div id='figure-title-" + fig_id + "' class='font-purple bold' style='width:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" + title + "</div>";
-    html += "<div><span class='bold'>" + label_type["x"] + ":</span> " + label["x"] + "</div>";
-    html += "<div><span class='bold'>" + label_type["y"] + ":</span> " + label["y"] + "</div>";
+    html += "<div id='figure-title-" + fig_id + "' class='font-purple bold limit-title'>" + title + "</div>";
+    html += "<div class='limit-title'><span class='bold'>" + label_type["x"] + ":</span> " + label["x"] + "</div>";
+    html += "<div class='limit-title'><span class='bold'>" + label_type["y"] + ":</span> " + label["y"] + "</div>";
     html += "<hr style='margin-bottom:0;'/></div>";
     html += "<div id='figure-div-" + fig_id + "'></div>";
     html += "</div>";
@@ -52,6 +52,8 @@ function stat_figure_growth_rate_of_turnover_draw(fig_id, src, title, label, kpi
     var fig_portlet_body_container = $("#figure-portlet-" + fig_id + ">div>.portlet-body");
     var fig_portlet_meta_container = $("#figure-meta-" + fig_id);
     fig_title_container.css("width", fig_portlet_body_container.width() + "px");
+    fig_title_container.next().css("width", fig_portlet_body_container.width() + "px");
+    fig_title_container.next().next().css("width", fig_portlet_body_container.width() + "px");
     $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
     var margin = {top: 20, right: 10, bottom: 50, left: 50};
     var width = fig_portlet_body_container.width() - 10 - margin.left - margin.right;
@@ -154,6 +156,8 @@ function stat_figure_pie_chart_draw(fig_id, src, title, label) {
     var fig_portlet_body_container = $("#figure-portlet-" + fig_id + ">div>.portlet-body");
     var fig_portlet_meta_container = $("#figure-meta-" + fig_id);
     fig_title_container.css("width", fig_portlet_body_container.width() + "px");
+    fig_title_container.next().css("width", fig_portlet_body_container.width() + "px");
+    fig_title_container.next().next().css("width", fig_portlet_body_container.width() + "px");
     $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
     var margin = {top: 20, right: 10, bottom: 50, left: 50};
     var width = fig_portlet_body_container.width();
@@ -209,6 +213,8 @@ function stat_figure_bar_chart_draw(fig_id, src, title, label) {
     var fig_portlet_body_container = $("#figure-portlet-" + fig_id + ">div>.portlet-body");
     var fig_portlet_meta_container = $("#figure-meta-" + fig_id);
     fig_title_container.css("width", fig_portlet_body_container.width() + "px");
+    fig_title_container.next().css("width", fig_portlet_body_container.width() + "px");
+    fig_title_container.next().next().css("width", fig_portlet_body_container.width() + "px");
     $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
     var margin = {top: 20, right: 10, bottom: 50, left: 50};
     var width = fig_portlet_body_container.width() - 10 - margin.left - margin.right;
