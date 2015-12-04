@@ -35,6 +35,7 @@
                     <ul>
                         <li><span class='font-yellow'>Modified</span> some chart titles and subtitles for model 1 and model 2</li>
                         <li><span class='font-purple'>Fixed</span> statistics table title too long bug</li>
+                        <li><span class='font-green'>Added</span> dismiss response for compulsive password change request</li>
                     </ul>
                     <span class="font-blue">v0.11.28</span>
                     <ul>

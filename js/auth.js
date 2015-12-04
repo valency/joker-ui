@@ -9,18 +9,21 @@ function check_login(callback) {
                 var previous_change_date = new Date(r["last_change_of_password"]);
                 var current_change_date = new Date();
                 var expire_date = 90 * 24 * 3600 * 1000;
-                if (r["last_change_of_password"] == null) {
-                    bootbox.alert(warning_message("This is your first time login, please change your password immediately."), function () {
-                        bootbox.hideAll();
-                        change_password();
-                    });
-                } else if (current_change_date - previous_change_date > expire_date) {
-                    bootbox.alert(warning_message("Your password has not been changed for 90 days, please change your password immediately."), function () {
-                        bootbox.hideAll();
-                        change_password();
-                    });
-                } else {
-                    console.info("Your password will expire in " + (90 - (current_change_date - previous_change_date) / 3600 / 1000 / 24).toFixed(0) + " days.");
+                console.info("Your password will expire in " + (90 - (current_change_date - previous_change_date) / 3600 / 1000 / 24).toFixed(0) + " days.");
+                if (Cookies.get('joker_change_password') == null) {
+                    if (r["last_change_of_password"] == null) {
+                        bootbox.alert(warning_message("You have not changed your password since your first log in, please change immediately."), function () {
+                            Cookies.set('joker_change_password', true);
+                            bootbox.hideAll();
+                            change_password();
+                        });
+                    } else if (current_change_date - previous_change_date > expire_date) {
+                        bootbox.alert(warning_message("Your password has not been changed for 90 days, please change immediately."), function () {
+                            Cookies.set('joker_change_password', true);
+                            bootbox.hideAll();
+                            change_password();
+                        });
+                    }
                 }
             }
         }).fail(function () {
