@@ -31,6 +31,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.12.4</span>
+                    <ul>
+                        <li><span class='font-yellow'>Modified</span> some chart titles and subtitles for model 1 and model 2</li>
+                    </ul>
                     <span class="font-blue">v0.11.28</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> button style for model validation</li>
