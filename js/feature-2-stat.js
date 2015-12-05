@@ -78,7 +78,7 @@ function draw_figures() {
             {text: "Active Rate > 0.6 in S1415 (%)", hint: ""}
         ], "");
     }).fail(function () {
-        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+        bootbox.alert(warning_message("No active data set detected. Click OK to configure."), function () {
             window.location.href = "data.php";
         });
     });

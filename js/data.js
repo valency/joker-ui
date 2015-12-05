@@ -82,20 +82,20 @@ function set_active(model, source) {
         window.location.reload();
     }).fail(function () {
         bootbox.hideAll();
-        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while activating data set!</span>");
+        bootbox.alert(error_message("Something is wrong while activating data set!"));
     });
 }
 
 function clear_db(model, source) {
     bootbox.dialog({
-        message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+        message: loading_message("Processing... Please be patient!"),
         closeButton: false
     });
     $.get(API_SERVER + "joker/model/" + model + "/delete_all/?source=" + source, function (r) {
         window.location.reload();
     }).fail(function () {
         bootbox.hideAll();
-        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while cleaning database!</span>");
+        bootbox.alert(error_message("Something is wrong while cleaning database!"));
     });
 }
 
@@ -134,7 +134,7 @@ function interpret_data_type_desc(data_type) {
 
 function datafile_extract(file) {
     bootbox.dialog({
-        message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+        message: loading_message("Processing... Please be patient!"),
         closeButton: false
     });
     $.get(API_SERVER + "joker/tool/extract_gzip/?src=" + file, function (r) {
@@ -156,8 +156,9 @@ function datafile_import(file) {
         message: msg,
         buttons: {
             Proceed: function () {
+                var start_time = new Date();
                 bootbox.dialog({
-                    message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+                    message: loading_message("Processing... Please be patient!"),
                     closeButton: false
                 });
                 var data_type = $("#select2_data_type").val().replace("model_", "");
@@ -165,22 +166,23 @@ function datafile_import(file) {
                     $.get(API_SERVER + "joker/model/" + data_type + "/add_cust_from_csv/?src=" + file, function (r) {
                         var import_status = eval(r);
                         $.get(API_SERVER + "joker/tool/env/set/?key=last_success_import&value=" + file, function (r) {
-                            var msg = "<p>" + import_status.processed + " entries have been processed.</p><p>" + import_status.success + " entries have been imported.</p><p>" + import_status.fail + " entries are failed to import.</p>";
+                            var end_time = new Date();
+                            var msg = "<p>" + import_status.processed + " entries have been processed.<br/>" + import_status.success + " entries have been imported.<br/>" + import_status.fail + " entries are failed to import.</p>";
                             bootbox.hideAll();
-                            bootbox.alert(msg, function () {
+                            bootbox.alert("<p>" + success_message("Import completed in " + (end_time - start_time) + " milliseconds.") + "</p>" + msg, function () {
                                 location.reload();
                             });
                         }).fail(function () {
                             bootbox.hideAll();
-                            bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
+                            bootbox.alert(error_message("Something is wrong while processing the file!"));
                         });
                     }).fail(function () {
                         bootbox.hideAll();
-                        bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while processing the file!</span>");
+                        bootbox.alert(error_message("Something is wrong while processing the file!"));
                     });
                 }).fail(function () {
                     bootbox.hideAll();
-                    bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong while cleaning database!</span>");
+                    bootbox.alert(error_message("Something is wrong while cleaning database!"));
                 });
             }
         }

@@ -20,7 +20,7 @@ $(document).ready(function () {
                 cust_set_search();
             }
         } else {
-            bootbox.alert("No customer set found. Click OK to create.", function () {
+            bootbox.alert(warning_message("No customer set found. Click OK to create."), function () {
                 window.location.href = "set-create.php";
             });
         }
@@ -110,7 +110,7 @@ function cust_set_change_metric() {
         buttons: {
             Proceed: function () {
                 bootbox.dialog({
-                    message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+                    message: loading_message("Processing... Please be patient!"),
                     closeButton: false
                 });
                 $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/kmeans/?header=" + cust_set["cluster_features"].join(",") + "&metric=" + $("#select_metric").val() + "&n_clusters=" + cust_set["cluster_count"] + "&set_id=" + cust_set["id"], function (data) {
@@ -119,7 +119,7 @@ function cust_set_change_metric() {
                     cust_set_search();
                 }).fail(function () {
                     bootbox.hideAll();
-                    bootbox.alert("<span class='font-red'><i class='fa fa-warning'></i> Something is wrong during clustering!</span>");
+                    bootbox.alert(error_message("Something is wrong during clustering!"));
                 });
             }
         }
@@ -138,7 +138,7 @@ function cust_set_delete() {
         buttons: {
             Proceed: function () {
                 bootbox.dialog({
-                    message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+                    message: loading_message("Processing... Please be patient!"),
                     closeButton: false
                 });
                 $.get(API_SERVER + "joker/model/1/set/remove/?id=" + $("#canvas-control-id").html(), function (data) {

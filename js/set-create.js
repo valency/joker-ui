@@ -103,7 +103,7 @@ function add_filter() {
 
 function create_set() {
     bootbox.dialog({
-        message: "<img src='assets/global/img/loading-spinner-grey.gif' class='loading'><span>&nbsp;&nbsp;Processing... Please be patient!</span>",
+        message: loading_message("Processing... Please be patient!"),
         closeButton: false
     });
     var filter_mode = $('.filter_operator').first().html();

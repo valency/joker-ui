@@ -44,7 +44,7 @@ $(document).ready(function () {
         });
         oTable = load_data("customer_table", oConf, 4);
     }).fail(function () {
-        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+        bootbox.alert(warning_message("No active data set detected. Click OK to configure."), function () {
             window.location.href = "data.php";
         });
     });

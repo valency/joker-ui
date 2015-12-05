@@ -32,7 +32,7 @@ function draw_figures() {
             y: "Turnover of the Bet Type"
         });
     }).fail(function () {
-        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+        bootbox.alert(warning_message("No active data set detected. Click OK to configure."), function () {
             window.location.href = "data.php";
         });
     });

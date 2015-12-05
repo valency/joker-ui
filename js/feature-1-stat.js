@@ -125,7 +125,7 @@ function draw_figures() {
             {text: "Increase (%)", hint: ""}
         ], "", null);
     }).fail(function () {
-        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+        bootbox.alert(warning_message("No active data set detected. Click OK to configure."), function () {
             window.location.href = "data.php";
         });
     });

@@ -85,6 +85,14 @@ $menu = [[
         "title" => "Data Management",
         "icon" => "icon-briefcase",
         "url" => "data.php"
+    ], [
+        "title" => "Job Management",
+        "icon" => "icon-list",
+        "url" => "job.php"
+    ], [
+        "title" => "Job Monitor",
+        "icon" => "icon-speedometer",
+        "url" => "job-monitor.php"
     ]]
 ]];
 

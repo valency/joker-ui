@@ -45,6 +45,10 @@ function warning_message(msg) {
     return "<span class='text-warning'><i class='fa fa-exclamation-circle'></i> " + msg + "</span>";
 }
 
+function loading_message(msg) {
+    return "<span class='text-info'><i class='fa fa-spinner'></i> " + msg + "</span>";
+}
+
 function guid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);

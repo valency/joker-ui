@@ -45,7 +45,7 @@ function cust_search() {
             $("#customer_table_wrapper>div").html("<span class='font-red'>Not Found</span>");
         });
     }).fail(function () {
-        bootbox.alert("No active data set detected. Click OK to configure.", function () {
+        bootbox.alert(warning_message("No active data set detected. Click OK to configure."), function () {
             window.location.href = "data.php";
         });
     });

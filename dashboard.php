@@ -31,6 +31,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.12.5</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> support of job management</li>
+                        <li><span class='font-green'>Added</span> support of job monitor</li>
+                        <li><span class='font-purple'>Fixed</span> color bugs of dialogs</li>
+                        <li><span class='font-yellow'>Modified</span> hint of data import</li>
+                    </ul>
                     <span class="font-blue">v0.12.4</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> some chart titles and subtitles for model 1 and model 2</li>
