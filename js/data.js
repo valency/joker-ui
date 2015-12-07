@@ -137,8 +137,16 @@ function datafile_extract(file) {
         message: loading_message("Processing... Please be patient!"),
         closeButton: false
     });
-    $.get(API_SERVER + "joker/tool/extract_gzip/?src=" + file, function (r) {
-        location.reload();
+    $.get("data/extract.php?f=" + file, function (r) {
+        if (r == "0") {
+            location.reload();
+        } else {
+            bootbox.hideAll();
+            bootbox.alert(error_message("Failed to extract the requested gzip file!"));
+        }
+    }).fail(function () {
+        bootbox.hideAll();
+        bootbox.alert(error_message("Cannot communicate with the extraction service!"));
     });
 }
 

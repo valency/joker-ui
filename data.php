@@ -42,15 +42,16 @@
                     <tbody>
                     <?php if ($handle = opendir('./data/')) {
                         while (false !== ($entry = readdir($handle))) {
-                            if ($entry != "." && $entry != ".." && (pathinfo($entry, PATHINFO_EXTENSION) == "csv" || pathinfo($entry, PATHINFO_EXTENSION) == "gz")) {
+                            $ext = pathinfo($entry, PATHINFO_EXTENSION);
+                            if ($entry != "." && $entry != ".." && ($ext == "csv" || $ext == "gz")) {
                                 echo "<tr>";
                                 echo "<td><a class='file-entry' href='data/" . $entry . "' target='_blank'><i class='fa fa-file-text-o'></i> " . $entry . "</a></td>";
                                 echo "<td>" . number_format(filesize('./data/' . $entry)) . "</td>";
                                 echo "<td>" . date("Y-m-d H:i:s", filemtime('./data/' . $entry)) . "</td>";
                                 echo "<td style='white-space:nowrap;'>";
-                                if (pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
+                                if ($ext == "csv") {
                                     echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue btn-admin'><i class='fa fa-edit'></i> Import</button>";
-                                } elseif (pathinfo($entry, PATHINFO_EXTENSION) == "gz") {
+                                } elseif ($ext == "gz") {
                                     echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple btn-admin'><i class='fa fa-download'></i> Extract</button>";
                                 }
                                 echo "<button onclick=\"delete_data_file('" . $entry . "')\" class='btn default btn-xs black btn-admin'><i class='fa fa-trash-o'></i> Delete</button>";

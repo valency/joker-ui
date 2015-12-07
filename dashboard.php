@@ -45,6 +45,7 @@
                         <li><span class='font-yellow'>Modified </span> layout of model management</li>
                         <li><span class='font-purple'>Fixed</span> display bug of html code within pre tag</li>
                         <li><span class='font-green'>Added</span> support of editing profiles for model management</li>
+                        <li><span class='font-purple'>Fixed</span> permission bug when decompressing gzip files</li>
                     </ul>
                     <span class="font-blue">v0.12.6</span>
                     <ul>
