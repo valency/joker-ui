@@ -48,6 +48,7 @@
                         <li><span class='font-purple'>Fixed</span> permission bug when decompressing gzip files</li>
                         <li><span class='font-purple'>Added</span> installation and uninstallation of modules for model management</li>
                         <li><span class='font-yellow'>Modified</span> file upload mechanism to overwritten</li>
+                        <li><span class='font-purple'>Added</span> view for EDW datasets</li>
                     </ul>
                     <span class="font-blue">v0.12.6</span>
                     <ul>
