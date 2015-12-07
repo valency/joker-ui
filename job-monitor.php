@@ -47,6 +47,7 @@
                         <th>Time (System)</th>
                         <th>State</th>
                         <th>Final Status</th>
+                        <th><i class='fa fa-cubes'></i> Management</th>
                     </tr>
                     </thead>
                     <tbody></tbody>

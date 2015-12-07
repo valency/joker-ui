@@ -27,6 +27,14 @@ String.prototype.splitMiddle = function () {
     return [s1, s2];
 };
 
+String.prototype.escapeHTML = function () {
+    return (
+        this.replace(/>/g, '&gt;').
+        replace(/</g, '&lt;').
+        replace(/"/g, '&quot;')
+    );
+};
+
 Array.prototype.findKeyValue = function (key_desc, key, value_desc) {
     for (var i = 0; i < this.length; i++) {
         if (this[i][key_desc] == key) return this[i][value_desc];

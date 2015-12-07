@@ -11,10 +11,6 @@
     vertical-align: middle;
 }
 
-form {
-    margin-bottom: 0;
-}
-
 .code-input {
     font-family: monospace;
     resize: none;

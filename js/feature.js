@@ -50,9 +50,9 @@ function interpret_gender_color(gender) {
 
 function show_cust_detail(model, source, data) {
     var html = generate_cust_data(data, model);
-    bootbox.dialog({
-        message: html,
-        title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>"
+    bootbox.alert({
+        title: "CUST_ID: " + data.id + " <a href='customer.php?model=" + model + "&id=" + data.id + "' target='_blank' class='fa fa-share'></a>",
+        message: html
     }).on('shown.bs.modal', function (e) {
         if (model == 4) {
             generate_cust_turnover_barchart("#cust_detail_betline_standard_barchart", data["betline_standard_part"], {x: "", y: "Betline (Standard)"});

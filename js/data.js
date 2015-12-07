@@ -8,7 +8,7 @@ $(document).ready(function () {
         add_deco_badge(2, function () {
             add_deco_badge(4, function () {
                 $("#file_list_table_wrapper table").dataTable({searching: false});
-                $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn red pull-right btn-admin' onclick=\"$('#file_upload').click();\"><i class='fa fa-plus'></i> Upload</button>");
+                $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn blue pull-right btn-admin' onclick=\"$('#file_upload').click();\"><i class='fa fa-plus'></i> Upload</button>");
                 init_widget();
                 auth_check();
                 Metronic.unblockUI();

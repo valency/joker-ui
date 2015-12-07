@@ -36,7 +36,7 @@
                         <th><i class="fa fa-briefcase"></i> File Name</th>
                         <th><i class="fa fa-database"></i> Size</th>
                         <th><i class="fa fa-clock-o"></i> Upload Time</th>
-                        <th><i class='fa fa-cubes'></i> Manage</th>
+                        <th><i class='fa fa-cubes'></i> Management</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -11,15 +11,20 @@ $(document).ready(function () {
             if (r["jobs"].hasOwnProperty(i)) {
                 var job = r["jobs"][i];
                 var state_code = job["state"] + (job["state"] == "finished" ? "_" + ( job["returncode"] == 0) : "");
-                var html = "<tr onclick=\"show_job_detail('" + i + "');\">";
+                var html = "<tr>";
                 html += "<td><span class='label bg-green'><i class='fa fa-sort'></i> " + job["seqno"] + "</span></td>";
-                html += "<td><span class='label bg-blue'>" + job["id"] + "</span></td>";
-                html += "<td>" + job["name"] + "</td>";
+                html += "<td><button class='btn btn-xs blue' onclick=\"show_job_detail('" + i + "');\">" + job["id"] + "</button></td>";
+                html += "<td><a href='javascript:void(0)' onclick=\"show_job_detail('" + i + "');\">" + job["name"] + "</a></td>";
                 html += "<td>" + job["times"]["real"] + "</td>";
                 html += "<td>" + job["times"]["user"] + "</td>";
                 html += "<td>" + job["times"]["system"] + "</td>";
                 html += "<td><span class='font-" + STATE_CODE[state_code]["color"] + "'>" + STATE_CODE[state_code]["text"] + "</span></td>";
                 html += "<td>" + job["returncode"] + "</td>";
+                html += "<td>";
+                html += "<button onclick=\"job_top('" + job["id"] + "');\" class='btn btn-xs green'><i class='fa fa-arrow-up'></i> Top</button>";
+                html += "<button onclick=\"job_kill('" + job["id"] + "');\" class='btn btn-xs red'><i class='fa fa-times'></i> Kill</button>";
+                html += "<button onclick=\"job_remove('" + job["id"] + "');\" class='btn btn-xs grey'><i class='fa fa-trash-o'></i> Remove</button>";
+                html += "</td>";
                 html += "</tr>";
                 $("#job-table-wrapper>table>tbody").append(html);
             }
@@ -40,6 +45,66 @@ function auth_check() {
     }
 }
 
+function job_top(id) {
+    bootbox.confirm("Are your sure you would like to move this job to the top of the job queue?", function (confirmed) {
+        if (confirmed) {
+            bootbox.hideAll();
+            bootbox.dialog({
+                message: loading_message("Processing... Please be patient!"),
+                closeButton: false
+            });
+            $.get(API_SERVER + "joker/connector/job-top/?id=" + id, function (r) {
+                window.location.reload();
+            }).fail(function (r) {
+                var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
+                resp = resp.substring(1, resp.length - 1);
+                bootbox.hideAll();
+                bootbox.alert("<p>" + error_message("Putting job to the top of the queue is failed due to the following reason(s):") + "</p><p>" + resp + "</p>");
+            });
+        }
+    });
+}
+
+function job_kill(id) {
+    bootbox.confirm("Are your sure you would like to kill this job? This action cannot be undone.", function (confirmed) {
+        if (confirmed) {
+            bootbox.hideAll();
+            bootbox.dialog({
+                message: loading_message("Processing... Please be patient!"),
+                closeButton: false
+            });
+            $.get(API_SERVER + "joker/connector/job-kill/?id=" + id, function (r) {
+                window.location.reload();
+            }).fail(function (r) {
+                var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
+                resp = resp.substring(1, resp.length - 1);
+                bootbox.hideAll();
+                bootbox.alert("<p>" + error_message("Killing job is failed due to the following reason(s):") + "</p><p>" + resp + "</p>");
+            });
+        }
+    });
+}
+
+function job_remove(id) {
+    bootbox.confirm("Are your sure you would like to remove this job from the job list? This action cannot be undone.", function (confirmed) {
+        if (confirmed) {
+            bootbox.hideAll();
+            bootbox.dialog({
+                message: loading_message("Processing... Please be patient!"),
+                closeButton: false
+            });
+            $.get(API_SERVER + "joker/connector/job-remove/?id=" + id, function (r) {
+                window.location.reload();
+            }).fail(function (r) {
+                var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
+                resp = resp.substring(1, resp.length - 1);
+                bootbox.hideAll();
+                bootbox.alert("<p>" + error_message("Removing job is failed due to the following reason(s):") + "</p><p>" + resp + "</p>");
+            });
+        }
+    });
+}
+
 function refresh_job_detail_output(id) {
     $.get(API_SERVER + "joker/connector/job-status/?id=" + id, function (r) {
         $("#job-detail-output").html(r["output"]);
@@ -57,72 +122,13 @@ function show_job_detail(id) {
         html += "<span class='label bg-grey'>" + job["returncode"] + "</span>";
         html += "<span class='pull-right'>" + job["times"]["real"] + " / " + job["times"]["user"] + " / " + job["times"]["system"] + "</span>";
         html += "</p><hr/>";
-        html += "<p>Command:</p><pre style='max-height:200px;'>" + job["command"] + "</pre>";
+        html += "<p>Job Information:</p><pre style='max-height:200px;'>" + job["extra"] + "</pre>";
         html += "<p><a href='javascript:void(0)' class='pull-right' onclick=\"refresh_job_detail_output('" + id + "');\"><i class='fa fa-refresh'></i></a> Output:</p>";
-        html += "<pre id='job-detail-output' style='max-height:200px;'>" + job["output"] + "</pre>";
-        html += "<p>Extra Information:</p><pre style='max-height:200px;'>" + job["extra"] + "</pre><hr/>";
-        var buttons = {};
-        if (job["state"] == "queued") buttons["Top"] = {
-            className: "btn-primary",
-            callback: function () {
-                bootbox.hideAll();
-                bootbox.dialog({
-                    message: loading_message("Processing... Please be patient!"),
-                    closeButton: false
-                });
-                $.get(API_SERVER + "joker/connector/job-top/?id=" + job["id"], function (r) {
-                    window.location.reload();
-                }).fail(function (r) {
-                    var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
-                    resp = resp.substring(1, resp.length - 1);
-                    bootbox.hideAll();
-                    bootbox.alert("<p>" + error_message("Putting job to the top of the queue is failed due to the following reason(s):") + "</p><p>" + resp + "</p>");
-                });
-            }
-        };
-        if (job["state"] == "running") {
-            buttons["Kill"] = {
-                className: "btn-danger",
-                callback: function () {
-                    bootbox.hideAll();
-                    bootbox.dialog({
-                        message: loading_message("Processing... Please be patient!"),
-                        closeButton: false
-                    });
-                    $.get(API_SERVER + "joker/connector/job-kill/?id=" + job["id"], function (r) {
-                        window.location.reload();
-                    }).fail(function (r) {
-                        var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
-                        resp = resp.substring(1, resp.length - 1);
-                        bootbox.hideAll();
-                        bootbox.alert("<p>" + error_message("Killing job is failed due to the following reason(s):") + "</p><p>" + resp + "</p>");
-                    });
-                }
-            };
-        } else {
-            buttons["Remove"] = {
-                className: "btn-grey",
-                callback: function () {
-                    bootbox.hideAll();
-                    bootbox.dialog({
-                        message: loading_message("Processing... Please be patient!"),
-                        closeButton: false
-                    });
-                    $.get(API_SERVER + "joker/connector/job-remove/?id=" + job["id"], function (r) {
-                        window.location.reload();
-                    }).fail(function (r) {
-                        var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
-                        resp = resp.substring(1, resp.length - 1);
-                        bootbox.hideAll();
-                        bootbox.alert("<p>" + error_message("Removing job is failed due to the following reason(s):") + "</p><p>" + resp + "</p>");
-                    });
-                }
-            };
-        }
-        bootbox.dialog({
+        html += "<pre id='job-detail-output' style='max-height:200px;'>" + job["output"].escapeHTML() + "</pre>";
+        console.log(html);
+        bootbox.alert({
             title: "<span class='label bg-blue'>" + job["id"] + "</span> " + job["name"],
-            message: html,
-            buttons: buttons
+            message: html
         }).on("shown.bs.modal", function () {
             $("#job-detail-output").animate({scrollTop: $('#job-detail-output').prop("scrollHeight")}, 100);
         });

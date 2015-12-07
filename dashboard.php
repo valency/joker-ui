@@ -39,6 +39,12 @@
                         <li><span class='font-green'>Added</span> resetting job tracker for job management</li>
                         <li><span class='font-green'>Added</span> removing profile for model management</li>
                         <li><span class='font-green'>Added</span> creating new profile for model management</li>
+                        <li><span class='font-yellow'>Modified </span> placement of buttons for job management</li>
+                        <li><span class='font-green'>Added</span> ok button for customer details of predictions</li>
+                        <li><span class='font-red'>Removed</span> command panel of job details for job management</li>
+                        <li><span class='font-yellow'>Modified </span> layout of model management</li>
+                        <li><span class='font-purple'>Fixed</span> display bug of html code within pre tag</li>
+                        <li><span class='font-green'>Added</span> support of editing profiles for model management</li>
                     </ul>
                     <span class="font-blue">v0.12.6</span>
                     <ul>
