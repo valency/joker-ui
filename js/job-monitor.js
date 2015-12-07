@@ -31,6 +31,9 @@ $(document).ready(function () {
         }
         $("#job-table-wrapper>table").dataTable();
         init_widget();
+        if (get_url_parameter("id") != undefined) {
+            show_job_detail(get_url_parameter("id"));
+        }
         Metronic.unblockUI();
     }).fail(function () {
         bootbox.alert(error_message("Cannot communicate with the core service server for listing status of jobs!"));

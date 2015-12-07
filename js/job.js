@@ -20,6 +20,38 @@ $(document).ready(function () {
     }).fail(function () {
         bootbox.alert(error_message("Cannot communicate with the core service server for listing modules!"));
     });
+    $('#upload-module').fileupload({
+        dataType: 'json',
+        acceptFileTypes: '/(\.|\/)(gz)$/i',
+        done: function (e, data) {
+            setTimeout(function () {
+                bootbox.hideAll();
+                bootbox.dialog({
+                    message: loading_message("Installing module... Please be patient!"),
+                    closeButton: false
+                });
+                $.get(API_SERVER + "joker/connector/job-module-install/?src=" + data["result"]["files"][0]["name"], function (r) {
+                    bootbox.hideAll();
+                    bootbox.alert("<p>" + success_message("Successfully sent the installation operation of the requested module to the core service server. You can refer to job management for more details." + "</p><p>Job ID: " + r + "</p>"), function () {
+                        window.location.href = "job-monitor.php?id=" + r;
+                    });
+                }).fail(function () {
+                    bootbox.hideAll();
+                    bootbox.alert(error_message("Cannot communicate with the core service server for installing the requested module!"));
+                });
+            }, 1000);
+        },
+        submit: function (e, data) {
+            bootbox.dialog({
+                message: "<div class='progress' style='margin-bottom:0;'><div class='progress-bar' style='width:0;'></div></div>",
+                closeButton: false
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $(".progress-bar").css('width', progress + '%');
+        }
+    });
 });
 
 function auth_check() {
@@ -185,5 +217,27 @@ function show_profile_detail(module, profile) {
     }).fail(function () {
         bootbox.hideAll();
         bootbox.alert(error_message("Cannot communicate with the core service server for showing the contents of profiles!"));
+    });
+}
+
+function uninstall_module() {
+    bootbox.confirm("Are your sure you would like to uninstall this module? This action cannot be undone.", function (confirmed) {
+        if (confirmed) {
+            bootbox.hideAll();
+            bootbox.dialog({
+                message: loading_message("Uninstalling module... Please be patient!"),
+                closeButton: false
+            });
+            var module = $("#module-list>ul>li.active>a").html();
+            $.get(API_SERVER + "joker/connector/job-module-uninstall/?module=" + module, function (r) {
+                bootbox.hideAll();
+                bootbox.alert(success_message("Successfully uninstalled the requested module."), function () {
+                    window.location.reload();
+                });
+            }).fail(function () {
+                bootbox.hideAll();
+                bootbox.alert(error_message("Cannot communicate with the core service server for uninstalling the requested module!"));
+            });
+        }
     });
 }
