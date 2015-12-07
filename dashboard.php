@@ -31,10 +31,24 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.12.7</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> status of modules for model management</li>
+                        <li><span class='font-green'>Added</span> support of submitting jobs for model management</li>
+                        <li><span class='font-green'>Added</span> extra information of job details for job management</li>
+                        <li><span class='font-green'>Added</span> resetting job tracker for job management</li>
+                        <li><span class='font-green'>Added</span> removing profile for model management</li>
+                        <li><span class='font-green'>Added</span> creating new profile for model management</li>
+                    </ul>
+                    <span class="font-blue">v0.12.6</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> support of job monitor</li>
+                        <li><span class='font-green'>Added</span> authentication for job management and job monitor</li>
+                        <li><span class='font-yellow'>Modified</span> x axis label of the figure of customer details</li>
+                    </ul>
                     <span class="font-blue">v0.12.5</span>
                     <ul>
                         <li><span class='font-green'>Added</span> support of job management</li>
-                        <li><span class='font-green'>Added</span> support of job monitor</li>
                         <li><span class='font-purple'>Fixed</span> color bugs of dialogs</li>
                         <li><span class='font-yellow'>Modified</span> hint of data import</li>
                     </ul>

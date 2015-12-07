@@ -1,4 +1,30 @@
 var COLOR_PALETTE = ["#467D97", "#5DA5DA", "#60BD68", "#F17CB0", "#B2912F", "#B276B2", "#DECF3F", "#F15854", "#A03423"];
+var STATE_CODE = {
+    NA: {
+        text: "N/A",
+        color: "grey"
+    },
+    finished_true: {
+        text: "Success",
+        color: "grey-gallery"
+    },
+    finished_false: {
+        text: "Failed",
+        color: "red"
+    },
+    running: {
+        text: "Running",
+        color: "green"
+    },
+    queued: {
+        text: "Queued",
+        color: "purple"
+    },
+    skipped: {
+        text: "Skipped",
+        color: "yellow"
+    }
+};
 var FEATURE_TAGS = [[
     {id: "id", text: "ID", type: "range", hint: "Customer ID", show_in_pred_table: false, show_in_detail_table: false},
     {id: "segment", text: "Segment", type: "in", hint: "Customer Segment", show_in_pred_table: false, show_in_detail_table: false},

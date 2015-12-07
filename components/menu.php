@@ -86,11 +86,11 @@ $menu = [[
         "icon" => "icon-briefcase",
         "url" => "data.php"
     ], [
-        "title" => "Job Management",
+        "title" => "Model Management",
         "icon" => "icon-list",
         "url" => "job.php"
     ], [
-        "title" => "Job Monitor",
+        "title" => "Job Management",
         "icon" => "icon-speedometer",
         "url" => "job-monitor.php"
     ]]

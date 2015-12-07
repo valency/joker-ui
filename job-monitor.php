@@ -28,39 +28,28 @@
         <div class="page-content">
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
-            <div><input id="file_upload" class="hidden" type="file" name="files[]" data-url="./data/?dir=." multiple/></div>
-            <div id="file_list_table_wrapper">
+            <div>
+                <span class="label bg-purple" style="line-height:34px;">Job Slots</span><span id="slot-info" class="label bg-yellow">...</span>
+                <button class="btn grey pull-right" style="margin-left:10px;" onclick="clear_job_list();"><i class="fa fa-trash"></i> Clear Job List</button>
+                <button class="btn red pull-right" style="margin-left:10px;" onclick="reset_job_tracker();"><i class="fa fa-times"></i> Reset Job Tracker</button>
+                <button class="btn green pull-right" onclick="set_num_slots();"><i class="fa fa-pencil-square-o"></i> Set # of Job Slots</button>
+            </div>
+            <hr/>
+            <div id="job-table-wrapper">
                 <table class="table table-striped table-bordered table-advance table-hover">
                     <thead>
                     <tr class="heading">
-                        <th><i class="fa fa-briefcase"></i> File Name</th>
-                        <th><i class="fa fa-database"></i> Size</th>
-                        <th><i class="fa fa-clock-o"></i> Upload Time</th>
-                        <th><i class='fa fa-cubes'></i> Manage</th>
+                        <th class="font-green">Seq.</th>
+                        <th class="font-blue">ID</th>
+                        <th>Name</th>
+                        <th>Time (Real)</th>
+                        <th>Time (User)</th>
+                        <th>Time (System)</th>
+                        <th>State</th>
+                        <th>Final Status</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <?php if ($handle = opendir('./data/')) {
-                        while (false !== ($entry = readdir($handle))) {
-                            if ($entry != "." && $entry != ".." && (pathinfo($entry, PATHINFO_EXTENSION) == "csv" || pathinfo($entry, PATHINFO_EXTENSION) == "gz")) {
-                                echo "<tr>";
-                                echo "<td><a class='file-entry' href='data/" . $entry . "' target='_blank'><i class='fa fa-file-text-o'></i> " . $entry . "</a></td>";
-                                echo "<td>" . number_format(filesize('./data/' . $entry)) . "</td>";
-                                echo "<td>" . date("Y-m-d H:i:s", filemtime('./data/' . $entry)) . "</td>";
-                                echo "<td style='white-space:nowrap;'>";
-                                if (pathinfo($entry, PATHINFO_EXTENSION) == "csv") {
-                                    echo "<button onclick=\"datafile_import('" . $entry . "')\" class='btn default btn-xs blue btn-admin'><i class='fa fa-edit'></i> Import</button>";
-                                } elseif (pathinfo($entry, PATHINFO_EXTENSION) == "gz") {
-                                    echo "<button onclick=\"datafile_extract('" . $entry . "')\" class='btn default btn-xs purple btn-admin'><i class='fa fa-download'></i> Extract</button>";
-                                }
-                                echo "<button onclick=\"delete_data_file('" . $entry . "')\" class='btn default btn-xs black btn-admin'><i class='fa fa-trash-o'></i> Delete</button>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                        }
-                        closedir($handle);
-                    } ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <!-- END PAGE -->
