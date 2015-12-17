@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function draw_figures() {
     $("#figure_container").html("");
-    $.get(API_SERVER + "joker/tool/env/get/?key=model_4_active_" + Cookies.get('joker_id'), function (active) {
+    $.get(API_SERVER + "tool/env/get/?key=model_4_active_" + Cookies.get('joker_id'), function (active) {
         var score_hp_preference = FEATURE_TAGS_PROP.findKeyValue("id", "score_hp_preference", "text");
         stat_figure_histogram("score_hp_preference", 0, "Distribution of " + score_hp_preference, "Distribution of " + score_hp_preference, {
             x: score_hp_preference,

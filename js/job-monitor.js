@@ -5,7 +5,7 @@ $(document).ready(function () {
     check_login();
     auth_check();
     Metronic.blockUI({boxed: true});
-    $.get(API_SERVER + "joker/connector/job-status/", function (r) {
+    $.get(API_SERVER + "connector/job-status/", function (r) {
         $("#slot-info").html(r["slot_occupied"] + " / " + r["slot_total"]);
         for (var i in r["jobs"]) {
             if (r["jobs"].hasOwnProperty(i)) {
@@ -56,7 +56,7 @@ function job_top(id) {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-top/?id=" + id, function (r) {
+            $.get(API_SERVER + "connector/job-top/?id=" + id, function (r) {
                 window.location.reload();
             }).fail(function (r) {
                 var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
@@ -76,7 +76,7 @@ function job_kill(id) {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-kill/?id=" + id, function (r) {
+            $.get(API_SERVER + "connector/job-kill/?id=" + id, function (r) {
                 window.location.reload();
             }).fail(function (r) {
                 var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
@@ -96,7 +96,7 @@ function job_remove(id) {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-remove/?id=" + id, function (r) {
+            $.get(API_SERVER + "connector/job-remove/?id=" + id, function (r) {
                 window.location.reload();
             }).fail(function (r) {
                 var resp = r["responseText"].replace(/<.*?>/gi, "").replace(/[<>"]/gi, "");
@@ -109,14 +109,14 @@ function job_remove(id) {
 }
 
 function refresh_job_detail_output(id) {
-    $.get(API_SERVER + "joker/connector/job-status/?id=" + id, function (r) {
+    $.get(API_SERVER + "connector/job-status/?id=" + id, function (r) {
         $("#job-detail-output").html(r["output"]);
         $("#job-detail-output").scrollTop($('#job-detail-output').prop("scrollHeight"));
     });
 }
 
 function show_job_detail(id) {
-    $.get(API_SERVER + "joker/connector/job-status/?id=" + id, function (r) {
+    $.get(API_SERVER + "connector/job-status/?id=" + id, function (r) {
         var job = r;
         var state_code = job["state"] + (job["state"] == "finished" ? "_" + ( job["returncode"] == 0) : "");
         var html = "<p>";
@@ -146,7 +146,7 @@ function clear_job_list() {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-clear/", function (r) {
+            $.get(API_SERVER + "connector/job-clear/", function (r) {
                 window.location.reload();
             }).fail(function () {
                 bootbox.hideAll();
@@ -164,7 +164,7 @@ function reset_job_tracker() {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-reset/", function (r) {
+            $.get(API_SERVER + "connector/job-reset/", function (r) {
                 window.location.reload();
             }).fail(function () {
                 bootbox.hideAll();
@@ -182,7 +182,7 @@ function set_num_slots() {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-set-num-slots/?slots=" + parseInt(result), function (r) {
+            $.get(API_SERVER + "connector/job-set-num-slots/?slots=" + parseInt(result), function (r) {
                 window.location.reload();
             }).fail(function () {
                 bootbox.hideAll();

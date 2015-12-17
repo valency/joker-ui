@@ -22,8 +22,8 @@ function cust_search() {
     var model = $("#select2_model").val();
     var cust_id = $("#search_cust_id").val();
     $("#customer_table_wrapper>div").html("");
-    $.get(API_SERVER + "joker/tool/env/get/?key=model_" + model + "_active_" + Cookies.get('joker_id'), function (active) {
-        $.get(API_SERVER + "joker/model/" + model + "/get/?source=" + active.value + "&id=" + cust_id, function (data) {
+    $.get(API_SERVER + "tool/env/get/?key=model_" + model + "_active_" + Cookies.get('joker_id'), function (active) {
+        $.get(API_SERVER + "model/" + model + "/get/?source=" + active.value + "&id=" + cust_id, function (data) {
             var html = generate_cust_data(data, model);
             $("#customer_table_wrapper>div").html(html);
             if (model == 4) {

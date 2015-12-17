@@ -2,7 +2,7 @@ function check_login(callback) {
     if (Cookies.get('joker_id') == undefined || Cookies.get('joker_id') == null) {
         window.location.href = "/joker/login.php";
     } else {
-        $.get(API_SERVER + "joker/auth/verify/?id=" + Cookies.get('joker_id') + "&ticket=" + Cookies.get('joker_ticket'), function (r) {
+        $.get(API_SERVER + "auth/verify/?id=" + Cookies.get('joker_id') + "&ticket=" + Cookies.get('joker_ticket'), function (r) {
             if (callback) callback();
             else {
                 $(".username").html(Cookies.get('joker_username'));
@@ -59,7 +59,7 @@ function change_password() {
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: API_SERVER + "joker/auth/password/",
+                        url: API_SERVER + "auth/password/",
                         data: {
                             id: Cookies.get('joker_id'),
                             old: CryptoJS.MD5($("#change_password_old").val()).toString(),

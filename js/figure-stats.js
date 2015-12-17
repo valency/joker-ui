@@ -281,7 +281,7 @@ function stat_figure_histogram(column, categorical, title, fig_title, label, mod
         x: "X Axis",
         y: "Y Axis"
     }), fig_id, 4, function () {
-        $.get(API_SERVER + "joker/model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins.join() : ""), function (data) {
+        $.get(API_SERVER + "model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins.join() : ""), function (data) {
             var src = [];
             for (var i = 0; i < data["hist"].length; i++) {
                 src.push({

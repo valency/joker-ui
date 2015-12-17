@@ -8,6 +8,10 @@ $menu = [[
     "icon" => "icon-rocket",
     "url" => "javascript:void(0)",
     "submenu" => [[
+        "title" => "Customer Review",
+        "icon" => "icon-users",
+        "url" => "customer.php"
+    ], [
         "title" => "Growth / Decline Analysis",
         "icon" => "icon-rocket",
         "url" => "javascript:void(0)",
@@ -78,13 +82,14 @@ $menu = [[
     "icon" => "icon-settings",
     "url" => "javascript:void(0)",
     "submenu" => [[
-        "title" => "Customer Management",
+        "title" => "User Management",
         "icon" => "icon-users",
-        "url" => "customer.php"
+        "url" => "user.php"
     ], [
         "title" => "Data Management",
         "icon" => "icon-briefcase",
         "url" => "data.php"
+
     ], [
         "title" => "Model Management",
         "icon" => "icon-list",
@@ -96,7 +101,8 @@ $menu = [[
     ]]
 ]];
 
-function find_title_by_url($m, $url) {
+function find_title_by_url($m, $url)
+{
     if ($m["url"] == $url) return $m["title"];
     if (array_key_exists("submenu", $m)) {
         for ($i = 0; $i < count($m["submenu"]); $i++) {
@@ -107,7 +113,8 @@ function find_title_by_url($m, $url) {
     return null;
 }
 
-function find_title_by_url_from_array($m, $url) {
+function find_title_by_url_from_array($m, $url)
+{
     for ($i = 0; $i < count($m); $i++) {
         $title = find_title_by_url($m[$i], $url);
         if ($title != null) {

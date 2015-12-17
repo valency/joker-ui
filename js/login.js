@@ -1,7 +1,7 @@
 $(document).ready(function () {
     handle_login();
     handle_register();
-    $("#trust_link").attr("href", API_SERVER + "joker/auth/trust/");
+    $("#trust_link").attr("href", API_SERVER + "auth/trust/");
 });
 
 function handle_login() {
@@ -62,7 +62,7 @@ function login() {
         var password = CryptoJS.MD5($("input[name='password']", $('.login-form')).val()).toString();
         $.ajax({
             type: "POST",
-            url: API_SERVER + "joker/auth/sign-in/",
+            url: API_SERVER + "auth/sign-in/",
             data: {
                 username: username,
                 password: password
@@ -191,7 +191,7 @@ function register() {
         if (!check_password($("input[name='password']", $('.register-form')).val())) {
             bootbox.alert(error_message("Password should contain at least one number, one lowercase and one uppercase letter, and has at least six characters."));
         } else {
-            $.post(API_SERVER + "joker/auth/register/", {
+            $.post(API_SERVER + "auth/register/", {
                 username: username,
                 password: password
             }, function (data) {

@@ -21,9 +21,9 @@ $(document).ready(function () {
         $(this).attr("title", th_hint);
     });
     // Draw table
-    $.get(API_SERVER + "joker/tool/env/get/?key=model_2_active_" + Cookies.get('joker_id'), function (active) {
+    $.get(API_SERVER + "tool/env/get/?key=model_2_active_" + Cookies.get('joker_id'), function (active) {
         oConf.jokerSource = active.value;
-        oConf.ajax = API_SERVER + "joker/model/2/get_all/?source=" + active.value + "&_r=" + Math.random();
+        oConf.ajax = API_SERVER + "model/2/get_all/?source=" + active.value + "&_r=" + Math.random();
         oConf.columns.splice(2, 0, {
             data: "chance_to_be_regular",
             name: "chance_to_be_regular",

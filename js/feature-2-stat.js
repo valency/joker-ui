@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function draw_figures() {
     $("#figure_container").html("");
-    $.get(API_SERVER + "joker/tool/env/get/?key=model_2_active_" + Cookies.get('joker_id'), function (active) {
+    $.get(API_SERVER + "tool/env/get/?key=model_2_active_" + Cookies.get('joker_id'), function (active) {
         var src = [];
         for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
             src.push({

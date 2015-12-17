@@ -33,6 +33,11 @@
                     <h3>Updates</h3>
                     <span class="font-blue">v0.12.7</span>
                     <ul>
+                        <li><span class='font-yellow'>Modified</span> api system architecture</li>
+                        <li><span class='font-purple'>Fixed</span> footer certificate link bug</li>
+                    </ul>
+                    <span class="font-blue">v0.12.7</span>
+                    <ul>
                         <li><span class='font-green'>Added</span> status of modules for model management</li>
                         <li><span class='font-green'>Added</span> support of submitting jobs for model management</li>
                         <li><span class='font-green'>Added</span> extra information of job details for job management</li>

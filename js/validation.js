@@ -9,7 +9,7 @@ $(document).ready(function () {
     var source = get_url_parameter("src");
     var model = get_url_parameter("model");
     var segment = get_url_parameter("seg");
-    $.get(API_SERVER + "joker/tool/env/get/?key=model_" + mode + "_active_" + Cookies.get('joker_id'), function (active) {
+    $.get(API_SERVER + "tool/env/get/?key=model_" + mode + "_active_" + Cookies.get('joker_id'), function (active) {
         if (truth != undefined && source != undefined && model != undefined && segment != undefined) {
             $("#form").remove();
             $("#canvas").show();
@@ -18,9 +18,9 @@ $(document).ready(function () {
             $("#canvas_label").append("<span class='label bg-blue'><i class='fa fa-file-text-o'></i> " + source + "</span> ");
             $("#canvas_label").append("<span class='label bg-green'><i class='fa fa-cube'></i> " + FEATURE_TAGS_PROP.findKeyValue("id", model, "text") + "</span> ");
             $("#canvas_label").append("<span class='label bg-purple'><i class='fa fa-users'></i> " + (segment == "" ? "All" : segment.replace(/,/g, ' & ')) + "</span> ");
-            $.get(API_SERVER + "joker/tool/csv_to_json/?src=validation/ground-truth/" + truth, function (truth_csv) {
-                $.get(API_SERVER + "joker/tool/csv_to_json/?src=validation/" + source, function (data_csv) {
-                    $.get(API_SERVER + "joker/model/" + mode + "/get_all/?source=" + active.value + "&segment=" + segment + "&draw=0&columns[0][data]=" + model + "&columns[0][name]=" + model + "&order[0][column]=0&order[0][dir]=desc&start=0&length=" + data_csv.content.length, function (data_ours) {
+            $.get(API_SERVER + "tool/csv_to_json/?src=validation/ground-truth/" + truth, function (truth_csv) {
+                $.get(API_SERVER + "tool/csv_to_json/?src=validation/" + source, function (data_csv) {
+                    $.get(API_SERVER + "model/" + mode + "/get_all/?source=" + active.value + "&segment=" + segment + "&draw=0&columns[0][data]=" + model + "&columns[0][name]=" + model + "&order[0][column]=0&order[0][dir]=desc&start=0&length=" + data_csv.content.length, function (data_ours) {
                         var hit_msg = "<span class='badge badge-danger pull-right'>Hit!</span>";
                         var truth = [];
                         for (i = 0; i < truth_csv.content.length; i++) {
@@ -68,7 +68,7 @@ $(document).ready(function () {
         } else {
             $("#canvas").remove();
             $("#form").show();
-            $.get(API_SERVER + "joker/model/" + mode + "/dist/?source=" + active.value + "&field=segment", function (data) {
+            $.get(API_SERVER + "model/" + mode + "/dist/?source=" + active.value + "&field=segment", function (data) {
                 var segment_tags = [];
                 for (var i = 0; i < data.length; i++) {
                     segment_tags.push({
@@ -118,7 +118,7 @@ function validate() {
 }
 
 function show_detail(id, model, source) {
-    $.get(API_SERVER + "joker/model/" + model + "/get/?source=" + source + "&id=" + id, function (data) {
+    $.get(API_SERVER + "model/" + model + "/get/?source=" + source + "&id=" + id, function (data) {
         show_cust_detail(model, source, data);
     });
 }

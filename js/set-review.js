@@ -7,7 +7,7 @@ $(document).ready(function () {
     QuickSidebar.init();
     check_login();
     init_widget();
-    $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/retrieve_all_id/", function (data) {
+    $.get(API_SERVER + "model/" + $("#select_data_set").val() + "/set/retrieve_all_id/", function (data) {
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
                 $("#input_set_id").append("<option value='" + data[i].id + "'>" + data[i].name + "</option>");
@@ -34,7 +34,7 @@ $(document).ready(function () {
 
 function cust_set_search() {
     $("#canvas-hint").html("<div class='alert alert-info'>Loading...</div>");
-    $.get(API_SERVER + "joker/model/1/set/search/?id=" + $("#input_set_id").val(), function (data) {
+    $.get(API_SERVER + "model/1/set/search/?id=" + $("#input_set_id").val(), function (data) {
         cust_set = data;
         // Clean up
         $("#canvas-hint").html("");
@@ -47,7 +47,7 @@ function cust_set_search() {
         $("#canvas-control-clusters").html(data.cluster_count == null ? "-" : data.cluster_count);
         $("#canvas-control-customers").html(data.cust.length);
         $("#canvas-control-metric").html(data["cluster_metric"] == null ? "-" : CLUSTERING_METRICS.findKeyValue("id", data["cluster_metric"], "text"));
-        $("#canvas-control-download-set").attr("href", API_SERVER + "joker/model/1/set/csv/?id=" + $("#input_set_id").val());
+        $("#canvas-control-download-set").attr("href", API_SERVER + "model/1/set/csv/?id=" + $("#input_set_id").val());
         // Control: details of clusters
         $("#canvas-control-cluster-details").html("");
         var cluster_amounts = [];
@@ -113,7 +113,7 @@ function cust_set_change_metric() {
                     message: loading_message("Processing... Please be patient!"),
                     closeButton: false
                 });
-                $.get(API_SERVER + "joker/model/" + $("#select_data_set").val() + "/set/kmeans/?header=" + cust_set["cluster_features"].join(",") + "&metric=" + $("#select_metric").val() + "&n_clusters=" + cust_set["cluster_count"] + "&set_id=" + cust_set["id"], function (data) {
+                $.get(API_SERVER + "model/" + $("#select_data_set").val() + "/set/kmeans/?header=" + cust_set["cluster_features"].join(",") + "&metric=" + $("#select_metric").val() + "&n_clusters=" + cust_set["cluster_count"] + "&set_id=" + cust_set["id"], function (data) {
                     bootbox.hideAll();
                     $("#input_set_id").val(cust_set["id"]);
                     cust_set_search();
@@ -141,7 +141,7 @@ function cust_set_delete() {
                     message: loading_message("Processing... Please be patient!"),
                     closeButton: false
                 });
-                $.get(API_SERVER + "joker/model/1/set/remove/?id=" + $("#canvas-control-id").html(), function (data) {
+                $.get(API_SERVER + "model/1/set/remove/?id=" + $("#canvas-control-id").html(), function (data) {
                     location.reload();
                 });
             }

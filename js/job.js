@@ -5,7 +5,7 @@ $(document).ready(function () {
     check_login();
     auth_check();
     Metronic.blockUI({boxed: true});
-    $.get(API_SERVER + "joker/connector/list-modules/", function (r) {
+    $.get(API_SERVER + "connector/list-modules/", function (r) {
         for (var i = 0; i < r.length; i++) {
             var module = r[i];
             $("#module-list>ul").append("<li><a href='#module-tab-" + module + "' data-toggle='tab' onclick=\"list_profiles('" + module + "');\">" + module + "</a></li>");
@@ -30,7 +30,7 @@ $(document).ready(function () {
                     message: loading_message("Installing module... Please be patient!"),
                     closeButton: false
                 });
-                $.get(API_SERVER + "joker/connector/job-module-install/?src=" + data["result"]["files"][0]["name"], function (r) {
+                $.get(API_SERVER + "connector/job-module-install/?src=" + data["result"]["files"][0]["name"], function (r) {
                     bootbox.hideAll();
                     bootbox.alert("<p>" + success_message("Successfully sent the installation operation of the requested module to the core service server. You can refer to job management for more details." + "</p><p>Job ID: " + r + "</p>"), function () {
                         window.location.href = "job-monitor.php?id=" + r;
@@ -93,7 +93,7 @@ function add_profile(module, profile, content, overwrite) {
                         message: loading_message("Saving profile... Please be patient!"),
                         closeButton: false
                     });
-                    $.post(API_SERVER + "joker/connector/job-profile-push/", {
+                    $.post(API_SERVER + "connector/job-profile-push/", {
                         module: module,
                         profile: profile,
                         content: content,
@@ -129,7 +129,7 @@ function list_profiles(module) {
     html += "</table>";
     html += "</div>";
     $("#module-tab-" + module + "").html(html);
-    $.get(API_SERVER + "joker/connector/list-profiles/?module=" + module, function (r) {
+    $.get(API_SERVER + "connector/list-profiles/?module=" + module, function (r) {
         for (var i = 0; i < r["profile_names"].length; i++) {
             var target = r["target_infos"][module + "@" + r["profile_names"][i]];
             var html = "<tr>";
@@ -154,7 +154,7 @@ function list_profiles(module) {
 }
 
 function profile_edit(module, profile) {
-    $.get(API_SERVER + "joker/connector/job-profile/?module=" + module + "&profile=" + profile, function (r) {
+    $.get(API_SERVER + "connector/job-profile/?module=" + module + "&profile=" + profile, function (r) {
         add_profile(module, profile, r["content"], true);
     }).fail(function () {
         bootbox.hideAll();
@@ -163,7 +163,7 @@ function profile_edit(module, profile) {
 }
 
 function profile_process(module, profile) {
-    $.get(API_SERVER + "joker/connector/job-profile/?module=" + module + "&profile=" + profile, function (r) {
+    $.get(API_SERVER + "connector/job-profile/?module=" + module + "&profile=" + profile, function (r) {
         bootbox.dialog({
             title: "Process Profile",
             message: "<p>" + module + "@" + profile + "</p><pre>" + r["content"] + "</pre>",
@@ -174,7 +174,7 @@ function profile_process(module, profile) {
                         message: loading_message("Processing... Please be patient!"),
                         closeButton: false
                     });
-                    $.get(API_SERVER + "joker/connector/job-submit/?module=" + module + "&profile=" + profile, function (r) {
+                    $.get(API_SERVER + "connector/job-submit/?module=" + module + "&profile=" + profile, function (r) {
                         bootbox.hideAll();
                         bootbox.alert("<p>" + success_message("Successfully submitted the requested job.") + "</p><p>Job ID: " + r["id"] + "</p>");
                     }).fail(function () {
@@ -195,7 +195,7 @@ function profile_remove(module, profile) {
                 message: loading_message("Processing... Please be patient!"),
                 closeButton: false
             });
-            $.get(API_SERVER + "joker/connector/job-profile-remove/?module=" + module + "&profile=" + profile, function (r) {
+            $.get(API_SERVER + "connector/job-profile-remove/?module=" + module + "&profile=" + profile, function (r) {
                 bootbox.hideAll();
                 bootbox.alert(success_message("Successfully removed the requested profile."), function () {
                     window.location.reload();
@@ -209,7 +209,7 @@ function profile_remove(module, profile) {
 }
 
 function show_profile_detail(module, profile) {
-    $.get(API_SERVER + "joker/connector/job-profile/?module=" + module + "&profile=" + profile, function (r) {
+    $.get(API_SERVER + "connector/job-profile/?module=" + module + "&profile=" + profile, function (r) {
         bootbox.alert({
             title: module + "@" + profile,
             message: "<pre>" + r["content"] + "</pre>"
@@ -229,7 +229,7 @@ function uninstall_module() {
                 closeButton: false
             });
             var module = $("#module-list>ul>li.active>a").html();
-            $.get(API_SERVER + "joker/connector/job-module-uninstall/?module=" + module, function (r) {
+            $.get(API_SERVER + "connector/job-module-uninstall/?module=" + module, function (r) {
                 bootbox.hideAll();
                 bootbox.alert(success_message("Successfully uninstalled the requested module."), function () {
                     window.location.reload();

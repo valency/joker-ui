@@ -6,7 +6,7 @@ $(document).ready(function () {
     QuickSidebar.init();
     check_login();
     init_widget();
-    $.get(API_SERVER + "joker/tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
+    $.get(API_SERVER + "tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         active_set = active.value;
         $("#data_source_btn>span").html("<i class='fa fa-briefcase'></i> " + active_set.replace(".csv", ""));
     }).fail(function () {
@@ -56,7 +56,7 @@ function add_filter() {
                 $("#filter_comparator").html("Between Range:");
                 $("#filter_input").html("<input class='form-control input-sm text-center' style='width:80px;' id='filter_input_min'/> - <input class='form-control input-sm text-center' style='width:80px;' id='filter_input_max'/>");
                 $("#filter_detail").html("Loading...");
-                $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/range/?source=" + active_set + "&field=" + $("#filter_feature").val(), function (data) {
+                $.get(API_SERVER + "model/" + $("#select_pred_model").val() + "/range/?source=" + active_set + "&field=" + $("#filter_feature").val(), function (data) {
                     $("#filter_detail").html("<input id='filter_detail_selector'/>");
                     $("#filter_detail_selector").ionRangeSlider({
                         min: data.min,
@@ -82,7 +82,7 @@ function add_filter() {
                 $("#filter_comparator").html("Choose From");
                 $("#filter_input").html("");
                 $("#filter_detail").html("Loading...");
-                $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/unique/?source=" + active_set + "&field=" + $("#filter_feature").val(), function (data) {
+                $.get(API_SERVER + "model/" + $("#select_pred_model").val() + "/unique/?source=" + active_set + "&field=" + $("#filter_feature").val(), function (data) {
                     $("#filter_detail").html("<input type='hidden' id='filter_detail_selector' class='form-control select2' value=''/>");
                     var filter_tags = [];
                     for (var i = 0; i < data.length; i++) {
@@ -121,7 +121,7 @@ function create_set() {
     }
     var url_options = "name=" + $("#set_title").val() + "&source=" + active_set + "&length=" + $("#no_of_records").val() + "&order=" + $("#select_pred_order").val() + "&filter=" + filters.join(":") + "&filter_mode=" + filter_mode;
     if ($("#select_shuffle_with_limit").prop('checked'))         url_options += "&shuffle_with_limit=0.2";
-    $.get(API_SERVER + "joker/model/" + $("#select_pred_model").val() + "/set/create/?" + url_options, function (data) {
+    $.get(API_SERVER + "model/" + $("#select_pred_model").val() + "/set/create/?" + url_options, function (data) {
         window.location.href = "set-show.php?id=" + data.id;
     }).fail(function () {
         bootbox.hideAll();

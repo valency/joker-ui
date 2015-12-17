@@ -124,7 +124,7 @@ function add_segment_filter(table, model) {
                 }
             }
         }).on("shown.bs.modal", function () {
-            $.get(API_SERVER + "joker/model/" + model + "/dist/?source=" + DT_CONF.jokerSource + "&field=segment", function (data) {
+            $.get(API_SERVER + "model/" + model + "/dist/?source=" + DT_CONF.jokerSource + "&field=segment", function (data) {
                 var segment_tags = [];
                 for (var i = 0; i < data.length; i++) {
                     segment_tags.push({
@@ -244,7 +244,7 @@ function generate_cust_prop(data, model, prop_attr_name, prop_name, color) {
 }
 
 function update_cust_rank(id, model, column, source) {
-    $.get(API_SERVER + "joker/model/" + model + "/rank/?source=" + source + "&id=" + id + "&field=" + column, function (data) {
+    $.get(API_SERVER + "model/" + model + "/rank/?source=" + source + "&id=" + id + "&field=" + column, function (data) {
         $("#cust_rank_" + column).html("<i class='fa fa-star'></i> " + (data.rank + 1) + " (" + (100 * (data.rank + 1) / data.total).toFixed(0) + " %)");
     });
 }
