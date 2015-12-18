@@ -35,6 +35,8 @@
                     <ul>
                         <li><span class='font-yellow'>Modified</span> api system architecture</li>
                         <li><span class='font-purple'>Fixed</span> footer certificate link bug</li>
+                        <li><span class='font-green'>Added</span> user management module</li>
+                        <li><span class='font-red'>Removed</span> registration for cover page</li>
                     </ul>
                     <span class="font-blue">v0.12.7</span>
                     <ul>

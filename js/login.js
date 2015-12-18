@@ -102,7 +102,6 @@ function handle_register() {
         if (!state.id) return state.text;
         return "<img class='flag' src='assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
     }
-
     $('.register-form').validate({
         errorElement: 'span',
         errorClass: 'help-block',
@@ -165,7 +164,6 @@ function handle_register() {
             return false;
         }
     });
-
     $('.register-form input').keypress(function (e) {
         if (e.which == 13) {
             if ($('.register-form').validate().form()) {

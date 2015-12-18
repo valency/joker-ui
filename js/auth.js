@@ -49,7 +49,7 @@ function change_password() {
         buttons: {
             Proceed: function () {
                 if ($("#change_password_new").val() != $("#change_password_new_repeat").val()) {
-                    bootbox.alert(error_message("Failed to change password: the new password and the password you repeated are not same."), function () {
+                    bootbox.alert(error_message("Failed to change password: the new password and the password you repeated are not the same."), function () {
                         change_password();
                     });
                 } else if (!check_password($("#change_password_new").val())) {
@@ -59,7 +59,7 @@ function change_password() {
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: API_SERVER + "auth/password/",
+                        url: API_SERVER + "auth/change-password/",
                         data: {
                             id: Cookies.get('joker_id'),
                             old: CryptoJS.MD5($("#change_password_old").val()).toString(),

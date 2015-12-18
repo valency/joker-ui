@@ -12,7 +12,7 @@
 <body class="login">
 <!-- BEGIN LOGO -->
 <div class="logo" style="margin-bottom:0;">
-    <img src="img/logo.png" alt="logo" class="logo-default" style="height:20px;"/>
+    <img src="img/logo.png" alt="logo" class="logo-default" style="height:30px;"/>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
@@ -46,10 +46,8 @@
             <button class="btn green-haze pull-right" onclick="login();">Login</button>
         </div>
         <div class="create-account">
-            <p>Don't have an account yet ? <a href="javascript:" id="register-btn">Create an account </a></p>
-        </div>
-        <div>
-            <p>First time visitor ? <a id="trust_link" href="" target="_blank">Trust</a> or <a href="data/smartcube.cert" target="_blank">download certificate</a></p>
+            <!--<p>Don't have an account yet? <a href="javascript:" id="register-btn">Create an account </a></p>-->
+            <p>First time visitor? <a id="trust_link" href="" target="_blank">Trust</a> or <a href="data/smartcube.cert" target="_blank">download certificate</a></p>
         </div>
     </form>
     <!-- END LOGIN FORM -->
@@ -77,7 +75,7 @@
     <!-- END FORGOT PASSWORD FORM -->
     <!-- BEGIN REGISTRATION FORM -->
     <form class="register-form" method="post">
-        <h3>Sign Up</h3>
+        <h3>Sign up</h3>
 
         <p>Enter your account details below:</p>
 
@@ -121,7 +119,7 @@
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN COPYRIGHT -->
-<div class="copyright">2015 &copy; <a href="http://www.ust.hk/" target="_blank">The Hong Kong University of Science and Technology</a></div>
+<div class="copyright">2015-2016 &copy; <a href="http://www.ust.hk/" target="_blank">HKUST</a> & <a href="http://www.hkjc.com/" target="_blank">HKJC</a></div>
 <!-- END COPYRIGHT -->
 <?php require_once "components/js.php"; ?>
 <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>

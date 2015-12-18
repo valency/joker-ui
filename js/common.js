@@ -28,17 +28,38 @@ String.prototype.splitMiddle = function () {
 };
 
 String.prototype.escapeHTML = function () {
-    return (
-        this.replace(/>/g, '&gt;').
-        replace(/</g, '&lt;').
-        replace(/"/g, '&quot;')
-    );
+    return this.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 };
 
 Array.prototype.findKeyValue = function (key_desc, key, value_desc) {
     for (var i = 0; i < this.length; i++) {
         if (this[i][key_desc] == key) return this[i][value_desc];
     }
+};
+
+Date.prototype.YYYYMMDDHHMMSS = function () {
+    var year = "" + this.getFullYear();
+    var month = "" + (this.getMonth() + 1);
+    if (month.length == 1) {
+        month = "0" + month;
+    }
+    var day = "" + this.getDate();
+    if (day.length == 1) {
+        day = "0" + day;
+    }
+    var hour = "" + this.getHours();
+    if (hour.length == 1) {
+        hour = "0" + hour;
+    }
+    var minute = "" + this.getMinutes();
+    if (minute.length == 1) {
+        minute = "0" + minute;
+    }
+    var second = "" + this.getSeconds();
+    if (second.length == 1) {
+        second = "0" + second;
+    }
+    return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 };
 
 function success_message(msg) {
