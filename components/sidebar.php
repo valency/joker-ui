@@ -1,6 +1,7 @@
 <?php
 require_once "menu.php";
-function generate_menu($m, $title_mode) {
+function generate_menu($m, $title_mode)
+{
     $page = $_GET["page"];
     for ($i = 0; $i < count($m); $i++) {
         $active_menu = find_title_by_url($m[$i], $page) != null;
@@ -34,7 +35,10 @@ function generate_menu($m, $title_mode) {
             <li class="sidebar-toggler-wrapper" style="margin-bottom:15px;">
                 <div class="sidebar-toggler"></div>
             </li>
-            <?php generate_menu($menu, true); ?>
+            <?php
+            if ($_GET['user'] != "admin") unset($menu[2]);
+            generate_menu($menu, true);
+            ?>
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

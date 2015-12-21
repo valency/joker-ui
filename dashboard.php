@@ -22,7 +22,7 @@
 </div>
 <div class="clearfix"></div>
 <div class="page-container">
-    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?page=' . $page); ?>
+    <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/sidebar.php?page=' . $page . '&user=' . $_COOKIE['joker_username']); ?>
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
@@ -31,6 +31,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v0.12.21</span>
+                    <ul>
+                        <li><span class='font-red'>Removed</span> maintenance menu when logged in as non-admin account</li>
+                    </ul>
                     <span class="font-blue">v0.12.18</span>
                     <ul>
                         <li><span class='font-yellow'>Modified</span> api system architecture</li>
