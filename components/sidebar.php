@@ -4,6 +4,7 @@ function generate_menu($m, $title_mode)
 {
     $page = $_GET["page"];
     for ($i = 0; $i < count($m); $i++) {
+        if ($m[$i]["admin"] && $_GET['user'] != "admin") continue;
         $active_menu = find_title_by_url($m[$i], $page) != null;
         $li_class = "";
         if ($i == 0) $li_class .= "start"; elseif ($i == count($m) - 1) $li_class .= "last";
@@ -35,10 +36,7 @@ function generate_menu($m, $title_mode)
             <li class="sidebar-toggler-wrapper" style="margin-bottom:15px;">
                 <div class="sidebar-toggler"></div>
             </li>
-            <?php
-            if ($_GET['user'] != "admin") unset($menu[2]);
-            generate_menu($menu, true);
-            ?>
+            <?php generate_menu($menu, true); ?>
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

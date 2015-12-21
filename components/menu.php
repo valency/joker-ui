@@ -84,19 +84,21 @@ $menu = [[
     "submenu" => [[
         "title" => "User Management",
         "icon" => "icon-users",
+        "admin" => true,
         "url" => "user.php"
     ], [
         "title" => "Data Management",
         "icon" => "icon-briefcase",
         "url" => "data.php"
-
     ], [
         "title" => "Model Management",
         "icon" => "icon-list",
+        "admin" => true,
         "url" => "job.php"
     ], [
         "title" => "Job Management",
         "icon" => "icon-speedometer",
+        "admin" => true,
         "url" => "job-monitor.php"
     ]]
 ]];

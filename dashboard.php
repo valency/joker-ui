@@ -34,6 +34,7 @@
                     <span class="font-blue">v0.12.21</span>
                     <ul>
                         <li><span class='font-red'>Removed</span> maintenance menu when logged in as non-admin account</li>
+                        <li><span class='font-red'>Removed</span> show edw data button when logged in as non-admin account</li>
                     </ul>
                     <span class="font-blue">v0.12.18</span>
                     <ul>
