@@ -57,6 +57,10 @@ var FEATURE_TAGS = [[
     {id: "avg_bet_size_recent_growth", type: "range", text: "Average Bet Size Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "active_rate_ytd_growth", type: "range", text: "Active Rate Growth (YTD vs. PYTD)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "active_rate_recent_growth", type: "range", text: "Active Rate Growth (Last 14 Meetings vs. Comparable 14 Meetings)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "turnover_ratio", type: "range", text: "Turnover Ratio", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "active_rate_ratio", type: "range", text: "Active Rate Ratio", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "recovery_rate_ratio", type: "range", text: "Recovery Rate Ratio", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "amplification", type: "range", text: "Amplification", hint: "", show_in_pred_table: false, show_in_detail_table: false},
     {id: "grow_prop", type: "range", text: "Grow Propensity", hint: "Larger Value Represents Higher Propensity to Grow", show_in_pred_table: false, show_in_detail_table: false},
     {id: "decline_prop", type: "range", text: "Decline Propensity", hint: "Larger Value Represents Higher Propensity to Decline", show_in_pred_table: false, show_in_detail_table: false}
 ], [
@@ -72,7 +76,11 @@ var FEATURE_TAGS = [[
     {id: "inv", text: "Turnover", hint: "Total Turnover of Recent 83 Meetings"},
     {id: "div", text: "Dividend", hint: "Total Dividend of Recent 83 Meetings"},
     {id: "rr", text: "Recovery Rate", hint: "Divide Dividend by Turnover"},
-    {id: "active_rate_previous_83", text: "Active Rate (Prev. 83)", hint: "Active Rate of Previous 83 Meetings"}
+    {id: "active_rate_previous_83", text: "Active Rate (Prev. 83)", hint: "Active Rate of Previous 83 Meetings"},
+    {id: "age_rc", text: "Age (RC)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "active_rate_recent", text: "Active Rate (Recent)", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "turnover_ratio", text: "Turnover Ratio", hint: "", show_in_pred_table: false, show_in_detail_table: false},
+    {id: "active_rate_ratio", text: "Active Rate Ratio", hint: "", show_in_pred_table: false, show_in_detail_table: false}
 ], [], [
     {id: "id", text: "ID", hint: "Customer ID"},
     {id: "segment", text: "Segment", hint: "Customer Segment"},

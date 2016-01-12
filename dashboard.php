@@ -31,6 +31,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v1.1.12</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> new columns for model 1</li>
+                        <li><span class='font-green'>Added</span> new columns for model 2</li>
+                    </ul>
                     <span class="font-blue">v0.12.21</span>
                     <ul>
                         <li><span class='font-red'>Removed</span> maintenance menu when logged in as non-admin account</li>
