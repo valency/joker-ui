@@ -31,6 +31,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v1.1.13</span>
+                    <ul>
+                        <li><span class='font-purple'>Fixed</span> index page redirection bug</li>
+                        <li><span class='font-purple'>Fixed</span> table header display bug of predictions of model 2</li>
+                    </ul>
                     <span class="font-blue">v1.1.12</span>
                     <ul>
                         <li><span class='font-green'>Added</span> new columns for model 1</li>

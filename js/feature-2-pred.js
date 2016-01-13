@@ -10,8 +10,10 @@ $(document).ready(function () {
     // Configure table header
     var table_header_div = $("#customer_table>thead>tr");
     for (var i = 2; i < FEATURE_TAGS[1].length; i++) {
-        table_header_div.append("<th>" + FEATURE_TAGS[1][i]["text"].splitMiddle().join("<br/>") + "</th>");
-        oConf.columns.push({data: FEATURE_TAGS[1][i]["id"], name: FEATURE_TAGS[1][i]["id"]});
+        if (FEATURE_TAGS[1][i]["show_in_pred_table"]) {
+            table_header_div.append("<th>" + FEATURE_TAGS[1][i]["text"].splitMiddle().join("<br/>") + "</th>");
+            oConf.columns.push({data: FEATURE_TAGS[1][i]["id"], name: FEATURE_TAGS[1][i]["id"]});
+        }
     }
     // Add hint for table header
     $("#customer_table>thead>tr>th").each(function () {
