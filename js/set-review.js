@@ -48,17 +48,23 @@ function cust_set_search() {
         $("#canvas-control-customers").html(data.cust.length);
         $("#canvas-control-metric").html(data["cluster_metric"] == null ? "-" : CLUSTERING_METRICS.findKeyValue("id", data["cluster_metric"], "text"));
         $("#canvas-control-download-set").attr("href", API_SERVER + "model/1/set/csv/?id=" + $("#input_set_id").val());
+        var html = "<ul>";
+        for (var i = 0; i < data["cluster_features"].length; i++) {
+            html += "<li>" + FEATURE_TAGS[0].findKeyValue("id", data["cluster_features"][i], "text") + "</li>";
+        }
+        html += "</ul>";
+        $("#canvas-control-features").html(html);
         // Control: details of clusters
         $("#canvas-control-cluster-details").html("");
         var cluster_amounts = [];
-        for (var i = 0; i < data.cluster_count; i++) {
+        for (i = 0; i < data.cluster_count; i++) {
             cluster_amounts.push(0);
         }
         for (i = 0; i < data.cust.length; i++) {
             cluster_amounts[data.cust[i].cluster]++;
         }
         for (i = 0; i < data.cluster_count; i++) {
-            var html = "<a class='bold' style='color:" + COLOR_PALETTE[i] + ";'>Cluster " + i + "</a>: ";
+            html = "<a class='bold' style='color:" + generate_color(i) + ";'>Cluster " + i + "</a>: ";
             html += cluster_amounts[i] + " Customers";
             html += "<br/>";
             $("#canvas-control-cluster-details").append(html);
@@ -226,7 +232,7 @@ function draw_cust_x_y_scatter(container, data, xLabel, yLabel) {
         .attr("d", d3.svg.symbol().type("cross").size(20))
         .style("stroke-width", 0)
         .style("fill", function (d) {
-            return COLOR_PALETTE[d["cluster"]];
+            return generate_color(d["cluster"]);
         })
         .attr("transform", transform);
     d3.select(container).call(zoom);

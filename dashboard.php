@@ -31,6 +31,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v1.1.25</span>
+                    <ul>
+                        <li><span class='font-purple'>Fixed</span> table header display bug for model management</li>
+                        <li><span class='font-yellow'>Modified</span> default sorting to upload time for data management</li>
+                        <li><span class='font-green'>Added</span> display of clustering features for clustering: view results</li>
+                        <li><span class='font-yellow'>Modified</span> color palette to make it clearly to view clusters</li>
+                    </ul>
                     <span class="font-blue">v1.1.13</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> index page redirection bug</li>

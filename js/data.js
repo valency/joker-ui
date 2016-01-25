@@ -7,7 +7,10 @@ $(document).ready(function () {
     add_deco_badge(1, function () {
         add_deco_badge(2, function () {
             add_deco_badge(4, function () {
-                $("#file_list_table_wrapper table").dataTable({searching: false});
+                $("#file_list_table_wrapper table").dataTable({
+                    searching: false,
+                    order: [[2, "desc"]]
+                });
                 $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn green pull-right btn-admin' style='margin-left:10px;' onclick=\"show_edw_datasets();\"><i class='fa fa-file-text-o'></i> Show Uploaded EDW Datasets</button>");
                 $("#file_list_table_wrapper .dataTables_wrapper .row .col-md-6:nth-child(2)").append("<button class='btn blue pull-right btn-admin' onclick=\"$('#file_upload').click();\"><i class='fa fa-plus'></i> Upload Results</button>");
                 init_widget();
@@ -130,7 +133,7 @@ function interpret_data_type_desc(data_type) {
         ], model_2: [
             "CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL",
             "MTG_NUM", "INV", "DIV", "RR", "ACTIVE_RATE_PREVIOUS_83",
-            "AGE_RC","ACTIVE_RATE_RECENT", "TURNOVER_RATIO", "ACTIVE_RATE_RATIO",
+            "AGE_RC", "ACTIVE_RATE_RECENT", "TURNOVER_RATIO", "ACTIVE_RATE_RATIO",
             "CHANCE_TO_BE_REGULAR", "REASON_CODE_(1-4)", "INV(1-83)"
         ], model_4: [
             "CUST_ID", "SEGMENT", "AGE", "GENDER", "YRS_W_CLUB", "IS_MEMBER", "IS_HRS_OWNER", "MAJOR_CHANNEL",

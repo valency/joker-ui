@@ -134,8 +134,8 @@ function list_profiles(module) {
             var target = r["target_infos"][module + "@" + r["profile_names"][i]];
             var html = "<tr>";
             html += "<td><a href='javascript:void(0)' onclick=\"show_profile_detail('" + module + "','" + r["profile_names"][i] + "');\"><i class='fa fa-file-text-o'></i> " + r["profile_names"][i] + "</a></td>";
-            html += "<td>" + target["is_cached"] + "</td>";
             html += "<td><span class='label bg-" + STATE_CODE[target["status"]]["color"] + "'>" + STATE_CODE[target["status"]]["text"] + "</span></td>";
+            html += "<td>" + target["is_cached"] + "</td>";
             html += "<td>";
             html += "<button onclick=\"profile_process('" + module + "','" + r["profile_names"][i] + "');\" class='btn btn-xs blue'><i class='fa fa-play'></i> Process</button>";
             html += "<button onclick=\"profile_edit('" + module + "','" + r["profile_names"][i] + "');\" class='btn btn-xs green'><i class='fa fa-pencil-square-o'></i> Edit</button>";

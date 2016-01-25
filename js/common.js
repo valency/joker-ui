@@ -78,6 +78,12 @@ function loading_message(msg) {
     return "<span class='text-info'><i class='fa fa-spinner'></i> " + msg + "</span>";
 }
 
+function generate_color(i) {
+    var colors = ["#DB3937", "#FECC2F", "#B6C023", "#40A4D8", "#A363DB", "#F66222", "#33BEB7"];
+    if (i >= 0) return colors[i % 7];
+    else return colors;
+}
+
 function guid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);

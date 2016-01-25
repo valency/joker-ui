@@ -163,7 +163,7 @@ function stat_figure_pie_chart_draw(fig_id, src, title, label) {
     var width = fig_portlet_body_container.width();
     var height = fig_portlet_body_container.height() < 300 ? 300 : fig_portlet_body_container.height() - fig_portlet_meta_container.height();
     var radius = Math.min(width, height) / 2;
-    var color = d3.scale.ordinal().range(COLOR_PALETTE);
+    var color = d3.scale.ordinal().range(generate_color(-1));
     var arc = d3.svg.arc().outerRadius(radius - 10).innerRadius(0);
     var pie = d3.layout.pie().sort(null).value(function (d) {
         return d.value;
@@ -183,7 +183,7 @@ function stat_figure_pie_chart_draw(fig_id, src, title, label) {
             return color(d.data.key);
         })
         .on("mousemove", function (d) {
-            d3.select(this).style("fill", "orange");
+            d3.select(this).style("fill", "black");
             tooltip.transition().duration(200).style("opacity", .9);
             tooltip.html(d.data.key + ": " + (100.0 * d.data.value).toFixed(2) + "%").style("left", (d3.event.pageX + 15) + "px").style("top", (d3.event.pageY - 15) + "px");
         })
@@ -308,7 +308,7 @@ function stat_color_table(id, title, src, header, prefix_content, hints) {
     for (var group = 0; group < src.length; group++) {
         if (src[group]) for (var key in src[group]) {
             if (src[group].hasOwnProperty(key)) {
-                var color = COLOR_PALETTE[group % COLOR_PALETTE.length];
+                var color = generate_color(group);
                 var hint = "";
                 if (hints.hasOwnProperty(key)) hint = hints[key];
                 html += "<tr><td class='bold text-right' style='background-color:" + color + ";color:white;' title='" + hint + "'>" + key + "</td>";

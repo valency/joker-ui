@@ -48,20 +48,16 @@
                         <span class="font-red bold"><i class='fa fa-th-large'></i> <span id="canvas-control-name">Loading...</span></span>
                         <span id="canvas-control-id" class="hidden">Loading...</span>
                     </p>
-
                     <p>
                         <span class="bold"># of Clusters: </span>
                         <span id="canvas-control-clusters">Loading...</span><br/>
                         <span class="bold"># of Customers: </span>
                         <span id="canvas-control-customers">Loading...</span><br/>
-                        <span class="bold">Metric: </span>
-                        <a id="canvas-control-metric" href="javascript:void(0)" onclick="cust_set_change_metric();">Loading...</a><br/>
                         <span class="bold">Created on: </span>
                         <span id="canvas-control-create-time">Loading...</span><br/>
                         <span class="bold">Clustered on: </span>
                         <span id="canvas-control-cluster-time">Loading...</span>
                     </p>
-
                     <p>
                         <a id="canvas-control-download-set" href="javascript:void(0)" target="_blank" class="btn green"><i class="fa fa-download"></i> Download</a>
                         <button class="btn grey" onclick="cust_set_delete();"><i class="fa fa-times"></i> Delete</button>
@@ -73,13 +69,11 @@
                             <select id="canvas-control-cluster-draw-x" class="form-control"></select>
                         </div>
                         <br/>
-
                         <div class="input-group">
                             <span class="input-group-addon">Y Axis</span>
                             <select id="canvas-control-cluster-draw-y" class="form-control"></select>
                         </div>
                         <br/>
-
                         <div class="checkbox-list">
                             <label class="checkbox-inline"><input type="checkbox" checked id="canvas-control-zoom-x"> Zoom X </label>
                             <label class="checkbox-inline"><input type="checkbox" checked id="canvas-control-zoom-y"> Zoom Y </label>
@@ -87,6 +81,13 @@
                         <br/>
                         <button class="btn red form-control no-border" onclick="cust_set_draw();"><i class="fa fa-play"></i> Plot</button>
                     </div>
+                    <hr/>
+                    <p>
+                        <span class="bold">Clustering Metric: </span>
+                        <a id="canvas-control-metric" href="javascript:void(0)" onclick="cust_set_change_metric();">Loading...</a><br/>
+                        <span class="bold">Clustering Features: </span><br/>
+                        <span id="canvas-control-features">Loading...</span>
+                    </p>
                     <hr/>
                     <div id="canvas-control-cluster-details">Loading...</div>
                 </div>
