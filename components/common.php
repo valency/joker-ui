@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Hong_Kong');
-$DOMAIN = '127.0.0.1:8080';
+$DOMAIN = '127.0.0.1';
 $PROTOCOL = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);

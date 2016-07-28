@@ -46,7 +46,7 @@
             <button class="btn green-haze pull-right" onclick="login();">Login</button>
         </div>
         <div class="create-account">
-            <!--<p>Don't have an account yet? <a href="javascript:" id="register-btn">Create an account </a></p>-->
+            <p>Don't have an account yet? <a href="javascript:" id="register-btn">Create an account </a></p>
             <p>First time visitor? <a id="trust_link" href="" target="_blank">Trust</a> or <a href="data/smartcube.cert" target="_blank">download certificate</a></p>
         </div>
     </form>
