@@ -30,6 +30,16 @@
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/breadcrumb.php?page=' . $page); ?>
             <!-- BEGIN PAGE -->
             <?php echo curl($PROTOCOL . $DOMAIN . '/joker/components/description.php?model=4'); ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">Segment</span>
+                        <input type="hidden" id="select-segments" class="form-control select2" value=""/>
+                        <span class="input-group-addon btn red" onclick="draw_figures();">Show Statistics</span>
+                    </div>
+                </div>
+            </div>
+            <hr/>
             <div id="figure-container"></div>
             <!-- END PAGE -->
         </div>

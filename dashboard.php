@@ -31,6 +31,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v1.9.12</span>
+                    <ul>
+                        <li><span class='font-green'>Added</span> segment filter for model 4</li>
+                        <li><span class='font-green'>Added</span> model description masters</li>
+                        <li><span class='font-green'>Added</span> summary tables</li>
+                    </ul>
                     <span class="font-blue">v1.1.25</span>
                     <ul>
                         <li><span class='font-purple'>Fixed</span> table header display bug for model management</li>

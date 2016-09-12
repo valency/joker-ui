@@ -359,3 +359,40 @@ function stat_table(id, title, src, header, prefix_content, hints, formatter) {
     html += "</tbody></table></div>";
     add_portlet("#figure-container", title, html, id, 12);
 }
+
+function stat_figure_year_on_year_growth(title, fig_title, label, field, season, segment, kpi) {
+    var fig_id = guid();
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "X Axis",
+        y: "Y Axis"
+    }), fig_id, 8, function () {
+        $.get(API_SERVER + "summary/year-on-year-growth/?field=" + field + "&season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
+            var src1 = [];
+            for (var i = 0; i < data["standard_" + field]["cumulative_growth_rate_of_total_standard_" + field].length; i++) {
+                src1.push({
+                    type: "standard_" + field,
+                    y: data["standard_" + field]["cumulative_growth_rate_of_total_standard_" + field][i],
+                    x: i + 1,
+                    values: [data["standard_" + field]["standard_" + field + "_previous_season"][i], data["standard_" + field]["standard_" + field + "_this_season"][i], data["standard_" + field]["total_standard_" + field + "_pytd"][i], data["standard_" + field]["total_standard_" + field + "_ytd"][i]]
+                });
+                src1.push({
+                    type: "exotic_" + field,
+                    y: data["exotic_" + field]["cumulative_growth_rate_of_total_exotic_" + field][i],
+                    x: i + 1,
+                    values: [data["exotic_" + field]["exotic_" + field + "_previous_season"][i], data["exotic_" + field]["exotic_" + field + "_this_season"][i], data["exotic_" + field]["total_exotic_" + field + "_pytd"][i], data["exotic_" + field]["total_exotic_" + field + "_ytd"][i]]
+                });
+            }
+            var src = d3.nest()
+                .key(function (d) {
+                    return d.type;
+                })
+                .entries(src1);
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
+                y_format: "%"
+            });
+        }).fail(function () {
+            $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + season + "' failed!</span>");
+        });
+    });
+}
