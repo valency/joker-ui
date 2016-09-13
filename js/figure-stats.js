@@ -409,7 +409,7 @@ function stat_figure_multiline_draw(fig_id, src, title, label, kpi, params) {
     var margin = {top: 20, right: 40, bottom: 50, left: 60};
     var width = fig_portlet_body_container.width() - 10 - margin.left - margin.right;
     var height = (fig_portlet_body_container.height() < 300 ? 300 : fig_portlet_body_container.height() - fig_portlet_meta_container.height()) - margin.top - margin.bottom;
-    var color = d3.scale.ordinal().range(COLOR_PALETTE);
+    var color = d3.scale.category10();
     var x = d3.scale.linear().range([0, width]);
     var y = d3.scale.linear().range([height, 0]);
     var xAxis = d3.svg.axis().tickFormat(d3.format("d")).scale(x).orient("bottom");
@@ -554,7 +554,6 @@ function stat_figure_active_rate_year(title, fig_title, label, season, segment, 
                 .key(function (d) {
                     return d.type;
                 }).entries(src1);
-            console.log(src);
             $("#figure-div-" + fig_id).html("");
             stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
                 y_format: "%"
@@ -565,7 +564,6 @@ function stat_figure_active_rate_year(title, fig_title, label, season, segment, 
     });
 }
 
-
 function stat_figure_stacked(title, fig_title, label, season, segment) {
     var fig_id = guid();
     add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
@@ -573,25 +571,17 @@ function stat_figure_stacked(title, fig_title, label, season, segment) {
         y: "Y Axis"
     }), fig_id, 4, function () {
         $.get(API_SERVER + "summary/channel-shares/?season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
-            var src = [];
-            var TEL = [];
-            var IS = [];
-            var ESC = [];
-            console.log(data);
-            TEL.push(data["standard_turnover_ytd"][0]);
-            TEL.push(data["exotic_turnover_ytd"][0]);
-            IS.push(data["standard_turnover_ytd"][1]);
-            IS.push(data["exotic_turnover_ytd"][1]);
-            ESC.push(data["standard_turnover_ytd"][2]);
-            ESC.push(data["exotic_turnover_ytd"][2]);
-            src.push({types: ['Standard Turnover', 'Exotic Turnover'], TEL, IS, ESC});
-            console.log(src);
-            console.log(src[0]["types"]);
+            var src = [{
+                types: ['Standard Turnover', 'Exotic Turnover']
+            }];
+            for (var i = 0; i < data["major_channel"].length; i++) {
+                src[0][data["major_channel"][i]] = [data["standard_turnover_ytd"][i], data["exotic_turnover_ytd"][0]];
+            }
             $("#figure-div-" + fig_id).html("");
             stat_figure_stacked_bar_chart_draw(fig_id, src, title, label, {
                 gap: .35,
                 xKey: "types",
-                yKey: ["TEL", "IS", "ESC"],
+                yKey: data["major_channel"],
                 y_format: "%",
                 y_digit: 2,
                 x_rotate: false
@@ -611,7 +601,7 @@ function stat_figure_stacked_bar_chart_draw(fig_id, src, title, label, params) {
     fig_title_container.next().next().css("width", fig_portlet_body_container.width() + "px");
     $(".tooltip").css("z-index", $("#figure-portlet-" + fig_id + " .portlet").css("z-index") + 1);
     var margin = (("margin" in params) ? params["margin"] : {top: 20, right: 20, bottom: 50, left: 50});
-    var color = d3.scale.ordinal().range(COLOR_PALETTE);
+    var color = d3.scale.category10();
     var width = fig_portlet_body_container.width() - margin.left - margin.right;
     var height = (fig_portlet_body_container.height() < 300 ? 300 : fig_portlet_body_container.height() - fig_portlet_meta_container.height()) - margin.top - margin.bottom;
     var x = d3.scale.ordinal().rangeRoundBands([0, width], (("gap" in params) ? params["gap"] : .1));
@@ -755,7 +745,6 @@ function stat_figure_wakeup_rate(title, fig_title, label, season, segment, kpi) 
                     return d.type;
                 })
                 .entries(src1);
-            console.log(src);
             $("#figure-div-" + fig_id).html("");
             stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
                 y_format: "%"
@@ -1115,7 +1104,6 @@ function stat_figure_active_rate_month(title, fig_title, label, season, segment,
                     return d.type;
                 })
                 .entries(src1);
-            console.log(src);
             $("#figure-div-" + fig_id).html("");
             stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
                 y_format: "%"
@@ -1153,7 +1141,6 @@ function stat_figure_active_analysis(title, fig_title, label, type, season, segm
                     return d.type;
                 })
                 .entries(src1);
-            console.log(src);
             $("#figure-div-" + fig_id).html("");
             stat_figure_multiline_draw(fig_id, src, title, label, kpi, {});
         }).fail(function () {
