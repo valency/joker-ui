@@ -31,6 +31,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v1.9.13</span>
+                    <ul>
+                        <li><span class='font-red'>Removed</span> old figures for model 4</li>
+                        <li><span class='font-green'>Added</span> new figures for model 4</li>
+                    </ul>
                     <span class="font-blue">v1.9.12</span>
                     <ul>
                         <li><span class='font-green'>Added</span> segment filter for model 4</li>
