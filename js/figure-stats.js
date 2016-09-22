@@ -1163,3 +1163,5 @@ function stat_figure_active_analysis(title, fig_title, label, type, season, segm
         });
     });
 }
+
+// Below is new figures
