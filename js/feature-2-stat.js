@@ -4,6 +4,7 @@ $(document).ready(function () {
     QuickSidebar.init();
     check_login();
     init_widget();
+    init_column_filter();
     draw_figures();
 });
 

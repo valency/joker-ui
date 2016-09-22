@@ -8,21 +8,6 @@ $(document).ready(function () {
     draw_figures();
 });
 
-function init_column_filter() {
-    var column_values = [];
-    $.get(API_SERVER + "summary/retrieve-segment-values/", function (data) {
-        for (var i = 0; i < data.length; i++) {
-            var segment = data[i]["segment_code"];
-            if (segment != null) {
-                column_values.push({id: segment, text: segment});
-            }
-        }
-    });
-    $("#select-segments").select2({
-        tags: column_values
-    });
-}
-
 function draw_figures() {
     $("#figure-container").html("");
     var input = $("#select-segments").select2('data');

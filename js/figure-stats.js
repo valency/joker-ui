@@ -1,5 +1,20 @@
 var tooltip = d3.select(".page-container").append("div").attr("class", "tooltip").style("opacity", 0);
 
+function init_column_filter() {
+    var column_values = [];
+    $.get(API_SERVER + "summary/retrieve-segment-values/", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            var segment = data[i]["segment_code"];
+            if (segment != null) {
+                column_values.push({id: segment, text: segment});
+            }
+        }
+    });
+    $("#select-segments").select2({
+        tags: column_values
+    });
+}
+
 function add_portlet(target, title, body, fig_id, md, redraw_callback) {
     var content = "<div class='col-md-" + md + "' id='figure-portlet-" + fig_id + "'>";
     content += '<div class="portlet purple box">';

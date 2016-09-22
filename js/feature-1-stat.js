@@ -4,11 +4,12 @@ $(document).ready(function () {
     QuickSidebar.init();
     check_login();
     init_widget();
+    init_column_filter();
     draw_figures();
 });
 
 function draw_figures() {
-    $("#figure_container").html("");
+    $("#figure-container").html("");
     $.get(API_SERVER + "tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         var src = [];
         for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
