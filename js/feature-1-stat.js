@@ -18,15 +18,7 @@ function draw_figures() {
         }
     }
     $.get(API_SERVER + "tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
-        // TODO: Bob
-        var src = [];
-        for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
-            src.push({
-                x: GROWTH_RATE_TURNOVER_COUNT[i],
-                y: GROWTH_RATE_TURNOVER[i],
-                values: [TURNOVER_PREV_SEASON[i], TURNOVER_THIS_SEASON[i], TOTAL_TURNOVER_PYTD[i], TOTAL_TURNOVER_YTD[i]]
-            });
-        }
+        // Figures
         stat_figure_year_on_year_growth("Growth Rate of Turnover (YTD vs PYTD)", "Growth Rate of Turnover (YTD vs PYTD)", {
             x: "Meeting ID",
             y: "Cumulative Growth Rate of Total Turnover (YTD vs. PYTD)",
