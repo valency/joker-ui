@@ -21,20 +21,20 @@ function draw_figures() {
         x: "Meeting ID",
         y: "Cumulative Growth Rate of Total Turnover (YTD vs. PYTD)",
         keys: ["Turnover (Previous Season)", "Turnover (This Season)", "Total Turnover (PYTD)", "Total Turnover (YTD)"]
-    }, "turnover", 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
+    }, "turnover", true, 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
     stat_figure_year_on_year_growth("Growth Rate of Standard / Exotic Betline (YTD vs PYTD)", "Growth Rate of Standard / Exotic Betline (YTD vs PYTD)", {
         x: "Meeting ID",
         y: "Cumulative Growth Rate of Total Betline (YTD vs. PYTD)",
         keys: ["Betline (Previous Season)", "Betline (This Season)", "Total Betline (PYTD)", "Total Betline (YTD)"]
-    }, "betline", 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
+    }, "betline", true, 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
     stat_figure_active_rate_year("Active Rate (YTD vs PYTD)", "Active Rate (YTD vs PYTD)", {
         x: "Meeting ID",
         y: "Active Rate (YTD vs. PYTD)"
     }, 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
-    stat_figure_stacked("Bet Type - Channel Shares", "Bet Type - Channel Shares", {
+    stat_figure_bet_share("Bet Type - Channel Shares", "Bet Type - Channel Shares", {
         x: "Turnover Type",
         y: "Channel Share Ratio"
-    }, 2015, (input.length > 0 ? segment.join(",") : null));
+    }, true, 2015, (input.length > 0 ? segment.join(",") : null));
     stat_figure_wakeup_rate("Wake-Up Rate (YTD vs PYTD)", "Wake-Up Rate (YTD vs PYTD)", {
         x: "Meeting ID",
         y: "Wake-Up Rate (YTD vs. PYTD)"

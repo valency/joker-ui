@@ -10,6 +10,13 @@ $(document).ready(function () {
 
 function draw_figures() {
     $("#figure-container").html("");
+    var input = $("#select-segments").select2('data');
+    var segment = [];
+    if (input.length > 0) {
+        for (var i = 0; i < input.length; i++) {
+            segment.push(input[i].id);
+        }
+    }
     $.get(API_SERVER + "tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
         var src = [];
         for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
@@ -19,11 +26,11 @@ function draw_figures() {
                 values: [TURNOVER_PREV_SEASON[i], TURNOVER_THIS_SEASON[i], TOTAL_TURNOVER_PYTD[i], TOTAL_TURNOVER_YTD[i]]
             });
         }
-        stat_figure_growth_rate_of_turnover(src, "Growth Rate of Turnover (YTD vs. PYTD)", "Growth Rate of Turnover (YTD vs. PYTD)", {
+        stat_figure_year_on_year_growth("Growth Rate of Turnover (YTD vs PYTD)", "Growth Rate of Turnover (YTD vs PYTD)", {
             x: "Meeting ID",
             y: "Cumulative Growth Rate of Total Turnover (YTD vs. PYTD)",
             keys: ["Turnover (Previous Season)", "Turnover (This Season)", "Total Turnover (PYTD)", "Total Turnover (YTD)"]
-        }, 0.05);
+        }, "turnover", false, 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
         stat_figure_histogram("to_recent_growth", false, "Last 14 Meetings", "Turnover Growth Rate of Last 14 Meetings", {
             x: "Customers' Growth Rate of Turnover",
             y: "Probabilistic Distribution Function"
@@ -32,17 +39,10 @@ function draw_figures() {
             x: "Customers' Age",
             y: "Probabilistic Distribution Function"
         }, 1, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
-        src = [];
-        for (i = 0; i < MAJOR_CHANNEL_LABEL.length; i++) {
-            src.push({
-                key: MAJOR_CHANNEL_LABEL[i],
-                value: PERCENTAGE_MAJOR_CHANNEL[i]
-            });
-        }
-        stat_figure_pie_chart(src, "Channel", "Turnover of Channels (YTD)", {
-            x: "Channel",
-            y: "Turnover of the Channel"
-        });
+        stat_figure_bet_share("Bet Type - Channel Shares", "Bet Type - Channel Shares", {
+            x: "Turnover Type",
+            y: "Channel Share Ratio"
+        }, false, 2015, (input.length > 0 ? segment.join(",") : null));
         stat_figure_histogram("grow_prop", false, "Growth Score", "Distribution of Customer's Growth Score", {
             x: "Customer's Growth Score",
             y: "Probabilistic Distribution Function"
