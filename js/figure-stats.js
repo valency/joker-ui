@@ -375,7 +375,7 @@ function stat_table(id, title, src, header, prefix_content, hints, formatter) {
     add_portlet("#figure-container", title, html, id, 12);
 }
 
-function stat_figure_year_on_year_growth(title, fig_title, label, field, season, segment, kpi) {
+function stat_figure_year_on_year_growth(title, fig_title, label, field, seperate, season, segment, kpi) {
     var fig_id = guid();
     add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
         x: "X Axis",
@@ -384,18 +384,27 @@ function stat_figure_year_on_year_growth(title, fig_title, label, field, season,
         $.get(API_SERVER + "summary/year-on-year-growth/?field=" + field + "&season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
             var src1 = [];
             for (var i = 0; i < data["standard_" + field]["cumulative_growth_rate_of_total_standard_" + field].length; i++) {
-                src1.push({
-                    type: "standard_" + field,
-                    y: data["standard_" + field]["cumulative_growth_rate_of_total_standard_" + field][i],
-                    x: i + 1,
-                    values: [data["standard_" + field]["standard_" + field + "_previous_season"][i], data["standard_" + field]["standard_" + field + "_this_season"][i], data["standard_" + field]["total_standard_" + field + "_pytd"][i], data["standard_" + field]["total_standard_" + field + "_ytd"][i]]
-                });
-                src1.push({
-                    type: "exotic_" + field,
-                    y: data["exotic_" + field]["cumulative_growth_rate_of_total_exotic_" + field][i],
-                    x: i + 1,
-                    values: [data["exotic_" + field]["exotic_" + field + "_previous_season"][i], data["exotic_" + field]["exotic_" + field + "_this_season"][i], data["exotic_" + field]["total_exotic_" + field + "_pytd"][i], data["exotic_" + field]["total_exotic_" + field + "_ytd"][i]]
-                });
+                if (seperate) {
+                    src1.push({
+                        type: "standard_" + field,
+                        y: data["standard_" + field]["cumulative_growth_rate_of_total_standard_" + field][i],
+                        x: i + 1,
+                        values: [data["standard_" + field]["standard_" + field + "_previous_season"][i], data["standard_" + field]["standard_" + field + "_this_season"][i], data["standard_" + field]["total_standard_" + field + "_pytd"][i], data["standard_" + field]["total_standard_" + field + "_ytd"][i]]
+                    });
+                    src1.push({
+                        type: "exotic_" + field,
+                        y: data["exotic_" + field]["cumulative_growth_rate_of_total_exotic_" + field][i],
+                        x: i + 1,
+                        values: [data["exotic_" + field]["exotic_" + field + "_previous_season"][i], data["exotic_" + field]["exotic_" + field + "_this_season"][i], data["exotic_" + field]["total_exotic_" + field + "_pytd"][i], data["exotic_" + field]["total_exotic_" + field + "_ytd"][i]]
+                    });
+                } else {
+                    src1.push({
+                        type: field,
+                        y: data["standard_" + field]["cumulative_growth_rate_of_total_standard_" + field][i] + data["exotic_" + field]["cumulative_growth_rate_of_total_exotic_" + field][i],
+                        x: i + 1,
+                        values: [data["standard_" + field]["standard_" + field + "_previous_season"][i] + data["exotic_" + field]["exotic_" + field + "_previous_season"][i], data["standard_" + field]["standard_" + field + "_this_season"][i] + data["exotic_" + field]["exotic_" + field + "_this_season"][i], data["standard_" + field]["total_standard_" + field + "_pytd"][i] + data["exotic_" + field]["total_exotic_" + field + "_pytd"][i], data["standard_" + field]["total_standard_" + field + "_ytd"][i] + data["exotic_" + field]["total_exotic_" + field + "_ytd"][i]]
+                    });
+                }
             }
             var src = d3.nest()
                 .key(function (d) {
@@ -579,28 +588,42 @@ function stat_figure_active_rate_year(title, fig_title, label, season, segment, 
     });
 }
 
-function stat_figure_stacked(title, fig_title, label, season, segment) {
+function stat_figure_bet_share(title, fig_title, label, seperate, season, segment) {
     var fig_id = guid();
     add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
-        x: "X Axis",
-        y: "Y Axis"
+        x: seperate ? "X Axis" : "Key",
+        y: seperate ? "Y Axis" : "Value"
     }), fig_id, 4, function () {
         $.get(API_SERVER + "summary/channel-shares/?season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
-            var src = [{
-                types: ['Standard Turnover', 'Exotic Turnover']
-            }];
-            for (var i = 0; i < data["major_channel"].length; i++) {
-                src[0][data["major_channel"][i]] = [data["standard_turnover_ytd"][i], data["exotic_turnover_ytd"][0]];
+            if (seperate) {
+                var src = [{
+                    types: ['Standard Turnover', 'Exotic Turnover']
+                }];
+                for (var i = 0; i < data["major_channel"].length; i++) {
+                    src[0][data["major_channel"][i]] = [data["standard_turnover_ytd"][i], data["exotic_turnover_ytd"][i]];
+                }
+                $("#figure-div-" + fig_id).html("");
+                stat_figure_stacked_bar_chart_draw(fig_id, src, title, label, {
+                    gap: .35,
+                    xKey: "types",
+                    yKey: data["major_channel"],
+                    y_format: "%",
+                    y_digit: 2,
+                    x_rotate: false
+                });
+            } else {
+                var src = [];
+                for (var i = 0; i < data["major_channel"].length; i++) {
+                    src.push({
+                        key: data["major_channel"][i],
+                        value: data["standard_turnover_ytd"][i] + data["exotic_turnover_ytd"][i]
+                    });
+                }
+                setTimeout(function () {
+                    $("#figure-div-" + fig_id).html("");
+                    stat_figure_pie_chart_draw(fig_id, src, title, label);
+                }, 100);
             }
-            $("#figure-div-" + fig_id).html("");
-            stat_figure_stacked_bar_chart_draw(fig_id, src, title, label, {
-                gap: .35,
-                xKey: "types",
-                yKey: data["major_channel"],
-                y_format: "%",
-                y_digit: 2,
-                x_rotate: false
-            });
         }).fail(function () {
             $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
         });
@@ -1163,3 +1186,38 @@ function stat_figure_active_analysis(title, fig_title, label, type, season, segm
         });
     });
 }
+
+// Below is new figures
+// function stat_figure_active_rate_new(title, fig_title, label, season, segment, kpi) {
+//     var fig_id = guid();
+//     add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+//         x: "X Axis",
+//         y: "Y Axis"
+//     }), fig_id, 12, function () {
+//         $.get(API_SERVER + "summary/active-rate-new/?type=year&season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
+//             var src = [];
+//             for (var i = 0; i < data["active_rate_last"].length; i++) {
+//                 src1.push({
+//                     type: "previous_season",
+//                     y: data["active_rate_last"][i],
+//                     x: i + 1
+//                 });
+//                 src1.push({
+//                     type: "current_season",
+//                     y: data["active_rate"][i],
+//                     x: i + 1
+//                 });
+//             }
+//             src = d3.nest()
+//                 .key(function (d) {
+//                     return d.type;
+//                 }).entries(src1);
+//             $("#figure-div-" + fig_id).html("");
+//             stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
+//                 y_format: "%"
+//             });
+//         }).fail(function () {
+//             $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + season + "' failed!</span>");
+//         });
+//     });
+// }
