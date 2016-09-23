@@ -39,7 +39,7 @@ function draw_figures() {
         stat_figure_histogram("age", false, "Age", "Distribution of Customers' Age", {
             x: "Customers' Age",
             y: "Probabilistic Distribution Function"
-        }, 1, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
+        }, 1, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         stat_figure_bet_share("Bet Type - Channel Shares", "Bet Type - Channel Shares", {
             x: "Turnover Type",
             y: "Channel Share Ratio"
