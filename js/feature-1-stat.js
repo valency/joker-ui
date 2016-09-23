@@ -10,7 +10,15 @@ $(document).ready(function () {
 
 function draw_figures() {
     $("#figure-container").html("");
+    var input = $("#select-segments").select2('data');
+    var segment = [];
+    if (input.length > 0) {
+        for (var i = 0; i < input.length; i++) {
+            segment.push(input[i].id);
+        }
+    }
     $.get(API_SERVER + "tool/env/get/?key=model_1_active_" + Cookies.get('joker_id'), function (active) {
+        // TODO: Bob
         var src = [];
         for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
             src.push({
@@ -27,11 +35,12 @@ function draw_figures() {
         stat_figure_histogram("to_recent_growth", false, "Last 14 Meetings", "Turnover Growth Rate of Last 14 Meetings", {
             x: "Customers' Growth Rate of Turnover",
             y: "Probabilistic Distribution Function"
-        }, 1, active.value, 1, [-1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2]);
+        }, 1, active.value, 1, [-1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         stat_figure_histogram("age", false, "Age", "Distribution of Customers' Age", {
             x: "Customers' Age",
             y: "Probabilistic Distribution Function"
-        }, 1, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
+        }, 1, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
+        // TODO: Bob
         src = [];
         for (i = 0; i < MAJOR_CHANNEL_LABEL.length; i++) {
             src.push({
@@ -46,11 +55,11 @@ function draw_figures() {
         stat_figure_histogram("grow_prop", false, "Growth Score", "Distribution of Customer's Growth Score", {
             x: "Customer's Growth Score",
             y: "Probabilistic Distribution Function"
-        }, 1, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+        }, 1, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         stat_figure_histogram("decline_prop", false, "Decline Score", "Distribution of Customers' Decline Score", {
             x: "Customers' Decline Score",
             y: "Probabilistic Distribution Function"
-        }, 1, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+        }, 1, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         // Table
         var prefix_content = "<div class='input-group'>";
         prefix_content += "<span class='input-group-addon'>Segment</span>";

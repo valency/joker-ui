@@ -290,13 +290,13 @@ function stat_figure_bar_chart_draw(fig_id, src, title, label) {
         });
 }
 
-function stat_figure_histogram(column, categorical, title, fig_title, label, model, data_source, data_digits, bins) {
+function stat_figure_histogram(column, categorical, title, fig_title, label, model, data_source, data_digits, bins, segment) {
     var fig_id = guid();
     add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
         x: "X Axis",
         y: "Y Axis"
     }), fig_id, 4, function () {
-        $.get(API_SERVER + "model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins.join() : ""), function (data) {
+        $.get(API_SERVER + "model/" + model + "/histogram/?source=" + data_source + "&field=" + column + "&categorical=" + categorical + (bins ? "&bins=" + bins.join() : "") + segment, function (data) {
             var src = [];
             for (var i = 0; i < data["hist"].length; i++) {
                 src.push({

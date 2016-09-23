@@ -9,8 +9,16 @@ $(document).ready(function () {
 });
 
 function draw_figures() {
-    $("#figure_container").html("");
+    $("#figure-container").html("");
+    var input = $("#select-segments").select2('data');
+    var segment = [];
+    if (input.length > 0) {
+        for (var i = 0; i < input.length; i++) {
+            segment.push(input[i].id);
+        }
+    }
     $.get(API_SERVER + "tool/env/get/?key=model_2_active_" + Cookies.get('joker_id'), function (active) {
+        // TODO: Bob
         var src = [];
         for (var i = 0; i < GROWTH_RATE_TURNOVER_COUNT.length; i++) {
             src.push({
@@ -34,15 +42,16 @@ function draw_figures() {
         stat_figure_histogram("active_rate_previous_83", false, "Active Rate (Recent 83 Meetings)", "Active Rate of New Customers (Recent 83 Meetings)", {
             x: "New Customers' Active Rate",
             y: "Probabilistic Distribution Function"
-        }, 2, active.value, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
+        }, 2, active.value, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         stat_figure_histogram("age", false, "Age", "Distribution of New Customers' Age", {
             x: "New Customers' Age",
             y: "Probabilistic Distribution Function"
-        }, 2, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]);
+        }, 2, active.value, 0, [15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         stat_figure_histogram("chance_to_be_regular", false, "Probability of Active Rate > 0.6 (Next 83 Meetings)", "Distribution of Probabilities", {
             x: "New Customers' Probability of Active Rate > 0.6 (Next 83 Meetings)",
             y: "Probabilistic Distribution Function"
-        }, 2, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]);
+        }, 2, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
+        // TODO: Bob
         src = [];
         for (i = 0; i < ACTIVE_RATE_YTD_ALL_CUST.length; i++) {
             src.push({
