@@ -1221,3 +1221,47 @@ function stat_figure_active_analysis(title, fig_title, label, type, season, segm
 //         });
 //     });
 // }
+
+function stat_figure_active_rate_latest(categorical, title, fig_title, label, season, data_digits, bins, segment) {
+    var fig_id = guid();
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "X Axis",
+        y: "Y Axis"
+    }), fig_id, 4, function () {
+        $.get(API_SERVER + "summary/active-rate-latest/?season=" + season + (segment ? "&segment=" + segment : "") + "&categorical=" + categorical + (bins ? "&bins=" + bins.join() : ""), function (data) {
+            var src = [];
+            for (var i = 0; i < data["hist"].length; i++) {
+                src.push({
+                    y: data["hist"][i],
+                    x: Number(data["bin_edges"][i + 1]) === data["bin_edges"][i + 1] ? data["bin_edges"][i].toFixed(data_digits) + "-" + data["bin_edges"][i + 1].toFixed(data_digits) : data["bin_edges"][i + 1]
+                });
+            }
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_bar_chart_draw(fig_id, src, title, label);
+        }).fail(function () {
+            $("#figure-div-" + fig_id).html("<span class='font-red'>Loading latest active rate failed!</span>");
+        });
+    });
+}
+
+function stat_figure_bet_type(title, fig_title, label, season, segment) {
+    var fig_id = guid();
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "Key",
+        y: "Value"
+    }), fig_id, 4, function () {
+        $.get(API_SERVER + "summary/bet-type/?season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
+            var src = [];
+            for (var i = 0; i < data["major_type"].length; i++) {
+                src.push({
+                    key: data["major_type"][i],
+                    value: data["turnover_ytd"][i]
+                });
+            }
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_pie_chart_draw(fig_id, src, title, label);
+        }).fail(function () {
+            $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + column + "' failed!</span>");
+        });
+    });
+}

@@ -51,18 +51,10 @@ function draw_figures() {
             x: "New Customers' Probability of Active Rate > 0.6 (Next 83 Meetings)",
             y: "Probabilistic Distribution Function"
         }, 2, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
-        // TODO: Bob
-        src = [];
-        for (i = 0; i < ACTIVE_RATE_YTD_ALL_CUST.length; i++) {
-            src.push({
-                x: ACTIVE_RATE_YTD_ALL_CUST[i],
-                y: ACTIVE_RATE_YTD_ALL_CUST_PDF[i]
-            });
-        }
-        stat_figure_bar_chart(src, "Active Rate (YTD)", "Active Rate (YTD) of All Customers", {
+        stat_figure_active_rate_latest(false, "Active Rate (YTD)", "Active Rate of All Customers", {
             x: "Active Rate",
             y: "Probabilistic Distribution Function"
-        });
+        }, 2015, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
         var header = [
             {text: "Racing Season", hint: ""},
             {text: "# of New Customers", hint: ""},

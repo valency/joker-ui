@@ -28,18 +28,10 @@ function draw_figures() {
             x: score_hp_participation,
             y: "Probabilistic Distribution Function (%)"
         }, 4, active.value, 0, [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
-        // TODO: Bob
-        var src = [];
-        for (var i = 0; i < BET_TYPE.length; i++) {
-            src.push({
-                key: BET_TYPE[i],
-                value: PERCENTAGE_BET_TYPE[i]
-            });
-        }
-        stat_figure_pie_chart(src, "Bet Type", "Turnover of Bet Types (YTD)", {
+        stat_figure_bet_type("Bet Type", "Bet Type", {
             x: "Bet Type",
             y: "Turnover of the Bet Type"
-        });
+        }, 2015, (input.length > 0 ? segment.join(",") : null));
         stat_figure_year_on_year_growth("Growth Rate of Standard / Exotic Turnover (YTD vs PYTD)", "Growth Rate of Standard / Exotic Turnover (YTD vs PYTD)", {
             x: "Meeting ID",
             y: "Cumulative Growth Rate of Total Turnover (YTD vs. PYTD)",
