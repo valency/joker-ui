@@ -54,7 +54,7 @@ function draw_figures() {
         stat_figure_active_rate_latest(false, "Active Rate (YTD)", "Active Rate of All Customers", {
             x: "Active Rate",
             y: "Probabilistic Distribution Function"
-        }, 2015, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], (input.length > 0 ? "&segment=" + segment.join(",") : ""));
+        }, 2015, 1, [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], (input.length > 0 ? segment.join(",") : null));
         var header = [
             {text: "Racing Season", hint: ""},
             {text: "# of New Customers", hint: ""},

@@ -1173,7 +1173,6 @@ function stat_figure_active_analysis(title, fig_title, label, type, season, segm
                     x: i + 1
                 });
             }
-
             src = d3.nest()
                 .key(function (d) {
                     return d.type;
@@ -1186,41 +1185,6 @@ function stat_figure_active_analysis(title, fig_title, label, type, season, segm
         });
     });
 }
-
-// Below is new figures
-// function stat_figure_active_rate_new(title, fig_title, label, season, segment, kpi) {
-//     var fig_id = guid();
-//     add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
-//         x: "X Axis",
-//         y: "Y Axis"
-//     }), fig_id, 12, function () {
-//         $.get(API_SERVER + "summary/active-rate-new/?type=year&season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
-//             var src = [];
-//             for (var i = 0; i < data["active_rate_last"].length; i++) {
-//                 src1.push({
-//                     type: "previous_season",
-//                     y: data["active_rate_last"][i],
-//                     x: i + 1
-//                 });
-//                 src1.push({
-//                     type: "current_season",
-//                     y: data["active_rate"][i],
-//                     x: i + 1
-//                 });
-//             }
-//             src = d3.nest()
-//                 .key(function (d) {
-//                     return d.type;
-//                 }).entries(src1);
-//             $("#figure-div-" + fig_id).html("");
-//             stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
-//                 y_format: "%"
-//             });
-//         }).fail(function () {
-//             $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + season + "' failed!</span>");
-//         });
-//     });
-// }
 
 function stat_figure_active_rate_latest(categorical, title, fig_title, label, season, data_digits, bins, segment) {
     var fig_id = guid();
