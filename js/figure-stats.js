@@ -1229,3 +1229,34 @@ function stat_figure_bet_type(title, fig_title, label, season, segment) {
         });
     });
 }
+
+function stat_figure_active_rate_new(title, fig_title, label, season, segment, kpi) {
+    var fig_id = guid();
+    add_portlet("#figure-container", title, generate_portlet_meta(fig_id, fig_title, label, {
+        x: "X Axis",
+        y: "Y Axis"
+    }), fig_id, 8, function () {
+        $.get(API_SERVER + "summary/active-rate-new/?type=year&season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
+            var src = [];
+            var src1 = [];
+            for (var i = 0; i < data["active_rate_last"].length; i++) {
+                src1.push({
+                    type: "cumulative growth rate of active rate",
+                    y: data["cumulative_growth_rate_of_active_rate"][i],
+                    x: i + 1,
+                    values: [data["active_rate_last"][i], data["active_rate"][i], data["num_cust_last"][i], data["num_cust"][i]]
+                });
+            }
+            src = d3.nest()
+                .key(function (d) {
+                    return d.type;
+                }).entries(src1);
+            $("#figure-div-" + fig_id).html("");
+            stat_figure_multiline_draw(fig_id, src, title, label, kpi, {
+                y_format: "%"
+            });
+        }).fail(function () {
+            $("#figure-div-" + fig_id).html("<span class='font-red'>Loading schema '" + season + "' failed!</span>");
+        });
+    });
+}
