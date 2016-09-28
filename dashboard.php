@@ -31,6 +31,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3>Updates</h3>
+                    <span class="font-blue">v1.9.28</span>
+                    <ul>
+                        <li><span class='font-purple'>Fixed</span> rendering bug of figure 1 of model 2</li>
+                    </ul>
                     <span class="font-blue">v1.9.23</span>
                     <ul>
                         <li><span class='font-green'>Added</span> new figures for model 4</li>
