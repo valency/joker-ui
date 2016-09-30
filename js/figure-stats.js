@@ -1236,7 +1236,7 @@ function stat_figure_active_rate_new(title, fig_title, label, season, segment, k
         x: "X Axis",
         y: "Y Axis"
     }), fig_id, 8, function () {
-        $.get(API_SERVER + "summary/active-rate-new/?type=year&season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
+        $.get(API_SERVER + "summary/active-rate-new/?season=" + season + (segment ? "&segment=" + segment : ""), function (data) {
             var src = [];
             var src1 = [];
             for (var i = 0; i < data["active_rate_last"].length; i++) {
@@ -1244,7 +1244,7 @@ function stat_figure_active_rate_new(title, fig_title, label, season, segment, k
                     type: "cumulative growth rate of active rate",
                     y: data["cumulative_growth_rate_of_active_rate"][i],
                     x: i + 1,
-                    values: [data["active_rate_last"][i], data["active_rate"][i], data["num_cust_last"][i], data["num_cust"][i]]
+                    values: [data["active_rate_last"][i], data["active_rate"][i], data["num_active_last"][i], data["num_active"][i], data["num_new_last"][i], data["num_new"][i]]
                 });
             }
             src = d3.nest()

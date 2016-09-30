@@ -21,7 +21,7 @@ function draw_figures() {
         stat_figure_active_rate_new("Growth Rate of Avg. Active Rate of New Customers (PYTD vs. YTD)", "Growth Rate of Avg. Active Rate of New Customers (PYTD vs. YTD)", {
             x: "Meeting ID",
             y: "Cumulative Growth Rate of Active Rate (PYTD vs. YTD)",
-            keys: ["Avg. Active Rate (PYTD)", "Avg. Active Rate (YTD)", "# of Active Customers (Prev. Season)", "# of Active Customers (This Season)"]
+            keys: ["Avg. Active Rate (PYTD)", "Avg. Active Rate (YTD)", "# of Active Customers (Prev. Season)", "# of Active Customers (This Season)", "# of New Customers by Prev. Season (in 5 Years)", "# of New Customers by This Season (in 5 Years)"]
         }, 2015, (input.length > 0 ? segment.join(",") : null), 0.05);
         stat_figure_histogram("active_rate_previous_83", false, "Active Rate (Recent 83 Meetings)", "Active Rate of New Customers (Recent 83 Meetings)", {
             x: "New Customers' Active Rate",
